@@ -416,8 +416,8 @@ th { text-align: center; }
 
 .use-case-diagram {
     display: block;
-    height: 100%;
-    width: auto;
+    height: auto;
+    width: 100%;
     min-height: 800px;
     min-width: 600px;
     border-radius: 4px;
