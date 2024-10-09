@@ -1,43 +1,29 @@
-import Utils.Language;
-
 public class User {
 
-    // first name, last name, email, password, enterprise
-    private String fName, Lname, mail, pw, id, enterprise;
+    // first name, last name, email, password
+    private String fname, lname, mail, pw;
 
-    public User(String fName, String Lname, String mail, String pw, String id, String enterprise){
-        this.fName = fName;
-        this.Lname = Lname;
-        this.mail = mail;
-        this.pw = pw;
-        this.id = id;
-        this.enterprise = enterprise;
-    }
 
     // case user = particulier (not part of an firm)
-    public User(String fName, String Lname, String mail, String pw, String id){
-        this.fName = fName;
-        this.Lname = Lname;
+    // 
+    public User(String fname, String lname, String mail, String pw){
+        this.fname = fname;
+        this.lname = lname;
         this.mail = mail;
         this.pw = pw;
-        this.id = id;
     }
 
 
     // getters
-    public String getEnterprise() {return this.enterprise == null ? Language.notAnEnterprise("french") : this.enterprise;}
-    public String getId() {return id;}
-    public String getLname() {return Lname;}
-    public String getMail() {return mail;}
-    public String getPw() {return pw;}
-    public String getfName() {return fName;}
+    public String getLname() {return this.lname;}
+    public String getMail() {return this.mail;}
+    public String getPw() {return this.pw;}
+    public String getFname() {return this.fname;}
 
     // setters
-    public void setEnterprise(String enterprise) {this.enterprise = enterprise;}
-    public void setId(String id) {this.id = id;}
-    public void setLname(String lname) {Lname = lname;}
+    public void setLname(String lname) {this.lname = lname;}
     public void setMail(String mail) {this.mail = mail;}
     public void setPw(String pw) {this.pw = pw;}
-    public void setfName(String fName) {this.fName = fName;}
+    public void setFname(String fName) {this.fname = fName;}
 
 }
