@@ -11,9 +11,11 @@ public class Dialog {
     public static void init(){
         Speaker.welcome();
 
-        boolean exit = true;
-        while (!exit) {
-            
+        Speaker.STATE state = Speaker.STATE.INITIAL;
+        while (state != Speaker.STATE.QUIT) {
+
+            // after each menu interaction, the state changes and a new menu is handled
+            state = Speaker.menu(state);
         }
     }
 

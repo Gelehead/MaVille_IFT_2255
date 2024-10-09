@@ -4,15 +4,13 @@ public class User {
     private String fname, lname, mail, pw;
 
 
-    // case user = particulier (not part of an firm)
-    // 
+    // case user = particulier (not part of an enterprise)
     public User(String fname, String lname, String mail, String pw){
         this.fname = fname;
         this.lname = lname;
         this.mail = mail;
         this.pw = pw;
     }
-
 
     // getters
     public String getLname() {return this.lname;}
