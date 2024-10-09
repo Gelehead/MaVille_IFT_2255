@@ -2,12 +2,34 @@ import Utils.Language;
 import Utils.Speaker;
 
 // TODO : change every dialog option to be be dependant of language chosen by the user
+
+
 public class Dialog {
 
+    /* ------------------------ Graphic part ------------------------ */
+
+    public static void init(){
+        Speaker.welcome();
+
+        boolean exit = true;
+        while (!exit) {
+            
+        }
+    }
+
+
+
+
+    /* ------------------------ Dialog Part ------------------------ */
+
+    // this only works if there are only 2 types of user, if scope gets bigger, replace with switch case
     public static User getUserInfos(String userType){
         return userType == "resident" ? getResidentInfos() : getIntervenantInfos();
     }
 
+    /** Asks the user, assuming they are a resident, all useful information
+     * @return Resident object
+     */
     public static Resident getResidentInfos(){
         // mI for main Infos, makes the creation of new resident a shorter line
         String[] mI = getMainInfos();
@@ -35,6 +57,9 @@ public class Dialog {
         return mainInfos;
     }
 
+    /** Asks the user information related to its role as an intervenant
+     * @return Intervenant with all pertinent informations
+     */
     public static Intervenant getIntervenantInfos(){
         String[] mI = getMainInfos();
 
