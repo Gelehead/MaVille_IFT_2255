@@ -8,7 +8,7 @@ This project was done within the scope of the IFT2255 class in the Montreal Univ
 
 MaVille is a java project mainly done for a command line interface but extending the project to have a graphic interface is within our goals 
 
-HTML file link [here]()
+HTML file link [here](public\rapport.html)
 
 ## Installation
 

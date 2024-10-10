@@ -1,7 +1,11 @@
 package Utils;
 import java.util.Scanner;
 
+// TODO : low priority but we could try implementing regex
+
 public class Speaker {
+    private static final Scanner s = new Scanner(System.in);
+
     // put menu states here
     public enum STATE {
         INITIAL,
@@ -18,7 +22,7 @@ public class Speaker {
 
         PLACEHOLDER,
     }
-    private static final Scanner s = new Scanner(System.in);
+
     // prints in the command line the question and returns as a string the answer of the user
     public static String ask(String question){
         System.out.println(question);
@@ -65,12 +69,6 @@ public class Speaker {
                     return Speaker.STATE.INITIAL;
                 }
 
-                // return RESIDENT_INITIAL
-                // or
-                // return INTERVENANT_INITIAL
-
-                // return Speaker.STATE.PLACEHOLDER;
-
             case RESIDENT_MAIN:
                 // menu de navigation pour les residents
                 System.out.println(" \n Menu principal pour les résidents : ");
@@ -80,7 +78,7 @@ public class Speaker {
                 System.out.println(" [4] Planifier un projet ");
                 System.out.println(" [5] Faire une requete de travail ");
                 System.out.println(" [6] Accepter ou refuser la candidature d'un travail ");
-                System.out.println(" [7] Siganler un problème ");
+                System.out.println(" [7] Signaler un problème ");
                 System.out.println(" [8] Retourner au menu principal ");
                 System.out.println(" [9] Quitter ");
 
