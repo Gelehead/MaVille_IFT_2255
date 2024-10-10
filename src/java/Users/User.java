@@ -1,3 +1,4 @@
+package Users;
 public class User {
 
     // first name, last name, email, password

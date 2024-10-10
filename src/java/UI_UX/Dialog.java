@@ -1,5 +1,8 @@
+package UI_UX;
+import Users.Intervenant;
+import Users.Resident;
+import Users.User;
 import Utils.Language;
-import Utils.Speaker;
 
 // TODO : change every dialog option to be be dependant of language chosen by the user
 

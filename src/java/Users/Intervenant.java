@@ -1,12 +1,9 @@
+package Users;
 public class Intervenant extends User{
     private String fname, lname, mail, pw, enterprise, id;
     
     public Intervenant(String fname, String lname, String mail, String pw, String enterprise, String id){
         super(fname, lname, mail, pw);
-        this.fname = fname;
-        this.lname = lname;
-        this.mail = mail;
-        this.pw = pw;
         this.enterprise = enterprise;
         this.id = id;
     }

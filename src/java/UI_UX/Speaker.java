@@ -1,4 +1,4 @@
-package Utils;
+package UI_UX;
 import java.util.Scanner;
 
 // TODO : low priority but we could try implementing regex
