@@ -41,7 +41,7 @@
                         <img class="member-pic" src="" alt="" >
                         <div class="member-identification">
                             <span class="member-name">Oscar LAVOLET</span>
-                            <span class="member-id">2014069</span>
+                            <span class="member-id">20242868</span>
                         </div> 
                         <span>Discord: @foxys5881</span>
                         <a href="mailto:oscar.lavolet@umontreal.ca">oscar.lavolet@umontreal.ca</a>
@@ -51,7 +51,7 @@
                         <img class="member-pic" src="" alt="" >
                         <div class="member-identification">
                             <span class="member-name">Othmane ZEROUAL</span>
-                            <span class="member-id">1034870</span>
+                            <span class="member-id">20145827</span>
                         </div> 
                         <span>Discord: @othmane.zer_73875</span>
                         <a href="mailto:othmane.zeroual@umontreal.ca">othmane.zeroual@umontreal.ca</a>
@@ -132,7 +132,8 @@
                         <br>
                         Oscar s'occupera des diagrammes d'activités. (à finir avant le 8 octobre)
                         <br>
-                        On travaillera les trois sur le prototype. (à commencer à partir du 8 octobre)
+                        On travaillera les trois sur le code et la vérification du prototype. (à commencer à partir du 8 octobre et compléter jusqu'au 11 octobre)
+                        <br>
                         </em>
                 </p>
 
@@ -247,7 +248,7 @@
              
                 <h3 class="subsection-title">Cas d'utilisation</h3>
                 <div class="use-case">
-                    <img class="use-case-diagram" src="assets/cu-diagramme.png" alt="Diagramme de cas d'utilisation">
+                    <img class="use-case-diagram" src="assets/cu-diagramme-final.png" alt="Diagramme de cas d'utilisation">
                     <p class="use-case-notes">
                         <em>
                             Notes à propos du diagramme <br>
@@ -484,7 +485,7 @@
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Postconditions</h5>
                                 <ul class="bare-list cu-conditions">
-                                    <li class="dash">Aucun.</li>
+                                    <li class="dash">Trouver le projet.</li>
                                 </ul>
                             </div>
                             
@@ -549,7 +550,7 @@
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Postconditions</h5>
                                 <ul class="bare-list cu-conditions">
-                                    <li class="dash">Aucun.</li>
+                                    <li class="dash">Recevoir des notifications.</li>
                                 </ul>
                             </div>
                             
@@ -645,6 +646,7 @@
                                 <h5 class="cu-part-title">Acteurs</h5>
                                 <ul class="bare-list cu-actors">
                                     <li class="cu-actor">Résident (Principal)</li>
+                                    <li class="cu-actor">Employé de la ville (Acteur secondaire)</li>
                                 </ul>
                             </div>
                             
@@ -755,6 +757,7 @@
                                 <h5 class="cu-part-title">Acteurs</h5>
                                 <ul class="bare-list cu-actors">
                                     <li class="cu-actor">Résident (Principal)</li>
+                                    <li class="cu-actor">Employé de la ville (Acteur secondaire)</li>
                                 </ul>
                             </div>
                             
@@ -768,7 +771,7 @@
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Postconditions</h5>
                                 <ul class="bare-list cu-conditions">
-                                    <li class="dash">Aucun.</li>
+                                    <li class="dash">Le probleme est signalé a la ville.</li>
                                 </ul>
                             </div>
                             
@@ -822,7 +825,7 @@
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Postconditions</h5>
                                 <ul class="bare-list cu-conditions">
-                                    <li class="dash">Aucun.</li>
+                                    <li class="dash">Le nouveau projet est posté dans la liste des travaux.</li>
                                 </ul>
                             </div>
                             
@@ -876,7 +879,7 @@
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Postconditions</h5>
                                 <ul class="bare-list cu-conditions">
-                                    <li class="dash">Aucun.</li>
+                                    <li class="dash">Les informations concernant le projet sont mise à jour.</li>
                                 </ul>
                             </div>
                             
@@ -919,6 +922,7 @@
                                 <h5 class="cu-part-title">Acteurs</h5>
                                 <ul class="bare-list cu-actors">
                                     <li class="cu-actor">Intervenant (Principal)</li>
+                                    <li class="cu-actor">Employé de la ville (Acteur secondaire)</li>
                                 </ul>
                             </div>
                             
@@ -1022,14 +1026,25 @@
                 <div>
                     <h3 class="subsection-title">Besoins matériels</h3>
                     <p>
-                        <em>Pour l'application MaVille les besoins matériels incluent les infrastructures nécessaires pour assurer le bon fonctionnement et l'exploitation de l'application. Donc, on a besoins des serveurs dédiés pour gérer la mémoire requise, ainsi qu'un réseau performant pour garantir une connexion rapide et stable pour les utilisateurs. Des postes de travail sont également nécessaires pour les développeurs et l'équipe de gestion technique.</em>
+                        <em>Pour l'application MaVille les besoins matériels incluent les infrastructures nécessaires pour assurer
+                             le bon fonctionnement et l'exploitation de l'application. Donc, on a besoins des serveurs dédiés pour 
+                             gérer la mémoire requise, ainsi qu'un réseau performant pour garantir une connexion rapide et stable 
+                             pour les utilisateurs. Des postes de travail sont également nécessaires pour les développeurs et l'équipe
+                              de gestion technique.</em>
                     </p>
                 </div>
 
                 <div>
                     <h3 class="subsection-title">Solution de stockage</h3>
                     <p>
-                        <em>Pour l'application MaVille, une solution de stockage basée sur une base de données relationnelle est meilleure pour bien gérer les informations structurées telles que les projets de travaux, les requêtes des résidents, et les notifications. L'architecture de stockage serait distribuée sur une solution cloud pour assurer une haute disponibilité, la scalabilité et un accès rapide aux données. Des mécanismes de sauvegarde automatiques et réguliers doivent être mis en place pour garantir la récupération des données en cas de panne. La solution prend en compte les exigences de sécurité (chiffrement des données), de performance (accès rapide), et d'intégrité des données pour assurer la fiabilité du service à long terme.</em>
+                        <em>Pour l'application MaVille, une solution de stockage basée sur une base de données relationnelle est meilleure 
+                            pour bien gérer les informations structurées telles que les projets de travaux, les requêtes des résidents, 
+                            et les notifications. L'architecture de stockage serait distribuée sur une solution cloud pour assurer
+                             une haute disponibilité, la scalabilité et un accès rapide aux données.On implementera également une solution
+                             de stockage des données des utilisateur à l'aide des tables de hachage. Des mécanismes de sauvegarde automatiques
+                              et réguliers doivent être mis en place pour garantir la récupération des données en cas de panne. La solution prend 
+                              en compte les exigences de sécurité (chiffrement des données), de performance (accès rapide), et d'intégrité des
+                            données pour assurer la fiabilité du service à long terme.</em>
                     </p>
                 </div>
 
@@ -1037,7 +1052,11 @@
                     <h3 class="subsection-title">Solution d'intégration</h3>
 
                     <p>
-                        <em>Pour l'application MaVille, la solution d'intégration repose sur l'utilisation d'API ouvertes permettant une communication fluide avec d'autres systèmes, comme les bases de données municipales ou les services de gestion des travaux publics. Cela garantira que les données sur les chantiers et les travaux soient à jour et cohérentes. L'application devra s'interfacer avec d'autre logiciel pour la gestion des notifications, et intégrer des formats standards pour les échanges de données pour d'assurer une interopérabilité optimale.</em>
+                        <em>Pour l'application MaVille, la solution d'intégration repose sur l'utilisation d'API ouvertes permettant une communication
+                            fluide avec d'autres systèmes, comme les bases de données municipales ou les services de gestion des travaux publics.
+                            Cela garantira que les données sur les chantiers et les travaux soient à jour et cohérentes.L'application devra s'interfacer
+                            avec d'autre logiciel pour la gestion des notifications, et intégrer des formats standards pour les échanges de données pour 
+                             d'assurer une interopérabilité optimale.</em>
                     </p>
                 </div>
             </section>

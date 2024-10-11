@@ -418,8 +418,9 @@ th { text-align: center; }
     display: block;
     height: auto;
     width: 100%;
-    min-height: 800px;
-    min-width: 600px;
+    /*min-height: 800px;
+    min-width: 600px; */
+    max-width: 600px;
     border-radius: 4px;
     background-color: #d5d5d5;
 }
@@ -539,8 +540,11 @@ th { text-align: center; }
 
 .activity-diagram {
     display: block;
+    /*
     min-height: 600px;
     min-width: 600px;
+    */
+    max-width: 600px;
     height: 100%;
     width: auto;
     background-color: #d5d5d5;
