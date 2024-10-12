@@ -2,7 +2,7 @@
 This project was done within the scope of the IFT2255 class in the Montreal University
 
 ## Colaborators
- - [Syrine Cherni]()
+ - [Syrine Cherni](https://github.com/syswasy)
  - [Othmane Zeroual]()
  - [Oscar Lavolet](https://github.com/Gelehead)
 
@@ -12,26 +12,31 @@ HTML file link [here](public\rapport.html)
 
 ## Installation
 
-aaaa
+Pour exécuter l'application MaVille, assurez-vous d'avoir Java installé sur votre ordinateur. 
 
 ### Analysis 
 
-aaa
+Le projet MaVille vise à améliorer la communication entre les résidents de Montréal et les intervenants concernant les travaux publics. L'application permet aux utilisateurs de consulter les travaux en cours et à venir, de soumettre des requêtes et de recevoir des notifications personnalisées.
+
 
 ### Funcitionalities
 
-aaa
+- Inscription des résidents et des intervenants
+- Consultation des travaux planifiés
+- Recherche de projets par type, titre ou quartier
+- Réception de notifications sur les travaux dans le quartier
+- Soumission de requêtes pour des travaux spécifiques
+- Planification des travaux en collaboration avec les intervenants
 
 ### Prototyping 
 
-le yes
+Le prototype de l'application est disponible en tant que fichier exécutable JAR
 
 ### Contact
 
-bbb
+
 
 ### Afterword
 
-what we learned
 
 
