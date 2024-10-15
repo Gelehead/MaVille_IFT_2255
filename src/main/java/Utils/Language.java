@@ -6,54 +6,150 @@ package Utils;
 
 public class Language {
 
+    public enum language {
+        FRENCH,
+        ENGLISH
+    }
+
     // TODO: placeholder dialogue, replace when possible
-    public static String Qfname(String language){       return language == "french" ? "Quel est votre prenom?" : "What's your first name?";}
-    public static String Qlname(String language){       return language == "french" ? "Quel est votre nom de famille?" : "What's your last name?";}
-    public static String Qmail(String language){        return language == "french" ? "Quel est votre addresse mail?" : "What's your mail address?";}
-    public static String Qpassword(String language){    return language == "french" ? "Quel est votre mot de passe?" : "What's your password?";}
-    public static String Qid(String language){          return language == "french" ? "Quel est votre numero d'identification?" : "What's your ID number?";}
-    public static String Qenterprise(String language){  return language == "french" ? "Quel est votre entreprise?" : "What's your first name?";}
-    public static String Qphone(String language){       return language == "french" ? "Quel est votre numero de telephone?" : "What's your phone number?";}
-    public static String Qaddress(String language){     return language == "french" ? "Quel est votre addresse?" : "What's your address?";}
-    public static String Qbirthday(String language){    return language == "french" ? "Quel est votre date de naissance?" : "What's your birth day?";}
-
-    public static String notAnEnterprise(String language){return language == "french" ? "Cet utilisateur n'est pas une entreprise?" : "this user is not an enterprise";}
-
-    public static String QUserType(String language){
-        return language == "french" ? "Etes vous un resident ou un intervenant?"
-                + "\n Tapez [1] pour resident" +
-                  "\n Tapez [2] pour intervenant"
-                : "not yet implemented";
-                }
-    public static String QUserType(){return "Etes vous un resident ou un intervenant?"
-                + "\n Tapez [1] pour resident" +
-                  "\n Tapez [2] pour intervenant";
+    public static String Qfname(language language){
+        switch (language) {
+            case FRENCH: return "Quel est votre prenom?";
+            case ENGLISH: return "What's your first name?";
+            default: return "";
+        }
     }
 
-    // nav menu for residents    
-    public static String Main_menu_resident(){
-        return 
-        " Menu principal pour les résidents :\n" +
-        " [1] Consulter les travaux en cours\n" +
-        " [2] Rechercher un projet en particulier\n" +
-        " [3] Activer les notifications\n" +
-        " [4] Planifier un projet\n" +
-        " [5] Faire une requête de travail\n" +
-        " [6] Accepter ou refuser la candidature d'un travail\n" +
-        " [7] Signaler un problème\n" +
-        " [8] Retourner au menu principal\n" +
-        " [9] Quitter\n" + 
-        "Choisissez une option : ";
+    public static String Qlname(language language){
+        switch (language) {
+            case FRENCH: return "Quel est votre nom de famille?";
+            case ENGLISH: return "What's your last name?";
+            default: return "";
+        }
     }
 
-    public static String Main_menu_intervenant(){
-        return 
-        " Menu principal pour les intervenants :\n" +
-        " [1] Soumettre un nouveau projet\n" +
-        " [2] Soumettre une mise à jour du projet\n" +
-        " [3] Soumettre une candidature à une requête de travail\n" +
-        " [4] Retourner au menu principal\n" +
-        " [5] Quitter\n" +
-        "Choisissez une option : ";
+    public static String Qmail(language language){
+        switch (language) {
+            case FRENCH: return "Quel est votre adresse mail?";
+            case ENGLISH: return "What's your email address?";
+            default: return "";
+        }
     }
+
+    public static String Qpassword(language language){
+        switch (language) {
+            case FRENCH: return "Quel est votre mot de passe?";
+            case ENGLISH: return "What's your password?";
+            default: return "";
+        }
+    }
+
+    public static String Qid(language language){
+        switch (language) {
+            case FRENCH: return "Quel est votre numéro d'identification?";
+            case ENGLISH: return "What's your ID number?";
+            default: return "";
+        }
+    }
+
+    public static String Qenterprise(language language){
+        switch (language) {
+            case FRENCH: return "Quel est votre entreprise?";
+            case ENGLISH: return "What's your enterprise name?";
+            default: return "";
+        }
+    }
+
+    public static String Qphone(language language){
+        switch (language) {
+            case FRENCH: return "Quel est votre numéro de téléphone?";
+            case ENGLISH: return "What's your phone number?";
+            default: return "";
+        }
+    }
+
+    public static String Qaddress(language language){
+        switch (language) {
+            case FRENCH: return "Quel est votre adresse?";
+            case ENGLISH: return "What's your address?";
+            default: return "";
+        }
+    }
+
+    public static String Qbirthday(language language){
+        switch (language) {
+            case FRENCH: return "Quelle est votre date de naissance?";
+            case ENGLISH: return "What's your birth date?";
+            default: return "";
+        }
+    }
+
+    public static String notAnEnterprise(language language){
+        switch (language) {
+            case FRENCH: return "Cet utilisateur n'est pas une entreprise.";
+            case ENGLISH: return "This user is not an enterprise.";
+            default: return "";
+        }
+    }
+
+    public static String QUserType(language language){
+        switch (language) {
+            case FRENCH: return "Êtes-vous un résident ou un intervenant?\n" +
+                                "Tapez [1] pour résident\n" +
+                                "Tapez [2] pour intervenant";
+            case ENGLISH: return "Are you a resident or a contractor?\n" +
+                                "Press [1] for resident\n" +
+                                "Press [2] for contractor";
+            default: return "";
+        }
+    }
+
+    public static String Main_menu_resident(language language){
+        switch (language) {
+            case FRENCH: return "Menu principal pour les résidents :\n" +
+                                "[1] Consulter les travaux en cours\n" +
+                                "[2] Rechercher un projet en particulier\n" +
+                                "[3] Activer les notifications\n" +
+                                "[4] Planifier un projet\n" +
+                                "[5] Faire une requête de travail\n" +
+                                "[6] Accepter ou refuser la candidature d'un travail\n" +
+                                "[7] Signaler un problème\n" +
+                                "[8] Retourner au menu principal\n" +
+                                "[9] Quitter\n" + 
+                                "Choisissez une option : ";
+            case ENGLISH: return "Resident main menu:\n" +
+                                    "[1] View ongoing projects\n" +
+                                    "[2] Search for a specific project\n" +
+                                    "[3] Activate notifications\n" +
+                                    "[4] Plan a project\n" +
+                                    "[5] Submit a work request\n" +
+                                    "[6] Accept or reject a job application\n" +
+                                    "[7] Report a problem\n" +
+                                    "[8] Return to main menu\n" +
+                                    "[9] Quit\n" +
+                                    "Choose an option: ";
+            default: return "";
+        }
+    }
+
+    public static String Main_menu_intervenant(language language){
+        switch (language) {
+            case FRENCH: return "Menu principal pour les intervenants :\n" +
+                                "[1] Soumettre un nouveau projet\n" +
+                                "[2] Soumettre une mise à jour du projet\n" +
+                                "[3] Soumettre une candidature à une requête de travail\n" +
+                                "[4] Retourner au menu principal\n" +
+                                "[5] Quitter\n" +
+                                "Choisissez une option : ";
+            case ENGLISH: return "Contractor main menu:\n" +
+                                    "[1] Submit a new project\n" +
+                                    "[2] Submit a project update\n" +
+                                    "[3] Apply for a work request\n" +
+                                    "[4] Return to main menu\n" +
+                                    "[5] Quit\n" +
+                                    "Choose an option: ";
+            default: return "";
+        }
+    }
+
 }

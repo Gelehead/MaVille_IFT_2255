@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Language.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">my-app</a> &gt; <a href="index.source.html" class="el_package">Utils</a> &gt; <span class="el_source">Language.java</span></div><h1>Language.java</h1><pre class="source lang-java linenums">package Utils;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Language.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MaVille</a> &gt; <a href="index.source.html" class="el_package">Utils</a> &gt; <span class="el_source">Language.java</span></div><h1>Language.java</h1><pre class="source lang-java linenums">package Utils;
 
 /* Note : can be expended to search in a database for max efficiency 
  * plus very ugly like that
@@ -22,7 +22,7 @@
     public static String QUserType(String language){
 <span class="nc bnc" id="L23" title="All 2 branches missed.">        return language == &quot;french&quot; ? &quot;Etes vous un resident ou un intervenant?&quot;</span>
                 + &quot;\n Tapez [1] pour resident&quot; +
-<span class="nc" id="L25">                  &quot;\n Tapez [2] pour intervenant&quot;</span>
+                  &quot;\n Tapez [2] pour intervenant&quot;
 <span class="nc" id="L26">                : &quot;not yet implemented&quot;;</span>
                 }
 <span class="nc" id="L28">    public static String QUserType(){return &quot;Etes vous un resident ou un intervenant?&quot;</span>
@@ -33,7 +33,7 @@
     // nav menu for residents    
     public static String Main_menu_resident(){
 <span class="nc" id="L35">        return </span>
-<span class="nc" id="L36">        &quot; Menu principal pour les résidents :\n&quot; +</span>
+        &quot; Menu principal pour les résidents :\n&quot; +
         &quot; [1] Consulter les travaux en cours\n&quot; +
         &quot; [2] Rechercher un projet en particulier\n&quot; +
         &quot; [3] Activer les notifications\n&quot; +
@@ -48,7 +48,7 @@
 
     public static String Main_menu_intervenant(){
 <span class="nc" id="L50">        return </span>
-<span class="nc" id="L51">        &quot; Menu principal pour les intervenants :\n&quot; +</span>
+        &quot; Menu principal pour les intervenants :\n&quot; +
         &quot; [1] Soumettre un nouveau projet\n&quot; +
         &quot; [2] Soumettre une mise à jour du projet\n&quot; +
         &quot; [3] Soumettre une candidature à une requête de travail\n&quot; +

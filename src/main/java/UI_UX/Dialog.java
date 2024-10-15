@@ -1,11 +1,13 @@
 package UI_UX;
 import Users.*;
-import Utils.*;;
+import Utils.*;
+import Utils.Language.language;;
 
 // TODO : change every dialog option to be be dependant of language chosen by the user
 
 
 public class Dialog {
+    public static Language.language choice_language = language.FRENCH;
 
     /* ------------------------ Graphic part ------------------------ */
 
@@ -73,13 +75,13 @@ public class Dialog {
     }
     
     // getters
-    public static String getfirstName(){    return Speaker.ask(Language.Qfname("french"));}
-    public static String getLastName(){     return Speaker.ask(Language.Qlname("french"));}
-    public static String getMail(){         return Speaker.ask(Language.Qmail("french"));}
-    public static String getPassword(){     return Speaker.ask(Language.Qpassword("french"));}
-    public static String getId(){           return Speaker.ask(Language.Qid("french"));}
-    public static String getEnterprise(){   return Speaker.ask(Language.Qenterprise("french"));}
-    public static int getPhoneNum(){        return Integer.parseInt(Speaker.ask(Language.Qphone("french")));}
-    public static String getAddress(){      return Speaker.ask(Language.Qaddress("french"));}
-    public static int getBirthDay(){        return Integer.parseInt(Speaker.ask(Language.Qbirthday("french")));}
+    public static String getfirstName(){    return Speaker.ask(Language.Qfname(choice_language));}
+    public static String getLastName(){     return Speaker.ask(Language.Qlname(choice_language));}
+    public static String getMail(){         return Speaker.ask(Language.Qmail(choice_language));}
+    public static String getPassword(){     return Speaker.ask(Language.Qpassword(choice_language));}
+    public static String getId(){           return Speaker.ask(Language.Qid(choice_language));}
+    public static String getEnterprise(){   return Speaker.ask(Language.Qenterprise(choice_language));}
+    public static int getPhoneNum(){        return Integer.parseInt(Speaker.ask(Language.Qphone(choice_language)));}
+    public static String getAddress(){      return Speaker.ask(Language.Qaddress(choice_language));}
+    public static int getBirthDay(){        return Integer.parseInt(Speaker.ask(Language.Qbirthday(choice_language)));}
 }

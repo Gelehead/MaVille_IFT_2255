@@ -3,12 +3,21 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// TODO : low priority but we could try implementing regex
+import Utils.Language.language;
+
+// TODO : handle invalid input 
 
 public class Speaker {
     private static final Scanner s = new Scanner(System.in);
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" +
             "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+    private static final String PASSWORD_REGEX = 
+    "^(?=.*[0-9])" +         // at least one digit
+    "(?=.*[a-z])" +          // at least one lowercase letter
+    "(?=.*[A-Z])" +          // at least one uppercase letter
+    "(?=.*[@#$%^&+=])" +     // at least one special character
+    "(?=\\S+$).{8,}$";       // no whitespace, at least 8 characters
+    private static final Pattern pattern = Pattern.compile(PASSWORD_REGEX);
 
     // put menu states here
     public enum STATE {
@@ -59,12 +68,13 @@ public class Speaker {
             case INITIAL:
                 // main menu (mail address, pw and user type)
                 String mail = Speaker.ask("Entrer votre adresse mail : ");
-
                 while (!isValidEmail(mail)){mail = Speaker.ask("Entrer une adresse mail valide : ");}
 
                 String pw = Speaker.ask("Entrer votre mot de passe : ");
+                while (!isSecurePassword(pw)){pw = Speaker.ask("Entrer un mot de passe valide :" +
+                                                                "\n(>=1 number, >= 1 lowercase and upercase character, >= 1 special character (@#$%^&+=), 8+ characters, no whitespaces)");}
                 
-                String userType = Speaker.ask(Utils.Language.QUserType());
+                String userType = Speaker.ask(Utils.Language.QUserType(language.FRENCH));
                 switch (userType) {
                     case "1":
                         return Speaker.STATE.RESIDENT_MAIN;
@@ -78,7 +88,7 @@ public class Speaker {
                 }
 
             case RESIDENT_MAIN:
-                String choixResident = ask(Utils.Language.Main_menu_resident());
+                String choixResident = ask(Utils.Language.Main_menu_resident(language.FRENCH));
 
                 switch (choixResident) {
                     // Retourner au menu des résidents
@@ -110,7 +120,7 @@ public class Speaker {
                 }
 
             case MAIN_INTERVENANT:
-                String choixIntervenant = ask(Utils.Language.Main_menu_intervenant());
+                String choixIntervenant = ask(Utils.Language.Main_menu_intervenant(language.FRENCH));
 
                 switch (choixIntervenant) {
                     case "1":
@@ -146,6 +156,14 @@ public class Speaker {
         }
         // Match the email with the regex
         Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    public static boolean isSecurePassword(String password) {
+        if (password == null) {
+            return false;
+        }
+        Matcher matcher = pattern.matcher(password);
         return matcher.matches();
     }
 }

@@ -30,10 +30,9 @@ Le projet MaVille vise à améliorer la communication entre les résidents de Mo
 
 ### Prototyping 
 
-Le prototype de l'application est disponible en tant que fichier exécutable JAR
+Le prototype de l'application est disponible en tant que fichier exécutable JAR dans le dossier target.
 
 ### Contact
-
 
 
 ### Afterword
