@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Speaker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">my-app</a> &gt; <a href="index.source.html" class="el_package">UI_UX</a> &gt; <span class="el_source">Speaker.java</span></div><h1>Speaker.java</h1><pre class="source lang-java linenums">package UI_UX;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+// TODO : low priority but we could try implementing regex
+
+<span class="nc" id="L8">public class Speaker {</span>
+<span class="nc" id="L9">    private static final Scanner s = new Scanner(System.in);</span>
+    private static final String EMAIL_REGEX = &quot;^[a-zA-Z0-9_+&amp;*-]+(?:\\.[a-zA-Z0-9_+&amp;*-]+)*@&quot; +
+<span class="nc" id="L11">            &quot;(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$&quot;;</span>
+
+    // put menu states here
+<span class="nc" id="L14">    public enum STATE {</span>
+<span class="nc" id="L15">        INITIAL,</span>
+
+<span class="nc" id="L17">        RESIDENT_MAIN,</span>
+<span class="nc" id="L18">        RESIDENT_TRAVAUX,</span>
+<span class="nc" id="L19">        RESIDENT_NOTIFS,</span>
+<span class="nc" id="L20">        RESIDENT_PLANIF,</span>
+<span class="nc" id="L21">        RESIDENT_ABCD,</span>
+
+<span class="nc" id="L23">        MAIN_INTERVENANT,</span>
+
+<span class="nc" id="L25">        QUIT,</span>
+
+<span class="nc" id="L27">        PLACEHOLDER,</span>
+    }
+
+    // prints in the command line the question and returns as a string the answer of the user
+    public static String ask(String question){
+<span class="nc" id="L32">        System.out.println(question);</span>
+<span class="nc" id="L33">        String answer = s.nextLine();</span>
+        
+<span class="nc" id="L35">        return answer;</span>
+    }
+
+    public static void welcome(){
+<span class="nc" id="L39">        String introduction = </span>
+<span class="nc" id="L40">        &quot;&quot;&quot; </span>
+        note : best enjoyed with a wide window
+        ---------------------------------------------------------
+
+        ███╗░░░███╗░█████╗░  ██╗░░░██╗██╗██╗░░░░░██╗░░░░░███████╗
+        ████╗░████║██╔══██╗  ██║░░░██║██║██║░░░░░██║░░░░░██╔════╝
+        ██╔████╔██║███████║  ╚██╗░██╔╝██║██║░░░░░██║░░░░░█████╗░░
+        ██║╚██╔╝██║██╔══██║  ░╚████╔╝░██║██║░░░░░██║░░░░░██╔══╝░░
+        ██║░╚═╝░██║██║░░██║  ░░╚██╔╝░░██║███████╗███████╗███████╗
+        ╚═╝░░░░░╚═╝╚═╝░░╚═╝  ░░░╚═╝░░░╚═╝╚══════╝╚══════╝╚══════╝
+        ----------------------------------------------------------
+        &quot;&quot;&quot;;
+<span class="nc" id="L52">        System.out.println(introduction);</span>
+<span class="nc" id="L53">    }</span>
+
+    // STATE is part of an enum list
+    // must return the next state after asking which way the user wants to go
+    public static Speaker.STATE menu(Speaker.STATE STATE){
+<span class="nc bnc" id="L58" title="All 5 branches missed.">        switch (STATE) {</span>
+            case INITIAL:
+                // main menu (mail address, pw and user type)
+<span class="nc" id="L61">                String mail = Speaker.ask(&quot;Entrer votre adresse mail : &quot;);</span>
+
+<span class="nc bnc" id="L63" title="All 2 branches missed.">                while (!isValidEmail(mail)){mail = Speaker.ask(&quot;Entrer une adresse mail valide : &quot;);}</span>
+
+<span class="nc" id="L65">                String pw = Speaker.ask(&quot;Entrer votre mot de passe : &quot;);</span>
+                
+<span class="nc" id="L67">                String userType = Speaker.ask(Utils.Language.QUserType());</span>
+<span class="nc bnc" id="L68" title="All 3 branches missed.">                switch (userType) {</span>
+                    case &quot;1&quot;:
+<span class="nc" id="L70">                        return Speaker.STATE.RESIDENT_MAIN;</span>
+                    
+                    case &quot;2&quot;:
+<span class="nc" id="L73">                        return Speaker.STATE.MAIN_INTERVENANT;</span>
+                
+                    default:
+<span class="nc" id="L76">                        System.out.println(&quot;Choix invalide ,veuillez entrer 1 (résident) ou 2 (intervenant&quot;);</span>
+<span class="nc" id="L77">                        return Speaker.STATE.INITIAL;</span>
+                }
+
+            case RESIDENT_MAIN:
+<span class="nc" id="L81">                String choixResident = ask(Utils.Language.Main_menu_resident());</span>
+
+<span class="nc bnc" id="L83" title="All 10 branches missed.">                switch (choixResident) {</span>
+                    // Retourner au menu des résidents
+                    case &quot;1&quot;:
+<span class="nc" id="L86">                        System.out.println(&quot;La fonctionnalité pour consulter les travaux en cours n'est pas encore implémentée&quot;);</span>
+<span class="nc" id="L87">                        return Speaker.STATE.RESIDENT_MAIN;</span>
+                    case &quot;2&quot;:
+<span class="nc" id="L89">                        System.out.println(&quot;La fonctionnalité pour rechercher un projet en particulier n'est pas encore implémentée&quot;);</span>
+<span class="nc" id="L90">                        return Speaker.STATE.RESIDENT_MAIN;</span>
+                    case &quot;3&quot;:
+<span class="nc" id="L92">                        System.out.println(&quot;La fonctionnalité pour activer les notifications n'est pas encore implémentée&quot;);</span>
+<span class="nc" id="L93">                        return Speaker.STATE.RESIDENT_MAIN;</span>
+                    case &quot;4&quot;:
+<span class="nc" id="L95">                        System.out.println(&quot;La fonctionnalité pour planifier un projet n'est pas encore implémentée&quot;);</span>
+<span class="nc" id="L96">                        return Speaker.STATE.RESIDENT_MAIN;</span>
+                    case &quot;5&quot;:
+<span class="nc" id="L98">                        System.out.println(&quot;La fonctionnalité pour faire une requête de travail n'est pas encore implémentée&quot;);</span>
+<span class="nc" id="L99">                        return Speaker.STATE.RESIDENT_MAIN;</span>
+                    case &quot;6&quot;:
+<span class="nc" id="L101">                        System.out.println(&quot;La fonctionnalité pour accepter ou refuser la candidature d'un travail n'est pas encore implémentée&quot;);</span>
+<span class="nc" id="L102">                        return Speaker.STATE.RESIDENT_MAIN;</span>
+                    case &quot;7&quot;:
+<span class="nc" id="L104">                        System.out.println(&quot;La fonctionnalité pour signaler un problème n'est pas encore implémentée&quot;);</span>
+<span class="nc" id="L105">                        return Speaker.STATE.RESIDENT_MAIN;</span>
+                    case &quot;8&quot;:
+<span class="nc" id="L107">                        return Speaker.STATE.INITIAL;</span>
+                    case &quot;9&quot;:
+<span class="nc" id="L109">                        return Speaker.STATE.QUIT;</span>
+                }
+
+            case MAIN_INTERVENANT:
+<span class="nc" id="L113">                String choixIntervenant = ask(Utils.Language.Main_menu_intervenant());</span>
+
+<span class="nc bnc" id="L115" title="All 6 branches missed.">                switch (choixIntervenant) {</span>
+                    case &quot;1&quot;:
+<span class="nc" id="L117">                           System.out.println(&quot;La fonctionnalité pour soumettre un nouveau projet n'est pas encore implémentée&quot;);</span>
+<span class="nc" id="L118">                            return Speaker.STATE.MAIN_INTERVENANT;</span>
+                    case &quot;2&quot;:
+<span class="nc" id="L120">                        System.out.println(&quot;La fonctionnalité pour soumettre une mise à jour du projet n'est pas encore implémentée&quot;);</span>
+<span class="nc" id="L121">                        return Speaker.STATE.MAIN_INTERVENANT;</span>
+                    case &quot;3&quot;:
+<span class="nc" id="L123">                        System.out.println(&quot;La fonctionnalité pour soumettre une candidature à une requête de travail n'est pas encore implémentée&quot;);</span>
+<span class="nc" id="L124">                        return Speaker.STATE.MAIN_INTERVENANT;</span>
+                    case &quot;4&quot;:
+<span class="nc" id="L126">                        return Speaker.STATE.INITIAL;</span>
+                    case &quot;5&quot;:
+<span class="nc" id="L128">                        return Speaker.STATE.QUIT;</span>
+                }
+        
+            case QUIT:
+                // handle quit
+<span class="nc" id="L133">                return null;</span>
+    
+            default:
+<span class="nc" id="L136">                return Speaker.STATE.PLACEHOLDER;</span>
+        }
+    }
+
+    public static boolean isValidEmail(String email) {
+        // Compile the regex pattern
+<span class="nc" id="L142">        Pattern pattern = Pattern.compile(EMAIL_REGEX);</span>
+        // If the email is null, it's not valid
+<span class="nc bnc" id="L144" title="All 2 branches missed.">        if (email == null) {</span>
+<span class="nc" id="L145">            return false;</span>
+        }
+        // Match the email with the regex
+<span class="nc" id="L148">        Matcher matcher = pattern.matcher(email);</span>
+<span class="nc" id="L149">        return matcher.matches();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Database.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">my-app</a> &gt; <a href="index.source.html" class="el_package">backend</a> &gt; <span class="el_source">Database.java</span></div><h1>Database.java</h1><pre class="source lang-java linenums">package backend;
+
+import java.util.ArrayList;
+import java.util.Hashtable;
+
+import Users.*;
+
+public class Database implements java.io.Serializable {
+    // users are registered and saved via their email, most unique and clear identification method
+    private final Hashtable&lt;String, Intervenant&gt; intervenantHashtable;
+    private final Hashtable&lt;String, Resident&gt; residentHashtable;
+
+<span class="nc" id="L13">    public Database(){</span>
+<span class="nc" id="L14">        intervenantHashtable = new Hashtable&lt;&gt;();</span>
+<span class="nc" id="L15">        residentHashtable = new Hashtable&lt;&gt;();</span>
+<span class="nc" id="L16">    }</span>
+
+    /**
+     * 
+     * @param i Intervenant
+     */
+<span class="nc" id="L22">    public void addIntervenant(Intervenant i){intervenantHashtable.put(i.getMail(), i);}</span>
+
+    /**
+     * 
+     * @param r resident
+     */
+<span class="nc" id="L28">    public void addResident(Resident r){residentHashtable.put(r.getMail(), r);}</span>
+
+<span class="nc" id="L30">    public Resident getResident(String mail){return this.residentHashtable.get(mail);}</span>
+
+
+    /** Method to get Intervenant list from the database
+     * 
+     * @return Arraylist&lt;Intervenant&gt; intervenantList
+     */
+    public ArrayList&lt;Intervenant&gt; getIntervenantList(){
+<span class="nc" id="L38">        ArrayList&lt;Intervenant&gt; intervenantList = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">        for (Intervenant i : intervenantHashtable.values()){</span>
+<span class="nc" id="L40">            intervenantList.add(i);</span>
+        }
+<span class="nc" id="L42">        return intervenantList;</span>
+    }
+
+    /**
+     * 
+     * @return ArrayList&lt;Resident&gt; residentList
+     */
+    public ArrayList&lt;Resident&gt; getResidentList(){
+<span class="nc" id="L50">        ArrayList&lt;Resident&gt; residentList = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">        for (Resident i : residentHashtable.values()){</span>
+<span class="nc" id="L52">            residentList.add(i);</span>
+        }
+<span class="nc" id="L54">        return residentList;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
