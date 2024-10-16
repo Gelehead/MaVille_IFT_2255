@@ -3,6 +3,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import Utils.Language;
 import Utils.Language.language;
 
 // TODO : handle invalid input 
@@ -93,25 +94,25 @@ public class Speaker {
                 switch (choixResident) {
                     // Retourner au menu des résidents
                     case "1":
-                        System.out.println("La fonctionnalité pour consulter les travaux en cours n'est pas encore implémentée");
+                        System.out.println(Language.NotImplemented_ConsulterTravaux(language.FRENCH));
                         return Speaker.STATE.RESIDENT_MAIN;
                     case "2":
-                        System.out.println("La fonctionnalité pour rechercher un projet en particulier n'est pas encore implémentée");
+                        System.out.println(Language.NotImplemented_RechercherProjet(language.FRENCH));
                         return Speaker.STATE.RESIDENT_MAIN;
                     case "3":
-                        System.out.println("La fonctionnalité pour activer les notifications n'est pas encore implémentée");
+                        System.out.println(Language.NotImplemented_ActiverNotifications(language.FRENCH));
                         return Speaker.STATE.RESIDENT_MAIN;
                     case "4":
-                        System.out.println("La fonctionnalité pour planifier un projet n'est pas encore implémentée");
+                        System.out.println(Language.NotImplemented_PlanifierProjet(language.FRENCH));
                         return Speaker.STATE.RESIDENT_MAIN;
                     case "5":
-                        System.out.println("La fonctionnalité pour faire une requête de travail n'est pas encore implémentée");
+                        System.out.println(Language.NotImplemented_RequeteTravail(language.FRENCH));
                         return Speaker.STATE.RESIDENT_MAIN;
                     case "6":
-                        System.out.println("La fonctionnalité pour accepter ou refuser la candidature d'un travail n'est pas encore implémentée");
+                        System.out.println(Language.NotImplemented_AccepterRefuserCandidature(language.FRENCH));
                         return Speaker.STATE.RESIDENT_MAIN;
                     case "7":
-                        System.out.println("La fonctionnalité pour signaler un problème n'est pas encore implémentée");
+                        System.out.println(Language.NotImplemented_SignalerProbleme(language.FRENCH));
                         return Speaker.STATE.RESIDENT_MAIN;
                     case "8":
                         return Speaker.STATE.INITIAL;

@@ -32,6 +32,11 @@ Le projet MaVille vise à améliorer la communication entre les résidents de Mo
 
 Le prototype de l'application est disponible en tant que fichier exécutable JAR dans le dossier target.
 
+#### Debugging 
+
+(Note : TODO, pas encore implémenté)
+Pour debugger le prototype, la plupart des réponses demandant un code, mail ou autre informations personnelles peuvent être contournées en entrant "1"
+
 ### Contact
 
 

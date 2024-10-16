@@ -152,4 +152,61 @@ public class Language {
         }
     }
 
+    public static String NotImplemented_ConsulterTravaux(language language) {
+        switch (language) {
+            case FRENCH: return "La fonctionnalité pour consulter les travaux en cours n'est pas encore implémentée";
+            case ENGLISH: return "The feature to view ongoing projects is not yet implemented";
+            default: return "";
+        }
+    }
+
+    public static String NotImplemented_RechercherProjet(language language) {
+        switch (language) {
+            case FRENCH: return "La fonctionnalité pour rechercher un projet en particulier n'est pas encore implémentée";
+            case ENGLISH: return "The feature to search for a specific project is not yet implemented";
+            default: return "";
+        }
+    }
+
+    public static String NotImplemented_ActiverNotifications(language language) {
+        switch (language) {
+            case FRENCH: return "La fonctionnalité pour activer les notifications n'est pas encore implémentée";
+            case ENGLISH: return "The feature to activate notifications is not yet implemented";
+            default: return "";
+        }
+    }
+
+    public static String NotImplemented_PlanifierProjet(language language) {
+        switch (language) {
+            case FRENCH: return "La fonctionnalité pour planifier un projet n'est pas encore implémentée";
+            case ENGLISH: return "The feature to plan a project is not yet implemented";
+            default: return "";
+        }
+    }
+
+    public static String NotImplemented_RequeteTravail(language language) {
+        switch (language) {
+            case FRENCH: return "La fonctionnalité pour faire une requête de travail n'est pas encore implémentée";
+            case ENGLISH: return "The feature to submit a work request is not yet implemented";
+            default: return "";
+        }
+    }
+
+    public static String NotImplemented_AccepterRefuserCandidature(language language) {
+        switch (language) {
+            case FRENCH: return "La fonctionnalité pour accepter ou refuser la candidature d'un travail n'est pas encore implémentée";
+            case ENGLISH: return "The feature to accept or reject a job application is not yet implemented";
+            default: return "";
+        }
+    }
+
+    public static String NotImplemented_SignalerProbleme(language language) {
+        switch (language) {
+            case FRENCH: return "La fonctionnalité pour signaler un problème n'est pas encore implémentée";
+            case ENGLISH: return "The feature to report a problem is not yet implemented";
+            default: return "";
+        }
+    }
+
+
 }
