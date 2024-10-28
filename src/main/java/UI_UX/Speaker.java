@@ -20,23 +20,6 @@ public class Speaker {
     "(?=\\S+$).{8,}$";       // no whitespace, at least 8 characters
     private static final Pattern pattern = Pattern.compile(PASSWORD_REGEX);
 
-    // put menu states here
-    public enum STATE {
-        INITIAL,
-
-        RESIDENT_MAIN,
-        RESIDENT_TRAVAUX,
-        RESIDENT_NOTIFS,
-        RESIDENT_PLANIF,
-        RESIDENT_ABCD,
-
-        MAIN_INTERVENANT,
-
-        QUIT,
-
-        PLACEHOLDER,
-    }
-
     // prints in the command line the question and returns as a string the answer of the user
     public static String ask(String question){
         System.out.println(question);
@@ -64,28 +47,28 @@ public class Speaker {
 
     // STATE is part of an enum list
     // must return the next state after asking which way the user wants to go
-    public static Speaker.STATE menu(Speaker.STATE STATE){
+    public static Dialog.STATE menu(Dialog.STATE STATE){
         switch (STATE) {
             case INITIAL:
                 // main menu (mail address, pw and user type)
-                String mail = Speaker.ask("Entrer votre adresse mail : ");
-                while (!isValidEmail(mail)){mail = Speaker.ask("Entrer une adresse mail valide : ");}
+                String mail = ask("Entrer votre adresse mail : ");
+                while (!isValidEmail(mail)){mail = ask("Entrer une adresse mail valide : ");}
 
-                String pw = Speaker.ask("Entrer votre mot de passe : ");
-                while (!isSecurePassword(pw)){pw = Speaker.ask("Entrer un mot de passe valide :" +
+                String pw = ask("Entrer votre mot de passe : ");
+                while (!isSecurePassword(pw)){pw = ask("Entrer un mot de passe valide :" +
                                                                 "\n(>=1 number, >= 1 lowercase and upercase character, >= 1 special character (@#$%^&+=), 8+ characters, no whitespaces)");}
                 
                 String userType = Speaker.ask(Utils.Language.QUserType(language.FRENCH));
                 switch (userType) {
                     case "1":
-                        return Speaker.STATE.RESIDENT_MAIN;
+                        return Dialog.STATE.RESIDENT_MAIN;
                     
                     case "2":
-                        return Speaker.STATE.MAIN_INTERVENANT;
+                        return Dialog.STATE.MAIN_INTERVENANT;
                 
                     default:
                         System.out.println("Choix invalide ,veuillez entrer 1 (résident) ou 2 (intervenant");
-                        return Speaker.STATE.INITIAL;
+                        userType = Speaker.ask(Utils.Language.QUserType(language.FRENCH));
                 }
 
             case RESIDENT_MAIN:
@@ -95,29 +78,29 @@ public class Speaker {
                     // Retourner au menu des résidents
                     case "1":
                         System.out.println(Language.NotImplemented_ConsulterTravaux(language.FRENCH));
-                        return Speaker.STATE.RESIDENT_MAIN;
+                        return Dialog.STATE.RESIDENT_MAIN;
                     case "2":
                         System.out.println(Language.NotImplemented_RechercherProjet(language.FRENCH));
-                        return Speaker.STATE.RESIDENT_MAIN;
+                        return Dialog.STATE.RESIDENT_MAIN;
                     case "3":
                         System.out.println(Language.NotImplemented_ActiverNotifications(language.FRENCH));
-                        return Speaker.STATE.RESIDENT_MAIN;
+                        return Dialog.STATE.RESIDENT_MAIN;
                     case "4":
                         System.out.println(Language.NotImplemented_PlanifierProjet(language.FRENCH));
-                        return Speaker.STATE.RESIDENT_MAIN;
+                        return Dialog.STATE.RESIDENT_MAIN;
                     case "5":
                         System.out.println(Language.NotImplemented_RequeteTravail(language.FRENCH));
-                        return Speaker.STATE.RESIDENT_MAIN;
+                        return Dialog.STATE.RESIDENT_MAIN;
                     case "6":
                         System.out.println(Language.NotImplemented_AccepterRefuserCandidature(language.FRENCH));
-                        return Speaker.STATE.RESIDENT_MAIN;
+                        return Dialog.STATE.RESIDENT_MAIN;
                     case "7":
                         System.out.println(Language.NotImplemented_SignalerProbleme(language.FRENCH));
-                        return Speaker.STATE.RESIDENT_MAIN;
+                        return Dialog.STATE.RESIDENT_MAIN;
                     case "8":
-                        return Speaker.STATE.INITIAL;
+                        return Dialog.STATE.INITIAL;
                     case "9":
-                        return Speaker.STATE.QUIT;
+                        return Dialog.STATE.QUIT;
                 }
 
             case MAIN_INTERVENANT:
@@ -126,17 +109,17 @@ public class Speaker {
                 switch (choixIntervenant) {
                     case "1":
                            System.out.println("La fonctionnalité pour soumettre un nouveau projet n'est pas encore implémentée");
-                            return Speaker.STATE.MAIN_INTERVENANT;
+                            return Dialog.STATE.MAIN_INTERVENANT;
                     case "2":
                         System.out.println("La fonctionnalité pour soumettre une mise à jour du projet n'est pas encore implémentée");
-                        return Speaker.STATE.MAIN_INTERVENANT;
+                        return Dialog.STATE.MAIN_INTERVENANT;
                     case "3":
                         System.out.println("La fonctionnalité pour soumettre une candidature à une requête de travail n'est pas encore implémentée");
-                        return Speaker.STATE.MAIN_INTERVENANT;
+                        return Dialog.STATE.MAIN_INTERVENANT;
                     case "4":
-                        return Speaker.STATE.INITIAL;
+                        return Dialog.STATE.INITIAL;
                     case "5":
-                        return Speaker.STATE.QUIT;
+                        return Dialog.STATE.QUIT;
                 }
         
             case QUIT:
@@ -144,7 +127,7 @@ public class Speaker {
                 return null;
     
             default:
-                return Speaker.STATE.PLACEHOLDER;
+                return Dialog.STATE.PLACEHOLDER;
         }
     }
 

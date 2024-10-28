@@ -7,27 +7,25 @@ import Users.*;
 
 public class Database implements java.io.Serializable {
     // users are registered and saved via their email, most unique and clear identification method
-    private final Hashtable<String, Intervenant> intervenantHashtable;
-    private final Hashtable<String, Resident> residentHashtable;
+    private static final Hashtable<String, Intervenant> intervenantHashtable = new Hashtable<>();
+    private static final Hashtable<String, Resident> residentHashtable = new Hashtable<>();
 
     public Database(){
-        intervenantHashtable = new Hashtable<>();
-        residentHashtable = new Hashtable<>();
     }
 
     /**
      * 
      * @param i Intervenant
      */
-    public void addIntervenant(Intervenant i){intervenantHashtable.put(i.getMail(), i);}
+    public static void addIntervenant(Intervenant i){intervenantHashtable.put(i.getMail(), i);}
 
     /**
      * 
      * @param r resident
      */
-    public void addResident(Resident r){residentHashtable.put(r.getMail(), r);}
+    public static void addResident(Resident r){residentHashtable.put(r.getMail(), r);}
 
-    public Resident getResident(String mail){return this.residentHashtable.get(mail);}
+    public Resident getResident(String mail){return residentHashtable.get(mail);}
 
 
     /** Method to get Intervenant list from the database

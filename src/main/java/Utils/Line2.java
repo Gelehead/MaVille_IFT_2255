@@ -6,4 +6,9 @@ public class Line2 {
         this.p1 = p1;
         this.p2 = p2;
     }
+
+    public double norm(){return Math.sqrt(normSquared());}
+    
+    // returns norm Squared( p1 - p2 )
+    public double normSquared(){return p1.add(this.p2.mult(-1)).normSquared();}
 }

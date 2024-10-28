@@ -8,7 +8,7 @@ public class District {
 
     public District(Vec2[] frontiers){
         this.frontiers = frontiers;
-        int[][] sortedPoints = Algorythm.SortByIndex(0, Vec2.toCoordinates(frontiers));
+        double[][] sortedPoints = Algorithm.SortByIndex(0, Vec2.toCoordinates(frontiers));
     }
 
 }

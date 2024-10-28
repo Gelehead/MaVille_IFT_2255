@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Stack;
 
-public class Algorythm {
+public class Algorithm {
     public static void mergeSort(int[] arr, int left, int right ){
         if (left >= right) {return;}
         int mid = (left + right) / 2;
@@ -37,11 +37,11 @@ public class Algorythm {
         }
     }
 
-    public static int[][] SortByIndex(int index, int[][] arr){
-        Arrays.sort(arr, new Comparator<int[]>() {
+    public static double[][] SortByIndex(int index, double[][] arr){
+        Arrays.sort(arr, new Comparator<double[]>() {
             @Override 
-            public int compare(int[] a, int[] b){
-                return a[index] - b[index];
+            public int compare(double[] a, double[] b){
+                return (int) (a[index] - b[index]);
             }
         });
         return arr;
@@ -59,7 +59,7 @@ public class Algorythm {
 
     public static void Graham_scan(Vec2[] points){}
 
-    public static int dot(Line2 v1, Line2 v2){
+    public static double dot(Line2 v1, Line2 v2){
         return (v1.p2.x - v1.p1.x)*(v2.p2.x - v2.p1.x) + (v1.p2.y - v1.p1.y)*(v2.p2.y - v2.p1.y) ;
     }
     public static int dot(Vec2 v1, Vec2 v2){

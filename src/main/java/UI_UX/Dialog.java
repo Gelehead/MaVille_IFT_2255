@@ -7,6 +7,23 @@ import Utils.Language.language;;
 
 
 public class Dialog {
+        // put menu states here
+        public enum STATE {
+            INITIAL,
+    
+            RESIDENT_MAIN,
+            RESIDENT_TRAVAUX,
+            RESIDENT_NOTIFS,
+            RESIDENT_PLANIF,
+            RESIDENT_ABCD,
+    
+            MAIN_INTERVENANT,
+    
+            QUIT,
+    
+            PLACEHOLDER,
+        }
+
     public static Language.language choice_language = language.FRENCH;
 
     /* ------------------------ Graphic part ------------------------ */
@@ -14,11 +31,20 @@ public class Dialog {
     public static void init(){
         Speaker.welcome();
 
-        Speaker.STATE state = Speaker.STATE.INITIAL;
-        while (state != Speaker.STATE.QUIT) {
-
+        STATE state = STATE.INITIAL;
+        while (state != STATE.QUIT) {
             // after each menu interaction, the state changes and a new menu is handled
             state = Speaker.menu(state);
+
+            switch (state) {
+                case INITIAL:
+                    Speaker.menu(state);
+
+                    break;
+            
+                default:
+                    break;
+            }
         }
     }
 
