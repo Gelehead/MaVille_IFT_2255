@@ -6,9 +6,15 @@ import java.util.Hashtable;
 import Users.*;
 
 public class Database implements java.io.Serializable {
+    
     // users are registered and saved via their email, most unique and clear identification method
     private static final Hashtable<String, Intervenant> intervenantHashtable = new Hashtable<>();
     private static final Hashtable<String, Resident> residentHashtable = new Hashtable<>();
+
+
+    public enum District_name{
+
+    }
 
     public Database(){
     }

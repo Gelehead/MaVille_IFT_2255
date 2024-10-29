@@ -4,6 +4,8 @@ public class User {
     // first name, last name, email, password
     private String fname, lname, mail, pw;
 
+    public User(){}
+
 
     // case user = particulier (not part of an enterprise)
     public User(String fname, String lname, String mail, String pw){
@@ -24,5 +26,10 @@ public class User {
     public void setMail(String mail) {this.mail = mail;}
     public void setPw(String pw) {this.pw = pw;}
     public void setFname(String fName) {this.fname = fName;}
+
+    @Override
+    public String toString() {
+        return fname + " " + lname + " : " + mail + " , " + "*".repeat(pw.length());
+    }
 
 }

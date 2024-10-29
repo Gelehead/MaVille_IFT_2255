@@ -32,19 +32,14 @@ public class Dialog {
         Speaker.welcome();
 
         STATE state = STATE.INITIAL;
+
+        // creation of empty user object which will get modified at each state
+        User user = new User();
+
         while (state != STATE.QUIT) {
             // after each menu interaction, the state changes and a new menu is handled
-            state = Speaker.menu(state);
-
-            switch (state) {
-                case INITIAL:
-                    Speaker.menu(state);
-
-                    break;
-            
-                default:
-                    break;
-            }
+            state = Speaker.menu(state, user);
+            System.out.println(user);
         }
     }
 

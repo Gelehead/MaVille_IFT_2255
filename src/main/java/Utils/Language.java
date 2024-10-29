@@ -152,6 +152,14 @@ public class Language {
         }
     }
 
+    public static String EnterValidEmail(language language){
+        switch (language) {
+            case FRENCH: return "Entrer une adresse mail valide : ";
+            case ENGLISH: return "Please enter a valid mail adress";
+            default: return "";
+        }
+    }
+
     public static String NotImplemented_ConsulterTravaux(language language) {
         switch (language) {
             case FRENCH: return "La fonctionnalité pour consulter les travaux en cours n'est pas encore implémentée";
