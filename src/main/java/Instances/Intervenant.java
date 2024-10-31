@@ -1,8 +1,9 @@
 package Instances;
 public class Intervenant extends User{
 
+    public User.Type type = User.Type.INTERVENANT;
     // TODO: find more things to differentiate this from the user class
-    private String fname, lname, mail, pw, enterprise;
+    private String enterprise;
 
     public Intervenant(){}
     
@@ -19,15 +20,7 @@ public class Intervenant extends User{
 
     // getters 
     public String getEnterprise() {return this.enterprise;}
-    public String getLname()      {return lname;}
-    public String getMail()       {return this.mail;}
-    public String getPw()         {return this.pw;}
-    public String getFname()      {return this.fname;}
 
     //setters
-    public void setLname(String lname)           {this.lname = lname;}
-    public void setMail(String mail)             {this.mail = mail;}
-    public void setPw(String pw)                 {this.pw = pw;}
-    public void setfName(String fName)           {this.fname = fName;}
     public void setEnterprise(String enterprise) {this.enterprise = enterprise;}
 }

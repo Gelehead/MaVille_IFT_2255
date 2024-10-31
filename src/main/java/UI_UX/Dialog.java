@@ -17,11 +17,11 @@ public class Dialog {
         LOGIN,
         REGISTER,
 
-        RESIDENT_MAIN,
-        RESIDENT_TRAVAUX,
-        RESIDENT_NOTIFS,
-        RESIDENT_PLANIF,
-        RESIDENT_ABCD,
+        MAIN_RESIDENT,
+        TRAVAUX_RESIDENT,
+        NOTIFS_RESIDENT,
+        PLANIF_RESIDENT,
+        PLACEHOLDER_RESIDENT,
 
         MAIN_INTERVENANT,
 

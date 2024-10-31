@@ -48,7 +48,6 @@ public class Speaker {
 
     // STATE is part of an enum list
     // must return the next state after asking which way the user wants to go
-    // TODO: change INITIAL to be able to choose between login and register 
     public static Dialog.STATE menu(Dialog.STATE STATE, Database database){
         switch (STATE) {
             case INITIAL: return Integer.parseInt(ask(Language.Qinitial(Dialog.choice_language))) == 1 ? Dialog.STATE.LOGIN : Dialog.STATE.REGISTER;
@@ -60,10 +59,18 @@ public class Speaker {
                     login_mail = ask(Language.MailNotInDatabase(Dialog.choice_language));
                 }
                 String password = ask(Language.Qpassword(Dialog.choice_language));
-                while (!database.authentify(login_mail, password)) {
+                int tries = 0;
+                while (!database.authentify(login_mail, password) && (tries < 4)) {
+                    tries += 1;
                     password = ask(Language.IncorrectPassword(Dialog.choice_language));
                 }
-                return Dialog.STATE.INITIAL;
+                if ( tries > 3 ){
+                    System.out.println(Language.tooMuchIncorrectTries(Dialog.choice_language));
+                    return Dialog.STATE.INITIAL;
+                }
+                return database.userType(database.getUser(login_mail)).equals(User.Type.INTERVENANT) ? 
+                    Dialog.STATE.MAIN_INTERVENANT
+                    : Dialog.STATE.MAIN_RESIDENT;
 
 
             case REGISTER:
@@ -100,8 +107,9 @@ public class Speaker {
                         resident.setBirthDay(birthDay);
 
                         database.addResident(resident);
+                        database.setActiveUser(resident);
 
-                        return Dialog.STATE.RESIDENT_MAIN;
+                        return Dialog.STATE.MAIN_RESIDENT;
                     case "2":
                         String enterprise = ask(Language.Qenterprise(Dialog.choice_language));
 
@@ -109,6 +117,7 @@ public class Speaker {
                         intervenant.setEnterprise(enterprise);
 
                         database.addIntervenant(intervenant);
+                        database.setActiveUser(intervenant);
                         
                         return Dialog.STATE.MAIN_INTERVENANT;
                     default:
@@ -116,37 +125,40 @@ public class Speaker {
                         userType = Speaker.ask(Utils.Language.QUserType(Dialog.choice_language));
                 }
 
-            case RESIDENT_MAIN:
+
+            case MAIN_RESIDENT:
                 String choixResident = ask(Utils.Language.Main_menu_resident(Dialog.choice_language));
 
                 switch (choixResident) {
                     // Retourner au menu des résidents
                     case "1":
                         System.out.println(Language.NotImplemented_ConsulterTravaux(Dialog.choice_language));
-                        return Dialog.STATE.RESIDENT_MAIN;
+                        return Dialog.STATE.MAIN_RESIDENT;
                     case "2":
                         System.out.println(Language.NotImplemented_RechercherProjet(Dialog.choice_language));
-                        return Dialog.STATE.RESIDENT_MAIN;
+                        return Dialog.STATE.MAIN_RESIDENT;
                     case "3":
                         System.out.println(Language.NotImplemented_ActiverNotifications(Dialog.choice_language));
-                        return Dialog.STATE.RESIDENT_MAIN;
+                        return Dialog.STATE.MAIN_RESIDENT;
                     case "4":
                         System.out.println(Language.NotImplemented_PlanifierProjet(Dialog.choice_language));
-                        return Dialog.STATE.RESIDENT_MAIN;
+                        return Dialog.STATE.MAIN_RESIDENT;
                     case "5":
                         System.out.println(Language.NotImplemented_RequeteTravail(Dialog.choice_language));
-                        return Dialog.STATE.RESIDENT_MAIN;
+                        return Dialog.STATE.MAIN_RESIDENT;
                     case "6":
                         System.out.println(Language.NotImplemented_AccepterRefuserCandidature(Dialog.choice_language));
-                        return Dialog.STATE.RESIDENT_MAIN;
+                        return Dialog.STATE.MAIN_RESIDENT;
                     case "7":
                         System.out.println(Language.NotImplemented_SignalerProbleme(Dialog.choice_language));
-                        return Dialog.STATE.RESIDENT_MAIN;
+                        return Dialog.STATE.MAIN_RESIDENT;
                     case "8":
+                        database.setActiveUser(null);
                         return Dialog.STATE.INITIAL;
                     case "9":
                         return Dialog.STATE.QUIT;
                 }
+
 
             case MAIN_INTERVENANT:
                 String choixIntervenant = ask(Utils.Language.Main_menu_intervenant(Dialog.choice_language));
@@ -162,15 +174,18 @@ public class Speaker {
                         System.out.println("La fonctionnalité pour soumettre une candidature à une requête de travail n'est pas encore implémentée");
                         return Dialog.STATE.MAIN_INTERVENANT;
                     case "4":
+                        database.setActiveUser(null);
                         return Dialog.STATE.INITIAL;
                     case "5":
                         return Dialog.STATE.QUIT;
                 }
         
+
             case QUIT:
                 // handle quit
                 return null;
     
+                
             default:
                 return Dialog.STATE.PLACEHOLDER;
         }

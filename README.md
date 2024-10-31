@@ -14,12 +14,22 @@ HTML file link [here](public\rapport.html)
 
 Pour exécuter l'application MaVille, assurez-vous d'avoir Java installé sur votre ordinateur. 
 
-### Analysis 
+## Code 
+_Note: we called "travaux" "projects" because it makes more sense than "works" or "renovations"_
+
+### Left to do
+ - [x]
+ - [ ] Consulter les travaux en cours ou à venir.
+ - [ ] Consulter les entraves
+ - [ ] Soumettre une requête de travail
+ - [ ] Consulter la liste des requêtes de travail
+
+## Analysis 
 
 Le projet MaVille vise à améliorer la communication entre les résidents de Montréal et les intervenants concernant les travaux publics. L'application permet aux utilisateurs de consulter les travaux en cours et à venir, de soumettre des requêtes et de recevoir des notifications personnalisées.
 
 
-### Funcitionalities
+## Funcitionalities
 
 - Inscription des résidents et des intervenants
 - Consultation des travaux planifiés
@@ -28,19 +38,19 @@ Le projet MaVille vise à améliorer la communication entre les résidents de Mo
 - Soumission de requêtes pour des travaux spécifiques
 - Planification des travaux en collaboration avec les intervenants
 
-### Prototyping 
+## Prototyping 
 
 Le prototype de l'application est disponible en tant que fichier exécutable JAR dans le dossier target.
 
-#### Debugging 
+## Debugging 
 
 (Note : TODO, pas encore implémenté)
 Pour debugger le prototype, la plupart des réponses demandant un code, mail ou autre informations personnelles peuvent être contournées en entrant "1"
 
-### Contact
+## Contact
 
 
-### Afterword
+## Afterword
 
 
 

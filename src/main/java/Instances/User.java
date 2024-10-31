@@ -1,8 +1,15 @@
 package Instances;
 public class User {
 
+    public static enum Type {
+        USER,
+        RESIDENT,
+        INTERVENANT
+    }
+
     // first name, last name, email, password
     private String fname, lname, mail, pw;
+    public Type type = Type.USER;
 
     public User(){}
 

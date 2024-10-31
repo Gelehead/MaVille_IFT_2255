@@ -2,10 +2,13 @@ package backend;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.NoSuchElementException;
 
 import com.github.javafaker.Faker;
 
 import Instances.*;
+import UI_UX.Dialog;
+import Utils.Language;
 
 public class Database implements java.io.Serializable {
     
@@ -13,6 +16,7 @@ public class Database implements java.io.Serializable {
     private static Hashtable<String, User> userHashtable = new Hashtable<>();
     private static Hashtable<String, Intervenant> intervenantHashtable = new Hashtable<>();
     private static Hashtable<String, Resident> residentHashtable = new Hashtable<>();
+    private static User activeUser;
 
 
     public enum District_name{
@@ -54,6 +58,8 @@ public class Database implements java.io.Serializable {
     }
 
     public Resident getResident(String mail){return residentHashtable.get(mail);}
+    public Intervenant getIntervenant(String mail){return intervenantHashtable.get(mail);}
+    public User getUser(String mail){return userHashtable.get(mail);}
 
 
     /** Method to get Intervenant list from the database
@@ -80,8 +86,16 @@ public class Database implements java.io.Serializable {
         return residentList;
     }
 
-    public boolean authentify(String mail, String pw){return userHashtable.get(mail).getPw().equals(pw);}
-    public boolean exists(String mail){return userHashtable.containsKey(mail);}
+    public boolean authentify(String mail, String pw){
+        return userHashtable.get(mail).getPw().equals(pw);
+    }
+    public boolean exists(String mail){
+        return userHashtable.containsKey(mail);
+    }
+    public User.Type userType(User user){
+        if (!exists(user.getMail())){throw new NoSuchElementException(Language.noSuchUser(Dialog.choice_language, user.getMail()));}
+        return user.type;
+    }
 
     private void init(){
         Faker faker = new Faker();
@@ -151,4 +165,8 @@ public class Database implements java.io.Serializable {
             ));
         }
     }
+
+    //setters
+    public void setActiveUser(User activeUser) {Database.activeUser = activeUser;}
+    public User getActiveUser() {return activeUser;}
 }

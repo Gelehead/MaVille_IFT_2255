@@ -11,6 +11,22 @@ public class Language {
         ENGLISH
     }
 
+    public static String noSuchUser(language language, String mail){
+        switch (language) {
+            case FRENCH: return "L'utilisateur avec l'email" + mail + " n'existe pas dans la base de données." ;
+            case ENGLISH: return "User with email " + mail + " does not exist in the database."; 
+            default: return "";
+        }
+    }
+
+    public static String tooMuchIncorrectTries(language language){
+        switch (language) {
+            case FRENCH: return "Trop d'échecs. Veuillez réessayer dans un moment";
+            case ENGLISH: return "Too much incorrect tries. Please try again in a moment";
+            default: return "";
+        }
+    }
+
     public static String Qinitial(language language){
         switch (language) {
             case FRENCH: return """
@@ -44,7 +60,6 @@ public class Language {
         }
     }
 
-    // TODO: placeholder dialogue, replace when possible
     public static String Qfname(language language){
         switch (language) {
             case FRENCH: return "Quel est votre prenom?";
