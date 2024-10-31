@@ -1,18 +1,19 @@
-package Users;
+package Instances;
 public class Intervenant extends User{
-    private String fname, lname, mail, pw, enterprise, id;
+
+    // TODO: find more things to differentiate this from the user class
+    private String fname, lname, mail, pw, enterprise;
 
     public Intervenant(){}
     
-    public Intervenant(String fname, String lname, String mail, String pw, String enterprise, String id){
+    public Intervenant(String fname, String lname, String mail, String pw, String enterprise){
         super(fname, lname, mail, pw);
         this.enterprise = enterprise;
-        this.id = id;
     }
 
     @Override
     public String toString() {
-        return super.toString();
+        return super.toString() + ", enterprise : " + enterprise;
     }
 
 
@@ -22,13 +23,11 @@ public class Intervenant extends User{
     public String getMail()       {return this.mail;}
     public String getPw()         {return this.pw;}
     public String getFname()      {return this.fname;}
-    public String getId()         {return id;}
 
     //setters
     public void setLname(String lname)           {this.lname = lname;}
     public void setMail(String mail)             {this.mail = mail;}
     public void setPw(String pw)                 {this.pw = pw;}
     public void setfName(String fName)           {this.fname = fName;}
-    public void setId(String id)                 {this.id = id;}
     public void setEnterprise(String enterprise) {this.enterprise = enterprise;}
 }

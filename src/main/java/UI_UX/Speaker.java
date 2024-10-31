@@ -3,8 +3,9 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import Users.*;
+import Instances.*;
 import Utils.Language;
+import backend.Database;
 
 // TODO : handle invalid input 
 
@@ -48,9 +49,27 @@ public class Speaker {
     // STATE is part of an enum list
     // must return the next state after asking which way the user wants to go
     // TODO: change INITIAL to be able to choose between login and register 
-    public static Dialog.STATE menu(Dialog.STATE STATE, User user){
+    public static Dialog.STATE menu(Dialog.STATE STATE, Database database){
         switch (STATE) {
-            case INITIAL:
+            case INITIAL: return Integer.parseInt(ask(Language.Qinitial(Dialog.choice_language))) == 1 ? Dialog.STATE.LOGIN : Dialog.STATE.REGISTER;
+
+            case LOGIN:
+
+                String login_mail = ask(Language.Qmail(Dialog.choice_language));
+                while (!database.exists(login_mail)) {
+                    login_mail = ask(Language.MailNotInDatabase(Dialog.choice_language));
+                }
+                String password = ask(Language.Qpassword(Dialog.choice_language));
+                while (!database.authentify(login_mail, password)) {
+                    password = ask(Language.IncorrectPassword(Dialog.choice_language));
+                }
+                return Dialog.STATE.INITIAL;
+
+
+            case REGISTER:
+
+                User user = new User();
+
                 String fname = ask(Language.Qfname(Dialog.choice_language));
                 String lname = ask(Language.Qlname(Dialog.choice_language));
 
@@ -70,11 +89,28 @@ public class Speaker {
                 String userType = Speaker.ask(Utils.Language.QUserType(Dialog.choice_language));
                 switch (userType) {
                     case "1":
+                        
+                        String address = ask(Language.Qaddress(Dialog.choice_language));
+                        int birthDay = Integer.parseInt(ask(Language.Qbirthday(Dialog.choice_language)));
+
+                        Resident resident = (Resident) user;
+
+                        resident.setDistrict(null);
+                        resident.setAddress(address);
+                        resident.setBirthDay(birthDay);
+
+                        database.addResident(resident);
+
                         return Dialog.STATE.RESIDENT_MAIN;
-                    
                     case "2":
+                        String enterprise = ask(Language.Qenterprise(Dialog.choice_language));
+
+                        Intervenant intervenant = (Intervenant) user;
+                        intervenant.setEnterprise(enterprise);
+
+                        database.addIntervenant(intervenant);
+                        
                         return Dialog.STATE.MAIN_INTERVENANT;
-                
                     default:
                         System.out.println("Choix invalide ,veuillez entrer 1 (résident) ou 2 (intervenant");
                         userType = Speaker.ask(Utils.Language.QUserType(Dialog.choice_language));

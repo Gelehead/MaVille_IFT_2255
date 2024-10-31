@@ -1,7 +1,5 @@
-package backend;
+package Instances;
 import java.util.ArrayList;
-
-import Users.User;
 
 public class Project {
 

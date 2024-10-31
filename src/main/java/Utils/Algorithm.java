@@ -1,8 +1,10 @@
 package Utils;
-
 import java.util.Arrays;
 import java.util.Comparator;
 
+/** Algorithm class is used for district delimitation (convex hull problem), we will try to implement the graham scan 
+ *  
+ */ 
 public class Algorithm {
     public static void mergeSort(int[] arr, int left, int right ){
         if (left >= right) {return;}

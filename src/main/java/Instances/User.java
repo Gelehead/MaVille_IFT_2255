@@ -1,4 +1,4 @@
-package Users;
+package Instances;
 public class User {
 
     // first name, last name, email, password

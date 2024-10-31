@@ -11,6 +11,39 @@ public class Language {
         ENGLISH
     }
 
+    public static String Qinitial(language language){
+        switch (language) {
+            case FRENCH: return """
+                Choisissez une option
+                    [1] Connexion
+                    [2] Inscription
+                    """;
+        
+            case ENGLISH: return """
+                        Choose an option:
+                        [1] Login
+                        [2] Register 
+                    """;
+            default: return "";
+        }
+    }
+
+    public static String MailNotInDatabase(language language){
+        switch (language) {
+            case FRENCH: return "L'addresse mail entrée n'existe pas dans notre base de donnees, veuillez en entrer une nouvelle";
+            case ENGLISH: return "The adress you entered does not exist in our database, please enter a new one";
+            default: return "";
+        }
+    }
+
+    public static String IncorrectPassword(language language){
+        switch (language) {
+            case FRENCH: return "mot de passe incorrect, essayez à nouveau.";
+            case ENGLISH: return "incorrect password, try again";
+            default: return "";
+        }
+    }
+
     // TODO: placeholder dialogue, replace when possible
     public static String Qfname(language language){
         switch (language) {
@@ -114,8 +147,7 @@ public class Language {
                                 "[5] Faire une requête de travail\n" +
                                 "[6] Accepter ou refuser la candidature d'un travail\n" +
                                 "[7] Signaler un problème\n" +
-                                "[8] Retourner au menu principal\n" +
-                                "[9] Quitter\n" + 
+                                "[8] Quitter\n" + 
                                 "Choisissez une option : ";
             case ENGLISH: return "Resident main menu:\n" +
                                     "[1] View ongoing projects\n" +
@@ -125,8 +157,7 @@ public class Language {
                                     "[5] Submit a work request\n" +
                                     "[6] Accept or reject a job application\n" +
                                     "[7] Report a problem\n" +
-                                    "[8] Return to main menu\n" +
-                                    "[9] Quit\n" +
+                                    "[8] Quit\n" +
                                     "Choose an option: ";
             default: return "";
         }
@@ -138,15 +169,13 @@ public class Language {
                                 "[1] Soumettre un nouveau projet\n" +
                                 "[2] Soumettre une mise à jour du projet\n" +
                                 "[3] Soumettre une candidature à une requête de travail\n" +
-                                "[4] Retourner au menu principal\n" +
-                                "[5] Quitter\n" +
+                                "[4] Quitter\n" +
                                 "Choisissez une option : ";
             case ENGLISH: return "Contractor main menu:\n" +
                                     "[1] Submit a new project\n" +
                                     "[2] Submit a project update\n" +
                                     "[3] Apply for a work request\n" +
-                                    "[4] Return to main menu\n" +
-                                    "[5] Quit\n" +
+                                    "[4] Quit\n" +
                                     "Choose an option: ";
             default: return "";
         }
