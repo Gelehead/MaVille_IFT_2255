@@ -48,6 +48,7 @@
                         <!-- <span class="member-role">Chargé de...</span> -->
                     </li>
                     <li class="member">
+<!-- Feedback: Cadre du projet - Le cadre du projet est très bien défini -->
                         <img class="member-pic" src="" alt="" >
                         <div class="member-identification">
                             <span class="member-name">Othmane ZEROUAL</span>
@@ -115,6 +116,7 @@
                 <h3 class="subsection-title">Introduction</h3>
                 <p>
                     <em>
+<!-- Feedback: Introduction - Très bien -->
                         Les chantiers routiers à Montréal sont une réalité récurrente et ininvitable dans la ville.
                         <br>
                         Les résidents de Montréal ne reçoivent pas les informations concernant les chantiers de façons efficaces, ce qui engendre des imprévus pour les déplacements de ceux-ci.
@@ -139,6 +141,8 @@
 
                 <h3 class="subsection-title">Hypothèses (optionnel)</h3>
                 <p>
+<!-- Feedback: Échéancier - Bon échéancier -->
+<!-- Feedback: Utilisez une notation plus sommaire et il doit s'étendre sur toute la durée du projet -->
                     <em>•	Les intervenants fourniront des informations complètes et à jour sur les travaux publics et privés.
                         <br>
                         •	La majorité des résidents de Montréal utiliseront des appareils mobiles pour consulter l'application.
@@ -153,6 +157,12 @@
                         </em>
                 </p>
             </section>
+<!-- Feedback: Hypothèses - Les intervenants fourniront des informations complètes et à jour sur les travaux publics et privés: OK -->
+<!-- Feedback: Hypothèses - La majorité des résidents de Montréal utiliseront des appareils mobiles pour consulter l'application: OK, mais ça n'aura aucun impact sur votre implémentation -->
+<!-- Feedback: Hypothèses - Les utilisateurs préfèreront une interface simple et intuitive: Besoin non fonctionnel -->
+<!-- Feedback: Hypothèses - Les travaux pourront être planifiés avec un degré de précision suffisant pour informer les utilisateurs à l'avance: Besoin non fonctionnel -->
+<!-- Feedback: Hypothèses - Les acteurs publics et privés collaboreront efficacement pour partager les informations sur les travaux: Plutôt un souhait lié à un risque -->
+<!-- Feedback: Hypothèses - Les citoyens souhaiteront participer en signalant des problèmes ou en donnant des retours sur l'application: Plutôt un souhait lié à un risque -->
 
             <section class="main-section">
                 <h2 id="requirements" class="section-title">Exigences</h2>
@@ -228,6 +238,8 @@
                     </li>
                     <li class="persona">
                         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+<!-- Feedback: Exigences - Glossaire - Un bon glossaire dans l'ensemble, mais il manque certains éléments essentiels à répertorier dans le glossaire -->
+<!-- Feedback: Glossaire - Termes importants - Application MaVille, Code de la ville, Service Info Entraves et Travaux, Planification participative, Notifications personnalisées (la précision est importante ici) -->
                             <span class="persona-name">Oscar &ndash; <em>Père de famille</em></span>
                             <div class="persona-stat">
                                 <span class="persona-type persona-type--pp" title="Pratico-pratique">PP</span>
@@ -331,6 +343,8 @@
                 </div>
                 
 
+<!-- Feedback: Persona - Bon persona illustrant bien de possibles types d'utilisateurs. -->
+<!-- Feedback: Persona - Le pourcentage indique la proportion d'utilisateurs représentée par ce profil (Actuellement vous couvrez 90% (40+20+30) des utilisateurs) -->
                 <div class="scenario" id="cu-2">
                     <div class="scenario-meta">
                         <h4 class="cu-name">
@@ -399,6 +413,11 @@
                                             <li value="4">Le système affiche "Choisir un mot de passe sécurisé".</li>
                                             <li value="4">Retour à l'étape 4.</li>
                                         </ol>
+<!-- Feedback: Cas d'utilisation - Très bon diagramme -->
+<!-- Feedback: Cas d'utilisation - Résident et Intervenant pourraient être généralisés -->
+<!-- Feedback: Cas d'utilisation - Abus des relations Extend -->
+<!-- Feedback: Cas d'utilisation - Il serait préférable de mettre la connexion en précondition plutôt que d'utiliser les includes -->
+<!-- Feedback: Cas d'utilisation - Ajouter le CU inclus 'Envoyer une notification' (voir diagramme proposé pour le devoir) -->
                                     </li>
                                 </ol>
                             </div>
@@ -491,6 +510,11 @@
                             
                             <div class="cu-part cu-part--notes">
                                 <h5 class="cu-part-title">Notes</h5>
+<!-- Feedback: Scénarios - Les scénarios sont trop simples et il manque de scénarios alternatifs -->
+<!-- Feedback: Scénarios - Les étapes doivent alterner entre le système et les acteurs. Éviter d'avoir plus de 2 étapes successives pour le même acteur -->
+<!-- Feedback: Scénarios - Les scénarios sont un peu trop simples dans l'ensemble. Ça ne traduit pas avec suffisamment de détails l'interaction entre le système et l'acteur -->
+<!-- Feedback: Scénarios - Manque de vérification côté système -->
+<!-- Feedback: Scénarios - Manque de scenario alternatif pour les cas d'extension -->
                                 <p class="cu-notes">Aucune note additionnelle.</p>
                             </div>
                         </div>
@@ -574,6 +598,7 @@
                                 <p>Aucun.</p>
                             </div>
                         </div>
+<!-- Feedback: Diagrammes d'activités - À réviser complètement -->
                     </div>
 
                     <div class="scenario" id="cu-6">
@@ -688,6 +713,7 @@
 
                     <div class="scenario" id="cu-8">
                         <div class="scenario-meta">
+<!-- Feedback: Analyse - Risques - Très bien -->
                             <h4 class="cu-name">
                                 <strong>CU:</strong> Accepter ou refuser une candidature
                             </h4>
@@ -727,6 +753,7 @@
                         <div class="scenario-main">
                             <h5 class="scenario-main-title">Scénario principal</h5>
                             <ol class="scenario-main-steps">
+<!-- Feedback: Analyse - Besoins non fonctionnels - Correct -->
                                 <li class="scenario-main-step">Le résident se connecte à son compte.</li>
                                 <li class="scenario-main-step">Le résident choisit "Requête de travail".</li>
                                 <li class="scenario-main-step">Le résident voit la liste des requêtes approuvées.</li>
@@ -776,6 +803,7 @@
                             </div>
                             
                             <div class="cu-part cu-part--notes">
+<!-- Feedback: Analyse - Besoins matériels - Correct -->
                                 <h5 class="cu-part-title">Notes</h5>
                                 <p class="cu-notes">Aucune note additionnelle.</p>
                             </div>
@@ -815,6 +843,7 @@
                                 </ul>
                             </div>
                             
+<!-- Feedback: Solution de stockage - Correct -->
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Préconditions</h5>
                                 <ul class="bare-list cu-conditions">
@@ -849,6 +878,7 @@
                                 <p>Aucun.</p>
                             </div>
                         </div>
+<!-- Feedback: Solution d'intégration - Correct. Pour l'intégration avec les systèmes municipaux, vous pouvez mentionner le service Info entraves et travaux -->
                     </div>
 
                     <div class="scenario" id="cu-11">
@@ -1003,6 +1033,10 @@
                         </li>
                         <li>Les dates des travaux sont erronées, ce qui pourrait entraîner des fermetures de routes imprévues ou des changements non signalés. La solution serait d'avoir un système de validation des dates auprès de la ville et des entrepreneurs pour s'assurer de toujours fournir des informations de qualité.
                         </li>
+<!-- Feedback: Prototype - Bon prototype, mais un peu minimaliste -->
+<!-- Feedback: Prototype - Pensez à fournir des comptes de test la prochaine fois -->
+<!-- Feedback: Prototype - Le menu présenté pour chacun ne laisse pas paraitre tous les CUs possibles -->
+<!-- Feedback: Prototype - Aucune validation lors de la connexion -->
                         <li>La requête pour un travail déjà effectué pourrait entraîner des duplications inutiles. La solution serait de mettre en place un bon système de vérification des travaux existants/planifiés et d'avoir un moteur de recherche efficace permettant de retrouver les travaux précédents.
                         </li>
                         <li>Le manque de confidentialité de l'application pourrait engendrer une violation de la vie privée, puisque l'application collecte des données personnelles. La solution serait d'implémenter une politique de confidentialité transparente pour informer les utilisateurs et leur donner des options pour décider de la collecte et de l'utilisation de leurs données.
@@ -1049,7 +1083,9 @@
                 </div>
 
                 <div>
+<!-- Feedback: Rapport - Très bien! -->
                     <h3 class="subsection-title">Solution d'intégration</h3>
+<!-- Feedback: Git - Très bien -->
 
                     <p>
                         <em>Pour l'application MaVille, la solution d'intégration repose sur l'utilisation d'API ouvertes permettant une communication
