@@ -4,6 +4,7 @@ import java.util.Comparator;
 
 /** Algorithm class is used for district delimitation (convex hull problem), we will try to implement the graham scan 
  *  
+ * Update : way more complicated than firstly thought, will come back to it later
  */ 
 public class Algorithm {
     public static void mergeSort(int[] arr, int left, int right ){

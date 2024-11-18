@@ -1,42 +1,96 @@
 package Instances;
-import java.util.ArrayList;
+import metrics.*;
 
 public class Project {
 
-    public enum progress {
+    //actual parameters
+    public int id;
+    private Date start_date;
+    private Date end_date;
+    private District district;
+
+    private Progress status;
+    private Coordinates coordinates;
+
+    private String reason;
+    
+    private String occupancy;
+    private String organization;
+    private String submitter_category;
+
+    // not that useful parameters
+    private String permit_id;
+    private String permit_category;
+    private int contract_number;
+
+    public enum Progress {
         NOT_STARTED,
         IN_PROGRESS,
-        FINISHED
+        FINISHED,
+
+        PLACEHOLDER
 
         //probably needs like "NEGOTIATING", "REFUSED", "ABANDONED", and more
     }
 
-    String name, description;
-    int start_date, end_date;
-    // logs is the list of previous versions of the project
-    ArrayList<Project> logs;
-    User organiser;
-    District district;
+    public Project
+    (
+        int id, 
+        String permit_id, String permit_category, String contract_number,
+        String status, String reason,
+        District district, 
+        String start, String end, 
+        String occupancy, String organization, String submitter_category,
+        Coordinates co)
+    {
+        this.id = id;
 
-    public Project(String name, int start_date, int end_date, User organiser, District district, String description){
-        this.name = name;
-        this.start_date = start_date;
-        this.end_date = end_date;
-        // initializes logs as an empty list
-        this.logs = new ArrayList<Project>();
-        this.organiser = organiser;
+        this.permit_id = permit_id;
+        this.permit_category = permit_category;
+        this.contract_number = Integer.parseInt(contract_number);
+
+        this.status = toProgress(status);
+        this.reason = reason;
+
         this.district = district;
-        this.description = description;
+
+        this.start_date = Date.format(start);
+        this.end_date = Date.format(end);
+
+        this.occupancy = occupancy;
+        this.organization = organization;
+        this.submitter_category = submitter_category;
+
+        this.coordinates = co;
+    }
+
+    private Progress toProgress(String s){
+        return Progress.PLACEHOLDER;
     }
 
     @Override
-    public String toString(){
-        // find a good way to represent the project as a string
-        // must be usable wihtin the logs context
-        return "placeholder";
+    public String toString() {
+        String res = "";
+        res += ("  ID: " + id + "\n");
+        res += ("  Borough: " + district.name+ "\n");
+        res += ("  Start Date: " + start_date+ "\n");
+        res += ("  End Date: " + end_date + "\n");
+        res += ("  Longitude: " + coordinates.longitude+ "\n");
+        res += ("  Latitude: " + coordinates.latitude + "\n");
+        return res;
     }
 
-    public String getLogs(){
-        return "placeholder";
-    }
+    // getters 
+    public int getContract_number() {return contract_number;}
+    public Coordinates getCoordinates() {return coordinates;}
+    public District getDistrict() {return district;}
+    public Date getEnd_date() {return end_date;}
+    public String getOccupancy() {return occupancy;}
+    public String getOrganization() {return organization;}
+    public String getPermit_category() {return permit_category;}
+    public String getPermit_id() {return permit_id;}
+    public String getReason() {return reason;}
+    public Date getStart_date() {return start_date;}
+    public Progress getStatus() {return status;}
+    public String getSubmitter_category() {return submitter_category;}
 }

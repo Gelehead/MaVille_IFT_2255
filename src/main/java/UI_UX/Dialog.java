@@ -6,9 +6,9 @@ import backend.Database;
 //Dialog class is the main discussion class, interacts with the database and speaker class,
 public class Dialog {
 
-    private static int mockIntervenants = 3;
-    private static int mockResidents = 3;
-    private static int mockUsers = 3;
+    private static int mockIntervenants = 10;
+    private static int mockResidents = 10;
+    private static int mockUsers = 10;
 
     // put menu states here
     public enum STATE {

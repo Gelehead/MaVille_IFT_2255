@@ -29,19 +29,49 @@ public class Parser {
         public List<Record> records;
     }
 
-    class Record {
+    public class Record {
         @JsonProperty("_id")
         public int id;
         public String permit_permit_id;
+        public String contractnumber;
         public String boroughid;
         public String permitcategory;
         public String currentstatus;
-        @JsonProperty("duration_start_date")
-        public String durationStartDate;
-        @JsonProperty("duration_end_date")
-        public String durationEndDate;
+        public String duration_start_date;
+        public String duration_end_date;
+        public String reason_category;
         public String occupancy_name;
+        public String submittercategory;
         public String organizationname;
+        public String duration_days_mon_active;
+        public String duration_days_mon_all_day_round;
+        public String duration_days_tue_active;
+        public String duration_days_tue_all_day_round;
+        public String duration_days_wed_active;
+        public String duration_days_wed_all_day_round;
+        public String duration_days_thu_active;
+        public String duration_days_thu_all_day_round;
+        public String duration_days_fri_active;
+        public String duration_days_fri_all_day_round;
+        public String duration_days_sat_active;
+        public String duration_days_sat_all_day_round;
+        public String duration_days_sun_active;
+        public String duration_days_sun_all_day_round;
+        public String duration_days_sat_start_time;
+        public String duration_days_sat_end_time;
+        public String duration_days_mon_start_time;
+        public String duration_days_mon_end_time;
+        public String duration_days_tue_start_time;
+        public String duration_days_tue_end_time;
+        public String duration_days_wed_start_time;
+        public String duration_days_wed_end_time;
+        public String duration_days_thu_start_time;
+        public String duration_days_thu_end_time;
+        public String duration_days_fri_start_time;
+        public String duration_days_fri_end_time;
+        public String duration_days_sun_start_time;
+        public String duration_days_sun_end_time;
+        public String load_date;
         public String longitude;
         public String latitude;
 
@@ -51,7 +81,7 @@ public class Parser {
             res += ("  ID: " + id + "\n");
             res += ("  Permit ID: " + permit_permit_id+ "\n");
             res += ("  Borough: " + boroughid+ "\n");
-            res += ("  Start Date: " + durationStartDate+ "\n");
+            res += ("  Start Date: " + duration_start_date+ "\n");
             res += ("  Longitude: " + longitude+ "\n");
             res += ("  Latitude: " + latitude + "\n");
             return res;

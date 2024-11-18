@@ -11,6 +11,8 @@ import Instances.User.Type;
 import UI_UX.Dialog;
 import Utils.Language;
 import Utils.Parser;
+import Utils.Parser.Record;
+import metrics.*;
 
 public class Database implements java.io.Serializable {
     
@@ -28,19 +30,15 @@ public class Database implements java.io.Serializable {
     String ongoingProjectsURL = "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=cc41b532-f12d-40fb-9f55-eb58c9a2b12b";
 
     public enum District_name{
-
+        placeholder
     }
 
     public Database(){
-        init(3, 3, 3);
+        init();
     }
 
     public Database(int mockIntervenants, int mockResidents, int mockUsers){
         init(mockUsers, mockIntervenants, mockResidents);
-        for (Parser.Record project : Parser.getRecords(ongoingProjectsURL)) {
-            
-        }
-        Parser.getRecords(ongoingProjectsURL);
     }
 
     public void printAll(Type utype){
@@ -96,7 +94,8 @@ public class Database implements java.io.Serializable {
         projectHashtable.put(p.id, p);
     }
 
-    public District getDistrict(District_name name){return }
+    // TODO: placeholder, change when time allows
+    public District getDistrict(District_name name){return new District(name);}
 
     public Resident getResident(String mail){return residentHashtable.get(mail);}
     public Intervenant getIntervenant(String mail){return intervenantHashtable.get(mail);}
@@ -138,15 +137,55 @@ public class Database implements java.io.Serializable {
         return user.type;
     }
 
+    // TODO: complete placeholder
+    private void init_districts(){
+        districtHashtable.put(District_name.placeholder, new District(District_name.placeholder));
+    }
+
+    private void init_records(){
+        for (Parser.Record record : Parser.getRecords(ongoingProjectsURL)) {
+            Project project = toProject(record);
+            projectHashtable.put(project.id, project);
+        }
+        Parser.getRecords(ongoingProjectsURL);
+    }
+
+    // TODO: placeholder 
+    private District_name toDistrict_name(String s){
+        return District_name.placeholder;
+    }
+
+    private Project toProject(Record record){
+        Coordinates co = new Coordinates(Integer.parseInt(record.longitude), Integer.parseInt(record.latitude));
+        return new Project(
+            record.id,
+            record.permit_permit_id,
+            record.permitcategory,
+            record.contractnumber,
+            record.currentstatus,
+            record.reason_category,
+            districtHashtable.get(toDistrict_name(record.boroughid)),
+            record.duration_start_date,
+            record.duration_end_date,
+            record.occupancy_name,
+            record.organizationname,
+            record.submittercategory,
+            co
+        );
+    }
+
     /** Usage of Faker library to ease the false information creation
-     * 
+     *  
      */
     private void init(){
         init(10, 3, 7);
     }
 
-    // idk if this is useful but still cool to have
+    // real init function
     private void init(int mockUsers, int mockIntervenants, int mockResidents){
+        init_records();
+        init_districts();
+
         Faker faker = new Faker();
         for (int i = 0; i < mockUsers; i++) {
             addUser(new User(
