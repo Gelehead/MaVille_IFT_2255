@@ -4,7 +4,8 @@ public class User {
     public static enum Type {
         USER,
         RESIDENT,
-        INTERVENANT
+        INTERVENANT,
+        ADMIN
     }
 
     // first name, last name, email, password

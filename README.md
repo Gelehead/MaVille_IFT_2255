@@ -18,7 +18,7 @@ Pour exécuter l'application MaVille, assurez-vous d'avoir Java installé sur vo
 _Note: we called "travaux" "projects" because it makes more sense than "works" or "renovations"_
 
 ### Left to do
- - [x]
+ - [x] test test 
  - [ ] Consulter les travaux en cours ou à venir.
  - [ ] Consulter les entraves
  - [ ] Soumettre une requête de travail

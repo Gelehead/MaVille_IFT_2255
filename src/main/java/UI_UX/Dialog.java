@@ -25,6 +25,8 @@ public class Dialog {
 
         MAIN_INTERVENANT,
 
+        MAIN_ADMIN,
+
         QUIT,
 
         PLACEHOLDER,

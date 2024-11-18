@@ -7,28 +7,51 @@ import java.util.NoSuchElementException;
 import com.github.javafaker.Faker;
 
 import Instances.*;
+import Instances.User.Type;
 import UI_UX.Dialog;
 import Utils.Language;
+import Utils.Parser;
 
 public class Database implements java.io.Serializable {
     
     // users are registered and saved via their email, most unique and clear identification method
-    private static Hashtable<String, User> userHashtable = new Hashtable<>();
-    private static Hashtable<String, Intervenant> intervenantHashtable = new Hashtable<>();
-    private static Hashtable<String, Resident> residentHashtable = new Hashtable<>();
-    private static User activeUser;
+    private static Hashtable<String, User>              userHashtable = new Hashtable<>();
+    private static Hashtable<String, Intervenant>       intervenantHashtable = new Hashtable<>();
+    private static Hashtable<String, Resident>          residentHashtable = new Hashtable<>();
+    private static Hashtable<String, Admin>             adminHashtable = new Hashtable<>();
 
+    private static Hashtable<Integer, Project>          projectHashtable = new Hashtable<>();
+    private static Hashtable<District_name, District>   districtHashtable = new Hashtable<>();
+
+    private static User activeUser;
+    // JSON URL to get the ongoing projects
+    String ongoingProjectsURL = "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=cc41b532-f12d-40fb-9f55-eb58c9a2b12b";
 
     public enum District_name{
 
     }
 
     public Database(){
-        init();
+        init(3, 3, 3);
     }
 
     public Database(int mockIntervenants, int mockResidents, int mockUsers){
         init(mockUsers, mockIntervenants, mockResidents);
+        for (Parser.Record project : Parser.getRecords(ongoingProjectsURL)) {
+            
+        }
+        Parser.getRecords(ongoingProjectsURL);
+    }
+
+    public void printAll(Type utype){
+        switch (utype) {
+            case USER: 
+                break;
+            case RESIDENT :
+            case INTERVENANT : 
+            default:
+                break;
+        }
     }
 
     /**
@@ -56,6 +79,24 @@ public class Database implements java.io.Serializable {
         userHashtable.put(r.getMail(), r);
         residentHashtable.put(r.getMail(), r);
     }
+
+    /**
+     * 
+     * @param a admin
+     */
+    public void addAdmin(Admin a){
+        adminHashtable.put(a.getUsername(), a);
+    }
+
+    /**
+     * 
+     * @param p project
+     */
+    public void addProject(Project p){
+        projectHashtable.put(p.id, p);
+    }
+
+    public District getDistrict(District_name name){return }
 
     public Resident getResident(String mail){return residentHashtable.get(mail);}
     public Intervenant getIntervenant(String mail){return intervenantHashtable.get(mail);}
@@ -97,38 +138,11 @@ public class Database implements java.io.Serializable {
         return user.type;
     }
 
+    /** Usage of Faker library to ease the false information creation
+     * 
+     */
     private void init(){
-        Faker faker = new Faker();
-        for (int i = 0; i < 3; i++) {
-            addUser(new User(
-                faker.name().firstName(), 
-                faker.name().lastName(), 
-                faker.internet().emailAddress(), 
-                faker.internet().password()
-            ));
-        }
-
-        for (int i = 0; i < 3; i++) {
-            addResident(new Resident(
-                faker.name().firstName(), 
-                faker.name().lastName(), 
-                faker.internet().emailAddress(), 
-                faker.internet().password(),
-                Integer.parseInt(faker.phoneNumber().phoneNumber()),
-                faker.address().fullAddress().toLowerCase(),
-                (int) faker.date().birthday().getTime()
-            ));
-        }
-
-        for (int i = 0; i < 3; i++) {
-            addIntervenant(new Intervenant(
-                faker.name().firstName(), 
-                faker.name().lastName(), 
-                faker.internet().emailAddress(), 
-                faker.internet().password(),
-                faker.funnyName().toString()
-            ));
-        }
+        init(10, 3, 7);
     }
 
     // idk if this is useful but still cool to have
@@ -164,6 +178,8 @@ public class Database implements java.io.Serializable {
                 faker.funnyName().toString()
             ));
         }
+
+        addAdmin(new Admin(null, null, null, null, "Herobrine"));
     }
 
     //setters

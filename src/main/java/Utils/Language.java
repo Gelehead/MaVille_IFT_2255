@@ -11,6 +11,19 @@ public class Language {
         ENGLISH
     }
 
+    public static String main_menu_admin(language language){
+        switch (language) {
+            case FRENCH: return "";
+            case ENGLISH: return """
+                [1] Get all Users
+                [2] get all projects
+                [3] Main menu
+                [4] quit 
+                        """;
+            default: return "";
+        }
+    }
+
     public static String noSuchUser(language language, String mail){
         switch (language) {
             case FRENCH: return "L'utilisateur avec l'email" + mail + " n'existe pas dans la base de données." ;

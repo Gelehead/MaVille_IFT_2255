@@ -1,4 +1,5 @@
 package UI_UX;
+import java.lang.ProcessBuilder.Redirect.Type;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -157,7 +158,7 @@ public class Speaker {
                         return Dialog.STATE.INITIAL;
                     case "9":
                         return Dialog.STATE.QUIT;
-                }
+            }
 
 
             case MAIN_INTERVENANT:
@@ -178,7 +179,35 @@ public class Speaker {
                         return Dialog.STATE.INITIAL;
                     case "5":
                         return Dialog.STATE.QUIT;
+            }
+
+            case TRAVAUX_RESIDENT:
+                return null;
+
+            case MAIN_ADMIN:
+                String choixAdmin = ask(Utils.Language.main_menu_admin(Dialog.choice_language));
+                switch (choixAdmin) {
+                    case "1":
+                        System.out.println("Residents : ");
+                        database.printAll(User.Type.RESIDENT);
+
+                        System.out.println("Intervenants : ");
+                        database.printAll(User.Type.INTERVENANT);
+
+                        System.out.println("Admins : ");
+                        database.printAll(User.Type.ADMIN);
+                        return Dialog.STATE.MAIN_ADMIN;
+                    case "2" : 
+                        System.out.println("projects idk");
+                        database.printAll(null);
+                        return Dialog.STATE.MAIN_ADMIN;
+                    case "3" : 
+                        return Dialog.STATE.INITIAL;
+                    case "4" : return null;
+                    default:
+                        return Dialog.STATE.INITIAL;
                 }
+
         
 
             case QUIT:
