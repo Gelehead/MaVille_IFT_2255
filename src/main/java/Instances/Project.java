@@ -47,7 +47,7 @@ public class Project {
 
         this.permit_id = permit_id;
         this.permit_category = permit_category;
-        this.contract_number = Integer.parseInt(contract_number);
+        this.contract_number = contract_number == null ? 0 : Integer.parseInt(contract_number);
 
         this.status = toProgress(status);
         this.reason = reason;
@@ -72,7 +72,7 @@ public class Project {
     public String toString() {
         String res = "";
         res += ("  ID: " + id + "\n");
-        res += ("  Borough: " + district.name+ "\n");
+        res += ("  Borough: " + (district == null ? "district is null" : district.name) + "\n");
         res += ("  Start Date: " + start_date+ "\n");
         res += ("  End Date: " + end_date + "\n");
         res += ("  Longitude: " + coordinates.longitude+ "\n");

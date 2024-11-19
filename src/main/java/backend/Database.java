@@ -44,9 +44,25 @@ public class Database implements java.io.Serializable {
     public void printAll(Type utype){
         switch (utype) {
             case USER: 
+                for (String uk : userHashtable.keySet()) {
+                    System.out.println(userHashtable.get(uk).toString());
+                }
                 break;
             case RESIDENT :
-            case INTERVENANT : 
+                for (String rk : residentHashtable.keySet()) {
+                    System.out.println(residentHashtable.get(rk).toString());
+                }
+                break;
+            case INTERVENANT :
+                for (String ik : intervenantHashtable.keySet()) {
+                    System.out.println(intervenantHashtable.get(ik).toString());
+                }
+                break;
+            case PROJECT :
+                for (int pid : projectHashtable.keySet()) {
+                    System.out.println(projectHashtable.get(pid).toString());
+                }
+                break; 
             default:
                 break;
         }
@@ -147,7 +163,6 @@ public class Database implements java.io.Serializable {
             Project project = toProject(record);
             projectHashtable.put(project.id, project);
         }
-        Parser.getRecords(ongoingProjectsURL);
     }
 
     // TODO: placeholder 
@@ -156,7 +171,10 @@ public class Database implements java.io.Serializable {
     }
 
     private Project toProject(Record record){
-        Coordinates co = new Coordinates(Integer.parseInt(record.longitude), Integer.parseInt(record.latitude));
+        Coordinates co = new Coordinates(
+            record.longitude == null ? 0 : Double.parseDouble(record.longitude), 
+            record.longitude == null ? 0 : Double.parseDouble(record.latitude)
+        );
         return new Project(
             record.id,
             record.permit_permit_id,
@@ -202,7 +220,7 @@ public class Database implements java.io.Serializable {
                 faker.name().lastName(), 
                 faker.internet().emailAddress(), 
                 faker.internet().password(),
-                Integer.parseInt(faker.phoneNumber().phoneNumber()),
+                faker.phoneNumber().phoneNumber().intern(),
                 faker.address().fullAddress().toLowerCase(),
                 (int) faker.date().birthday().getTime()
             ));

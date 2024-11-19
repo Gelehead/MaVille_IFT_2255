@@ -50,7 +50,20 @@ public class Speaker {
     // must return the next state after asking which way the user wants to go
     public static Dialog.STATE menu(Dialog.STATE STATE, Database database){
         switch (STATE) {
-            case INITIAL: return Integer.parseInt(ask(Language.Qinitial(Dialog.choice_language))) == 1 ? Dialog.STATE.LOGIN : Dialog.STATE.REGISTER;
+            case INITIAL: 
+                String a = ask(Language.Qinitial(Dialog.choice_language));
+                switch (a) {
+                    case "1":
+                        return Dialog.STATE.REGISTER;
+                    case "2":
+                        return Dialog.STATE.LOGIN;
+                    case "3":
+                        System.out.println("You are an admin");
+                        return Dialog.STATE.MAIN_ADMIN;
+                    default:
+                        return Dialog.STATE.INITIAL;
+                }
+
 
             case LOGIN:
 
@@ -120,6 +133,11 @@ public class Speaker {
                         database.setActiveUser(intervenant);
                         
                         return Dialog.STATE.MAIN_INTERVENANT;
+                    case "3":
+                        System.out.println("You are an admin");
+
+                        return Dialog.STATE.MAIN_ADMIN;
+
                     default:
                         System.out.println("Choix invalide ,veuillez entrer 1 (résident) ou 2 (intervenant");
                         userType = Speaker.ask(Utils.Language.QUserType(Dialog.choice_language));
@@ -198,7 +216,7 @@ public class Speaker {
                         return Dialog.STATE.MAIN_ADMIN;
                     case "2" : 
                         System.out.println("projects idk");
-                        database.printAll(null);
+                        database.printAll(User.Type.PROJECT);
                         return Dialog.STATE.MAIN_ADMIN;
                     case "3" : 
                         return Dialog.STATE.INITIAL;

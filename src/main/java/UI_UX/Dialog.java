@@ -39,7 +39,7 @@ public class Dialog {
     public static void init(){
         Speaker.welcome();
 
-        STATE state = STATE.REGISTER;
+        STATE state = STATE.INITIAL;
         Database database = new Database(mockIntervenants, mockResidents, mockUsers);
 
         while (state != STATE.QUIT) {

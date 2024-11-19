@@ -1,5 +1,6 @@
 package Utils;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -11,14 +12,13 @@ import java.util.Scanner;
 
 public class Parser {
 
-    class Root {
+    public static class Root {
         public String help;
         public boolean success;
         public Result result;
     }
-    
-    // Class to map the "result" object
-    class Result {
+    @JsonIgnoreProperties({"fields"})
+    public static class Result {
         @JsonProperty("include_total")
         public boolean includeTotal;
         public int limit;
@@ -27,11 +27,19 @@ public class Parser {
         @JsonProperty("resource_id")
         public String resourceId;
         public List<Record> records;
+        @JsonProperty("total_estimation_threshold")
+        public String totalEstimationThreshold;
+        public List<Object> fields;  // This will be ignored during deserialization
+        public Object _links;
+        public int total;
+        public boolean total_was_estimated;
     }
 
-    public class Record {
+    public static class Record {
         @JsonProperty("_id")
         public int id;
+        @JsonProperty("id")
+        public String official_id;
         public String permit_permit_id;
         public String contractnumber;
         public String boroughid;
@@ -117,7 +125,7 @@ public class Parser {
      * 
      * @param filePath
      */
-    public static Parser.Record[] getRecords(String jsonURL){
+    public static List<Record> getRecords(String jsonURL){
         try {
             ObjectMapper om = new ObjectMapper();
 
@@ -125,7 +133,7 @@ public class Parser {
 
             Root root = om.readValue(JsonResponse, Root.class);
 
-            return (Record[]) root.result.records.toArray();
+            return root.result.records;
         } 
         catch (IOException e) {
             e.printStackTrace();

@@ -5,7 +5,11 @@ public class User {
         USER,
         RESIDENT,
         INTERVENANT,
-        ADMIN
+        ADMIN,
+
+        // trust, this is relevant 
+        // used in the database.printall
+        PROJECT
     }
 
     // first name, last name, email, password

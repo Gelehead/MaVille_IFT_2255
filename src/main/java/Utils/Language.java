@@ -13,13 +13,18 @@ public class Language {
 
     public static String main_menu_admin(language language){
         switch (language) {
-            case FRENCH: return "";
+            case FRENCH: return """
+                [1] Tous les utilisateurs
+                [2] Tous les projects
+                [3] Menu principal
+                [4] quit
+                    """;
             case ENGLISH: return """
                 [1] Get all Users
                 [2] get all projects
                 [3] Main menu
                 [4] quit 
-                        """;
+                    """;
             default: return "";
         }
     }
@@ -46,6 +51,7 @@ public class Language {
                 Choisissez une option
                     [1] Connexion
                     [2] Inscription
+                    [3] Admin (sera caché pour le produit final)
                     """;
         
             case ENGLISH: return """
