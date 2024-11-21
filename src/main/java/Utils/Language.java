@@ -11,6 +11,84 @@ public class Language {
         ENGLISH
     }
 
+    public static String no_project_found(language language){
+        switch (language) {
+            case FRENCH:
+                return "Désolé, aucun projet ne correspondant à vos spécification n'a été trouvé";
+            case ENGLISH:
+                return "Sorry, no project corresponding to your demands have been found";
+            default:
+                return "";
+        }
+    }
+
+    public static String not_implemented_filter_project_search(language language){
+        switch (language) {
+            case FRENCH:
+                return "la fonction de recherche avec filtre n est pas encore implementee";
+            case ENGLISH:
+                return "The search function hasn't its filter function implemented yet";
+            default:
+                return "";
+        }
+    }
+
+    public static String progressMenu(language lang) {
+        switch (lang) {
+            case FRENCH:
+                return """
+                choisissez un type de progression de Projet
+                    [1] Non commencé
+                    [2] En cours
+                    [3] Terminé
+                    [4] Placeholder
+                        """;
+            case ENGLISH:
+                return """
+                Please choose a type of project progression
+                    [1] Not started
+                    [2] In progress
+                    [3] Finished
+                    [4] Placeholder
+                        """;
+            default:
+                return "";
+        }
+    }    
+
+    public static String reasonMenu(language lang) {
+        switch (lang) {
+            case FRENCH:
+                return """
+                    [1] Construction et rénovation sans excavation
+                    [2] Construction et rénovation avec excavation
+                    [3] Égouts et aqueducs : Réhabilitation
+                    [4] Égouts et aqueducs : Excavation
+                    [5] Égouts et aqueducs : Inspection et nettoyage
+                    [6] Réseaux routiers : Réfection et travaux corrélatifs
+                    [7] Infrastructure souterraine majeure : Massifs et conduits
+                    [8] Raison non prise en charge
+                    [9] Autre
+                        """;
+            case ENGLISH:
+                return """
+                    [1] Construction and renovation without excavation
+                    [2] Construction and renovation with excavation
+                    [3] Sewers and aqueducts: Rehabilitation
+                    [4] Sewers and aqueducts: Excavation
+                    [5] Sewers and aqueducts: Inspection and cleaning
+                    [6] Road networks: Repair and related work
+                    [7] Major underground infrastructure: Massifs and conduits
+                    [8] Unhandled reason
+                    [9] Other
+                        """;
+            default:
+                return "";
+        }
+    }
+    
+        
+
     public static String main_menu_admin(language language){
         switch (language) {
             case FRENCH: return """
@@ -18,6 +96,7 @@ public class Language {
                 [2] Tous les projects
                 [3] Menu principal
                 [4] quit
+                [5] test function
                     """;
             case ENGLISH: return """
                 [1] Get all Users
@@ -145,7 +224,7 @@ public class Language {
 
     public static String Qbirthday(language language){
         switch (language) {
-            case FRENCH: return "Quelle est votre date de naissance?";
+            case FRENCH: return "Quelle est votre date de naissance? (sous la forme \"JJMMAAA\")";
             case ENGLISH: return "What's your birth date?";
             default: return "";
         }

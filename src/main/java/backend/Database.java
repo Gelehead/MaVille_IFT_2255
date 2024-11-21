@@ -142,6 +142,18 @@ public class Database implements java.io.Serializable {
         return residentList;
     }
 
+        /**
+     * 
+     * @return ArrayList<Resident> residentList
+     */
+    public ArrayList<Project> getProjectList(){
+        ArrayList<Project> projecList = new ArrayList<>();
+        for (Project p : projectHashtable.values()){
+            projecList.add(p);
+        }
+        return projecList;
+    }
+
     public boolean authentify(String mail, String pw){
         return userHashtable.get(mail).getPw().equals(pw);
     }
@@ -180,7 +192,6 @@ public class Database implements java.io.Serializable {
             record.permit_permit_id,
             record.permitcategory,
             record.contractnumber,
-            record.currentstatus,
             record.reason_category,
             districtHashtable.get(toDistrict_name(record.boroughid)),
             record.duration_start_date,

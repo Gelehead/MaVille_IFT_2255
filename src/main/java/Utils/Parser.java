@@ -2,14 +2,17 @@ package Utils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.HttpURLConnection;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.time.Duration;
 import java.util.List;
-import java.util.Scanner;
-
 public class Parser {
 
     public static class Root {
@@ -51,7 +54,7 @@ public class Parser {
         public String occupancy_name;
         public String submittercategory;
         public String organizationname;
-        public String duration_days_mon_active;
+/*         public String duration_days_mon_active;
         public String duration_days_mon_all_day_round;
         public String duration_days_tue_active;
         public String duration_days_tue_all_day_round;
@@ -78,7 +81,7 @@ public class Parser {
         public String duration_days_fri_start_time;
         public String duration_days_fri_end_time;
         public String duration_days_sun_start_time;
-        public String duration_days_sun_end_time;
+        public String duration_days_sun_end_time; */
         public String load_date;
         public String longitude;
         public String latitude;
@@ -97,10 +100,24 @@ public class Parser {
     }
 
     // Method to fetch JSON data from a URL
+    //TODO: implement an offline method, so the program can work without url
     public static String fetchJsonFromUrl(String jsonUrl) throws IOException {
         // Open connection to the URL
         URL url = new URL(jsonUrl);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        try (InputStream input = url.openStream()) {
+            InputStreamReader isr = new InputStreamReader(input);
+            BufferedReader reader = new BufferedReader(isr);
+            StringBuilder json = new StringBuilder();
+            int c;
+            while ((c = reader.read()) != -1) {
+                json.append((char) c);
+            }
+            return json.toString();
+        }
+
+        // current method is slightly faster than this one
+
+/*         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         connection.connect();
 
@@ -118,7 +135,7 @@ public class Parser {
             }
         }
         connection.disconnect();
-        return jsonResponse.toString();
+        return jsonResponse.toString(); */
     }
 
     /** Gets all records and put them into the database
@@ -127,11 +144,35 @@ public class Parser {
      */
     public static List<Record> getRecords(String jsonURL){
         try {
+            // test to mesure how much time each operation takes
+            java.sql.Timestamp start1 = Timestamp.from(java.time.Instant.now());
+
             ObjectMapper om = new ObjectMapper();
+            om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+            java.sql.Timestamp end1 = Timestamp.from(java.time.Instant.now());
+            Duration duration1 = Duration.between(start1.toInstant(), end1.toInstant());
+            System.out.println(duration1.toMillis());
+
+
+
+            java.sql.Timestamp start2 = Timestamp.from(java.time.Instant.now());
 
             String JsonResponse = fetchJsonFromUrl(jsonURL);
 
+            java.sql.Timestamp end2 = Timestamp.from(java.time.Instant.now());
+            Duration duration2 = Duration.between(start2.toInstant(), end2.toInstant());
+            System.out.println(duration2.toMillis());
+
+
+            java.sql.Timestamp start = Timestamp.from(java.time.Instant.now());
+
             Root root = om.readValue(JsonResponse, Root.class);
+
+            java.sql.Timestamp end = Timestamp.from(java.time.Instant.now());
+            Duration duration = Duration.between(start.toInstant(), end.toInstant());
+            System.out.println(duration.toMillis());
+
 
             return root.result.records;
         } 

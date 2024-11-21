@@ -7,9 +7,15 @@ public class User {
         INTERVENANT,
         ADMIN,
 
+        PLACEHOLER,
+
         // trust, this is relevant 
         // used in the database.printall
         PROJECT
+    }
+
+    public enum Notifications {
+        
     }
 
     // first name, last name, email, password
