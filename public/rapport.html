@@ -94,6 +94,15 @@
                             <li class="dash">Diagramme d'activités</li>
                         </ul>
                     </li>
+                    <ul class="bare-list nav">
+                        <li class="nav-item">
+                            <h3 class="nav-item-title"><a class="nav-item-title__link" href="#conception">Conception</a></h3>
+                            <ul class="bare-list nav-item-details">
+                                <li class="dash">Architecture et choix de design</li>
+                                <li class="dash">Diagramme de classe</li>
+                                <li class="dash">Diagramme de séquence</li>
+                            </ul>
+                        </li>
                     <li class="nav-item">
                         <h3 class="nav-item-title"><a class="nav-item-title__link" href="#analysis">Analyse</a></h3>
                         <ul class="bare-list nav-item-details">
@@ -105,7 +114,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <h3 class="nav-item-title"><a class="nav-item-title__link" href="#prototype">Prototype</a> </h3>
+                        <h3 class="nav-item-title"><a class="nav-item-title__link" href="#prototype">Implémentation</a> </h3>
                     </li>
                 </ul>
             </nav>
@@ -126,17 +135,39 @@
                 </p>
                 <h3 class="subsection-title">Échéancier</h3>
                 <p>
-                    <em>D'abord on complètera une grande partie du rapport avant de commencer le prototype.
+                    <em>
+                        8 - 14 novembre :  
                         <br>
-                        Syrine s'occupera du cadre de projet, du glossaire, persona et de l'analyse. (à finir avant le 8 octobre)
+                        - Othmane : Mise à jour des diagrammes d'activités.  
                         <br>
-                        Othmane s'occupera des scénarios et du diagramme de cas d'utilisation. (à finir avant le 8 octobre)
+                        - Oscar : Préparation initiale des fichiers JSON pour les données.  
                         <br>
-                        Oscar s'occupera des diagrammes d'activités. (à finir avant le 8 octobre)
+                        - Syrine : Mise à jour du rapport d'analyse des exigences et des besoins.  
+                        <br><br>
+                
+                        15 - 17 novembre :  
                         <br>
-                        On travaillera les trois sur le code et la vérification du prototype. (à commencer à partir du 8 octobre et compléter jusqu'au 11 octobre)
+                        - Othmane : Création du diagramme de classes et des diagrammes de séquence.  
                         <br>
-                        </em>
+                        - Oscar : Implémentation des cas d'utilisation principaux et ajout du mock data.  
+                        <br>
+                        - Syrine : Architecture et rédaction des justifications des choix de design.  
+                        <br><br>
+                
+                        18 - 20 novembre :  
+                        <br>
+                        Othmane : Finalisation des diagrammes de séquence et classes.  
+                        <br>
+                        Oscar : Travail sur l'interface utilisateur (UI/UX) et intégration des tests unitaires.  
+                        <br>
+                        Syrine : Complétion des sections Analyse et Conception dans le rapport.  
+                        <br><br>
+                
+                        21 - 22 novembre :  
+                        <br>
+                        Équipe : Tests, mise en commun, et livraison du projet.  
+                        <br>
+                    </em>
                 </p>
 
                 <h3 class="subsection-title">Hypothèses (optionnel)</h3>
@@ -145,15 +176,12 @@
 <!-- Feedback: Utilisez une notation plus sommaire et il doit s'étendre sur toute la durée du projet -->
                     <em>•	Les intervenants fourniront des informations complètes et à jour sur les travaux publics et privés.
                         <br>
-                        •	La majorité des résidents de Montréal utiliseront des appareils mobiles pour consulter l'application.
+                        •	 La majorité des utilisateurs auront une connexion internet stable, ce qui est essentielle pour accéder aux fonctionnalités en temps réel de l'application.
                         <br>
-                        •	Les utilisateurs préfèreront une interface simple et intuitive.
+                        •	Les données sur les travaux en cours ou planifiés seront disponibles via des API fiables, pour permettre leur intégration dans l'application.
                         <br>
-                        •	Les travaux pourront être planifiés avec un degré de précision suffisant pour informer les utilisateurs à l'avance.
+                        •	Les notifications personnalisées augmenteront l'engagement des utilisateurs et favoriseront leur participation active à la planification participative.
                         <br>
-                        •	Les acteurs publics et privés collaboreront efficacement pour partager les informations sur les travaux.
-                        <br>
-                        •	Les citoyens souhaiteront participer en signalant des problèmes ou en donnant des retours sur l'application.
                         </em>
                 </p>
             </section>
@@ -183,8 +211,8 @@
                     <dd class="glossary-def">Travaux réalisés par la Ville ou ses partenaires pour améliorer l'infrastructure urbaine.</dd>
                     <dt class="glossary-term">Travaux privés</dt>
                     <dd class="glossary-def">Travaux réalisés par des entrepreneurs privés.</dd>
-                    <dt class="glossary-term">Notifications</dt>
-                    <dd class="glossary-def">Alertes envoyées aux résidents pour les informer des changements ou avancées des travaux.</dd>
+                    <dt class="glossary-term">Notifications personnalisées</dt>
+                    <dd class="glossary-def">Alertes spécifiques envoyées aux résidents pour les informer des changements ou avancées des travaux affectant leur quartier ou leurs préférences.</dd>
                     <dt class="glossary-term">Quartier</dt>
                     <dd class="glossary-def">Secteur géographique de Montréal auquel un résident est associé ou qui est affecté par des travaux.</dd>
                     <dt class="glossary-term">Type de travaux</dt>
@@ -195,6 +223,18 @@
                     <dd class="glossary-def">Demande soumise par un résident pour réaliser des travaux spécifiques dans son quartier.</dd>
                     <dt class="glossary-term">Statut du projet</dt>
                     <dd class="glossary-def">État d'avancement du projet de travaux, comme "Prévu", "En cours" ou "Suspendu".</dd>
+                    <dt class="glossary-term">Application MaVille</dt>
+                    <dd class="glossary-def">Plateforme numérique conçue pour améliorer la communication et la coordination entre les résidents, les intervenants, et la Ville de Montréal.</dd>
+                    <dt class="glossary-term">Code de la ville</dt>
+                    <dd class="glossary-def">Identifiant unique à 8 chiffres attribué par la Ville de Montréal aux intervenants pour leur permettre de s'inscrire à l'application.</dd>
+                    <dt class="glossary-term">Service Info Entraves et Travaux</dt>
+                    <dd class="glossary-def">Système existant de la Ville de Montréal fournissant des données sur les entraves routières et les travaux en cours, intégré dans l'application via une API.</dd>
+                    <dt class="glossary-term">Planification participative</dt>
+                    <dd class="glossary-def">Fonctionnalité permettant aux résidents de partager leurs préférences sur les horaires des travaux dans leur quartier et de consulter les préférences des autres résidents.</dd>
+                    <dt class="glossary-term">Horaire des travaux</dt>
+                    <dd class="glossary-def">Période spécifique pendant laquelle les travaux sont planifiés ou exécutés, incluant des plages horaires précises pour minimiser les impacts.</dd>
+                    <dt class="glossary-term">API municipales</dt>
+                    <dd class="glossary-def">Interfaces fournies par la Ville de Montréal permettant d'obtenir des données actualisées sur les travaux et entraves routières.</dd>
                 </dl>
 
                 <h3 class="subsection-title">Persona (optionnel)</h3>
@@ -223,7 +263,7 @@
                             <span class="persona-name">Othmane &ndash; <em>Entrepreneur privé</em></span>
                             <div class="persona-stat">
                                 <span class="persona-type persona-type--eco" title="Ecolo">PP</span>
-                                <span class="persona-market">20%</span>
+                                <span class="persona-market">30%</span>
                             </div>
                         </div>
                         <span class="persona-info">Homme propriétaire d'une entreprise de construction à Montréal.</span>
@@ -1023,20 +1063,60 @@
                 </div>
             </section>
 
+
+            <section class="main-section">
+                <h2 id="conception" class="section-title">Conception</h2>
+
+                <div>
+                    <h3 class="subsection-title">Architecture et choix de design</h3>
+                    <p>
+                        <h4> Architecture - modèle C4</h4>
+                        <img class="activity-diagram" src="assets/modelC4/c4devoir2-Niveau_1.drawio.svg" alt="Modèle C4 : Niveau 1 ">
+                        <p>
+                        <img class="activity-diagram" src="assets/modelC4/c4devoir2-Niveau_2.drawio.svg" alt="Modèle C4 : Niveau 2 ">
+                        <p>
+                        <img class="activity-diagram" src="assets/modelC4/c4devoir2-Niveau_3.drawio.svg" alt="Modèle C4 : Niveau 3 ">
+                    <p>
+                        <h4> Choix de design</h4>
+                    <p>
+                        Pour l'application MaVille, nous avons choisi un design qui repose sur une approche modulaire qui 
+                        sépare les responsabilités entre l'interface, le Backend, et les composants internes. 
+                        L'<em>interface</em> est structuré autour des composants <em>Dialog</em> et <em>Speaker</em>, qui gèrent  les
+                        interactions utilisateur et l'affichage des message.  Le <em>Backend</em>, quant à lui, intègre des composants
+                        comme <em>Database</em> pour la gestion des données, <em>Parser</em> pour les appels à l'API externe, <em>Writer</em>
+                        pour la sauvegarde locale des données, et <em>Language</em> pour le support multilingue. 
+                        Cette séparation améliore la maintenabilité et réduit le couplage, pour ainsi faciliter l'ajout de nouvelles fonctionnalités. 
+                        Les communications sont basées sur REST pour les interactions avec l'API Info entraves et travaux et sur des appels interne pour les composants de l'application.  
+                    </p>    
+                </div>
+                
+                <div>
+                    <h3 class="subsection-title">Diagramme de classe</h3>
+                </div>
+
+                <div>
+                    <h3 class="subsection-title">Diagramme de séquence</h3>
+                </div>
+
+
+
+
+
+
             <section class="main-section">
                 <h2 id="analysis" class="section-title">Analyse</h2>
 
                 <div>
                     <h3 class="subsection-title">Risques</h3>
                     <ol class="risks">
-                        <li>Les travaux en cours ou planifiés ne sont pas à jour ou actualisés en temps réel, ce qui fait que les utilisateurs basent leur planification sur des informations erronées. La solution serait de mettre en place une mise à jour automatique et fréquente avec des données officielles de la ville.
+                        <li>Les données des travaux en cours ou planifiés ne sont pas à jour ou actualisés en temps réel, ce qui fait que les utilisateurs basent leur planification sur des informations erronées. La solution serait d'implémenter des appels API périodiques pour synchroniser les informations de manière automatique et garantir leur fiabilité.
                         </li>
-                        <li>Les dates des travaux sont erronées, ce qui pourrait entraîner des fermetures de routes imprévues ou des changements non signalés. La solution serait d'avoir un système de validation des dates auprès de la ville et des entrepreneurs pour s'assurer de toujours fournir des informations de qualité.
+                        <li>Les informations fournies par les intervenants (par exemple, type de travaux, dates, ou emplacements) pourraient être incorrectes ou incomplètes , ce qui pourrait entraîner des fermetures de routes imprévues ou des changements non signalés.
+                            La solution serait d'ajouter une étape de validation des données lors de leur soumission, avec des règles standardisées pour les intervenants.
                         </li>
-<!-- Feedback: Prototype - Bon prototype, mais un peu minimaliste -->
-<!-- Feedback: Prototype - Pensez à fournir des comptes de test la prochaine fois -->
-<!-- Feedback: Prototype - Le menu présenté pour chacun ne laisse pas paraitre tous les CUs possibles -->
-<!-- Feedback: Prototype - Aucune validation lors de la connexion -->
+                        <li>Les préférences des résidents pour les plages horaires des travaux pourraient être incompatibles ou contradictoires avec les contraintes des intervenants.
+                            La solution serait de mettre en place un système de pondération et de priorisation des préférences pour équilibrer les besoins des résidents et des intervenants.
+                        </li>
                         <li>La requête pour un travail déjà effectué pourrait entraîner des duplications inutiles. La solution serait de mettre en place un bon système de vérification des travaux existants/planifiés et d'avoir un moteur de recherche efficace permettant de retrouver les travaux précédents.
                         </li>
                         <li>Le manque de confidentialité de l'application pourrait engendrer une violation de la vie privée, puisque l'application collecte des données personnelles. La solution serait d'implémenter une politique de confidentialité transparente pour informer les utilisateurs et leur donner des options pour décider de la collecte et de l'utilisation de leurs données.
@@ -1050,8 +1130,8 @@
                     <h3 class="subsection-title">Besoins non-fonctionnelles</h3>
                     <ol class="nf-requirements">
                         <li>Interface intuitive : L'application doit être facile à utiliser pour les utilisateurs de tous âges, avec une navigation simple et claire.</li>
-                        <li>Soutien technique disponible : Un support technique réactif doit être mis en place pour assister les utilisateurs en cas de problème.</li>
-                        <li>Mises à jour fréquentes : L'application doit être régulièrement mise à jour pour garantir la précision des données et l'ajout de nouvelles fonctionnalités.</li>
+                        <li>Soutien technique disponible : Un support technique doit être disponible via plusieurs canaux (email, chatbot, téléphone) et réactif, avec des FAQ et tutoriels intégrés à l'application pour répondre aux questions fréquentes.</li>
+                        <li>Mises à jour fréquentes : L'application doit être régulièrement mise à jour pour garantir la précision des données et l'ajout de nouvelles fonctionnalités.On doit également les annoncées aux utilisateurs via les notifications. </li>
                         <li>Multilinguisme (anglais et français): Pour répondre aux besoins des résidents de Montréal, l'application doit être disponible en anglais et en français.</li>
                         <li>Fiabilité : L'application doit être accessible en tout temps, surtout en cas de travaux urgents ou imprévus. Une bonne disponibilité permet aux utilisateurs de consulter les informations sans interruption, ce qui est important pour planifier leurs déplacements efficacement.</li>
                     </ol>
@@ -1061,11 +1141,15 @@
                     <h3 class="subsection-title">Besoins matériels</h3>
                     <p>
                         <em>Pour l'application MaVille les besoins matériels incluent les infrastructures nécessaires pour assurer
-                             le bon fonctionnement et l'exploitation de l'application. Donc, on a besoins des serveurs dédiés pour 
-                             gérer la mémoire requise, ainsi qu'un réseau performant pour garantir une connexion rapide et stable 
-                             pour les utilisateurs. Des postes de travail sont également nécessaires pour les développeurs et l'équipe
-                              de gestion technique.</em>
-                    </p>
+                             le bon fonctionnement et l'exploitation de l'application. Donc, on a besoins des serveurs dédiés performants pour 
+                            gérer les requêtes en temps réel et la mémoire requise qui stockera dans une base de données les informations des utilisateurs
+                            et des travaux. 
+                            Ainsi qu'un réseau performant pour garantir une connexion rapide et stable 
+                             pour les utilisateurs. Des postes de travail et un environnement de test dédié pour le développement et la validation des fonctionnalités 
+                             sont également nécessaires pour les développeurs et l'équipe
+                              de gestion technique.
+                        </em>
+                     </p>
                 </div>
 
                 <div>
@@ -1088,21 +1172,22 @@
 <!-- Feedback: Git - Très bien -->
 
                     <p>
-                        <em>Pour l'application MaVille, la solution d'intégration repose sur l'utilisation d'API ouvertes permettant une communication
-                            fluide avec d'autres systèmes, comme les bases de données municipales ou les services de gestion des travaux publics.
-                            Cela garantira que les données sur les chantiers et les travaux soient à jour et cohérentes.L'application devra s'interfacer
-                            avec d'autre logiciel pour la gestion des notifications, et intégrer des formats standards pour les échanges de données pour 
-                             d'assurer une interopérabilité optimale.</em>
+                        <em>Pour l'application MaVille, la solution d'intégration repose sur l'utilisation des API ouvertes proposées
+                         par la Ville de Montréal, comme le service Info entraves et travaux, pour obtenir des données actualisées et 
+                        cohérentes sur les chantiers et entraves. Ces APIs permettront une communication fluide avec les systèmes municipaux 
+                        et assureront une synchronisation en temps réel des informations. L'application devra également s'interfacer avec
+                         des services tiers pour la gestion des notifications en temps réel, en adoptant des formats standards (JSON) 
+                         pour garantir une opérabilité optimale et une extensibilité future.</em>
                     </p>
                 </div>
             </section>
 
             <section class="main-section">
-                <h2 id="prototype" class="section-title">Prototype</h2>
+                <h2 id="prototype" class="section-title">Implémentation</h2>
 
                 <p>
                     <em>
-                        Indiquez ici les informations nécessaires (commande d'exécution, comptes préconfigurées) pour exécuter et tester le prototype</em>.
+                        Indiquez ici les informations nécessaires (commande d'exécution, comptes préconfigurées) pour exécuter et tester</em>.
                 </p>
             </section>
         </div>
