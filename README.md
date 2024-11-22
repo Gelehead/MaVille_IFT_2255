@@ -23,6 +23,10 @@ _Note: we called "travaux" "projects" because it makes more sense than "works" o
  - [ ] Soumettre une requête de travail
  - [ ] Consulter la liste des requêtes de travail
 
+### Impediment - Project relationship
+Although there isn't any clear relationship between a project's "id" and an impediment (entrave) 's "id_request", when creating new projects, we made sure to have those 2 ids be linked between each other.
+So that when searching for a certain impediment linked to a project, we have a clear relation
+
 ## Analysis 
 
 Le projet MaVille vise à améliorer la communication entre les résidents de Montréal et les intervenants concernant les travaux publics. L'application permet aux utilisateurs de consulter les travaux en cours et à venir, de soumettre des requêtes et de recevoir des notifications personnalisées.

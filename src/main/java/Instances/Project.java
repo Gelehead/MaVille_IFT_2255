@@ -5,6 +5,7 @@ public class Project {
 
     //actual parameters
     public int id;
+    public String bigId;
     private Date start_date;
     private Date end_date;
     private District district;
@@ -25,30 +26,47 @@ public class Project {
 
     //probably needs like "NEGOTIATING", "REFUSED", "ABANDONED", and more
     public enum Progress {
+        // for projects
         NOT_STARTED,
         IN_PROGRESS,
         FINISHED,
+
+        // for requests
+        SUBMITTED,
+        REFUSED,
+        ACCEPTED,
 
         PLACEHOLDER
     }
 
 
     public enum Reason {
-        Construction_rénovation_sans_excavation,
+        Travaux_routiers,
+        Travaux_de_gaz_ou_électricité,
+        Construction_ou_rénovation,
+        Entretien_paysager,
+        Travaux_liés_aux_transports_en_commun,
+        Travaux_de_signalisation_et_éclairage,
+        Travaux_souterrains,
+        Travaux_résidentiel,
+        Entretien_urbain,
+        Entretien_des_réseaux_de_télécommunication,
+
+        /* Construction_rénovation_sans_excavation,
         Construction_rénovation_avec_excavation,
         Égouts_et_aqueducs__Réhabilitation,
         Égouts_et_aqueducs__Excavation,
         Égouts_et_aqueducs__Inspection_et_nettoyage,
-        Autre,
         Réseaux_routier__Réfection_et_travaux_corrélatifs,
-        S_3_Infrastructure_souterraine_majeure__Massifs_et_conduits,
+        S_3_Infrastructure_souterraine_majeure__Massifs_et_conduits, */
 
+        Autre,
         UNHANDLED_REASON
     }
 
     public Project
     (
-        int id, 
+        int id, String bigId,
         String permit_id, String permit_category, String contract_number,
         String reason,
         District district, 
@@ -57,6 +75,7 @@ public class Project {
         Coordinates co)
     {
         this.id = id;
+        this.bigId = bigId;
 
         this.permit_id = permit_id;
         this.permit_category = permit_category;
@@ -85,21 +104,21 @@ public class Project {
     private Reason toReason(String s){
         switch (s) {
             case "S-3 Infrastructure souterraine majeure - Massifs et conduits":
-                return Reason.S_3_Infrastructure_souterraine_majeure__Massifs_et_conduits;
+                return Reason.Travaux_souterrains;
             case "Autre":
                 return Reason.Autre;
             case "Construction/rénovation sans excavation":
-                return Reason.Construction_rénovation_sans_excavation;
+                return Reason.Construction_ou_rénovation;
             case "Construction/rénovation avec excavation" :
-                return Reason.Construction_rénovation_avec_excavation;
+                return Reason.Construction_ou_rénovation;
             case "Égouts et aqueducs - Réhabilitation" : 
-                return Reason.Égouts_et_aqueducs__Réhabilitation;
+                return Reason.Travaux_souterrains;
             case "Égouts et aqueducs - Inspection et nettoyage" : 
-                return Reason.Égouts_et_aqueducs__Inspection_et_nettoyage;
+                return Reason.Travaux_souterrains;
             case "Égouts et aqueducs - Excavation" :
-                return Reason.Égouts_et_aqueducs__Excavation;
+                return Reason.Travaux_souterrains;
             case "Réseaux routier - Réfection et travaux corrélatifs":
-                return Reason.Réseaux_routier__Réfection_et_travaux_corrélatifs;
+                return Reason.Travaux_routiers;
             default:
                 return Reason.UNHANDLED_REASON;
         }

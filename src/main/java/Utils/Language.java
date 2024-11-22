@@ -11,6 +11,50 @@ public class Language {
         ENGLISH
     }
 
+    public static String ask_for_correct_format_schedule(language language){
+        switch (language) {
+            case FRENCH:
+                return "Ecrivez selon le format suivant : \n    \" JOUR hhmm - hhmm\"";
+            case ENGLISH : 
+                return "please enter a response with the following format : \n    \" DAY hhmm - hhmm\"";
+            default:
+                return "";
+        }
+    }
+
+    public static String ask_for_schedule(language language){
+        switch (language) {
+            case FRENCH:
+                return "Donnez une plage horaire qui vous satisfait dans les horaires suivants : \n(--- : vide, ### : plein)";
+            case ENGLISH:
+                return "placeholder";
+            default:
+                return "";
+        }
+    }
+
+    public static String fetching_impediments(language language){
+        switch (language) {
+            case FRENCH:
+                return "Requête des entraves...";
+            case ENGLISH :
+                return "fetching impediments...";
+            default:
+                return "";
+        }
+    }    
+
+    public static String fetching_records(language language){
+        switch (language) {
+            case FRENCH:
+                return "Requête de travaux...";
+            case ENGLISH :
+                return "fetching records...";
+            default:
+                return "";
+        }
+    }
+
     public static String no_project_found(language language){
         switch (language) {
             case FRENCH:
@@ -60,32 +104,39 @@ public class Language {
         switch (lang) {
             case FRENCH:
                 return """
-                    [1] Construction et rénovation sans excavation
-                    [2] Construction et rénovation avec excavation
-                    [3] Égouts et aqueducs : Réhabilitation
-                    [4] Égouts et aqueducs : Excavation
-                    [5] Égouts et aqueducs : Inspection et nettoyage
-                    [6] Réseaux routiers : Réfection et travaux corrélatifs
-                    [7] Infrastructure souterraine majeure : Massifs et conduits
-                    [8] Raison non prise en charge
-                    [9] Autre
+                    [1] Travaux routiers
+                    [2] Travaux de gaz ou électricité
+                    [3] Construction ou rénovation
+                    [4] Entretien paysager
+                    [5] Travaux liés aux transports en commun
+                    [6] Travaux de signalisation et éclairage
+                    [7] Travaux souterrains
+                    [8] Travaux résidentiel
+                    [9] Entretien urbain
+                    [10] Entretien des réseaux de télécommunication
+                    [11] Raison non prise en charge
+                    [12] Autre
                         """;
             case ENGLISH:
                 return """
-                    [1] Construction and renovation without excavation
-                    [2] Construction and renovation with excavation
-                    [3] Sewers and aqueducts: Rehabilitation
-                    [4] Sewers and aqueducts: Excavation
-                    [5] Sewers and aqueducts: Inspection and cleaning
-                    [6] Road networks: Repair and related work
-                    [7] Major underground infrastructure: Massifs and conduits
-                    [8] Unhandled reason
-                    [9] Other
+                    [1] Roadwork
+                    [2] Gas or electricity work
+                    [3] Construction or renovation
+                    [4] Landscaping maintenance
+                    [5] Work related to public transportation
+                    [6] Signage and lighting work
+                    [7] Underground work
+                    [8] Residential work
+                    [9] Urban maintenance
+                    [10] Telecommunications network maintenance
+                    [11] Unhandled reason
+                    [12] Other
                         """;
             default:
                 return "";
         }
     }
+    
     
         
 
@@ -260,7 +311,9 @@ public class Language {
                                 "[5] Faire une requête de travail\n" +
                                 "[6] Accepter ou refuser la candidature d'un travail\n" +
                                 "[7] Signaler un problème\n" +
-                                "[8] Quitter\n" + 
+                                "[8] Consulter les entraves \n" +
+                                "[9] Revenir au menu principal\n" + 
+                                "[10] Quitter\n" + 
                                 "Choisissez une option : ";
             case ENGLISH: return "Resident main menu:\n" +
                                     "[1] View ongoing projects\n" +
@@ -270,7 +323,9 @@ public class Language {
                                     "[5] Submit a work request\n" +
                                     "[6] Accept or reject a job application\n" +
                                     "[7] Report a problem\n" +
-                                    "[8] Quit\n" +
+                                    "[8] Search for a specific Impediment\n" +
+                                    "[9] Go back to main menu\n" +
+                                    "[10] Quit\n" +
                                     "Choose an option: ";
             default: return "";
         }

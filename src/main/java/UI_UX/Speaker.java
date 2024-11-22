@@ -1,4 +1,5 @@
 package UI_UX;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -7,6 +8,7 @@ import Instances.*;
 import Instances.Project.Progress;
 import Utils.Language;
 import backend.Database;
+import metrics.Date;
 
 // TODO : handle invalid input 
 
@@ -156,7 +158,7 @@ public class Speaker {
                         return Dialog.STATE.INITIAL;
                 }
 
-
+            // TODO: bookmark
             case MAIN_RESIDENT:
                 String choixResident = ask(Utils.Language.Main_menu_resident(Dialog.choice_language));
 
@@ -181,9 +183,11 @@ public class Speaker {
                         System.out.println(Language.NotImplemented_SignalerProbleme(Dialog.choice_language));
                         return Dialog.STATE.SIGNAL_PRB_RESIDENT;
                     case "8":
+                        return Dialog.STATE.IMPEDIMENT_RESIDENT;
+                    case "9" :
                         database.setActiveUser(null);
                         return Dialog.STATE.INITIAL;
-                    case "9":
+                    case "10":
                         return Dialog.STATE.QUIT;
             }
 
@@ -201,28 +205,47 @@ public class Speaker {
                 Project.Reason chosen_reason;
                 String r = ask(Language.reasonMenu(Dialog.choice_language));
                 switch (r) {
-                    case "1": chosen_reason = Project.Reason.Construction_rénovation_sans_excavation;
+                    case "1":
+                        chosen_reason = Project.Reason.Travaux_routiers;
                         break;
-                    case "2": chosen_reason = Project.Reason.Construction_rénovation_avec_excavation;
+                    case "2":
+                        chosen_reason = Project.Reason.Travaux_de_gaz_ou_électricité;
                         break;
-                    case "3":chosen_reason = Project.Reason.Égouts_et_aqueducs__Réhabilitation;
+                    case "3":
+                        chosen_reason = Project.Reason.Construction_ou_rénovation;
                         break;
-                    case "4":chosen_reason = Project.Reason.Égouts_et_aqueducs__Excavation;
+                    case "4":
+                        chosen_reason = Project.Reason.Entretien_paysager;
                         break;
-                    case "5":chosen_reason = Project.Reason.Égouts_et_aqueducs__Inspection_et_nettoyage;
+                    case "5":
+                        chosen_reason = Project.Reason.Travaux_liés_aux_transports_en_commun;
                         break;
-                    case "6":chosen_reason = Project.Reason.Réseaux_routier__Réfection_et_travaux_corrélatifs;
+                    case "6":
+                        chosen_reason = Project.Reason.Travaux_de_signalisation_et_éclairage;
                         break;
-                    case "7":chosen_reason = Project.Reason.S_3_Infrastructure_souterraine_majeure__Massifs_et_conduits;
+                    case "7":
+                        chosen_reason = Project.Reason.Travaux_souterrains;
                         break;
-                    case "8":chosen_reason = Project.Reason.UNHANDLED_REASON;
+                    case "8":
+                        chosen_reason = Project.Reason.Travaux_résidentiel;
                         break;
-                    case "9":chosen_reason = Project.Reason.Autre;
+                    case "9":
+                        chosen_reason = Project.Reason.Entretien_urbain;
+                        break;
+                    case "10":
+                        chosen_reason = Project.Reason.Entretien_des_réseaux_de_télécommunication;
+                        break;
+                    case "11":
+                        chosen_reason = Project.Reason.UNHANDLED_REASON;
+                        break;
+                    case "12":
+                        chosen_reason = Project.Reason.Autre;
                         break;
                     default:
                         chosen_reason = Project.Reason.UNHANDLED_REASON;
                         throw new IllegalArgumentException("Invalid choice: " + r);
                 }
+                
 
                 Project.Progress chosen_progress; 
                 String prog = ask(Language.progressMenu(Dialog.choice_language));
@@ -254,22 +277,34 @@ public class Speaker {
 
                 return Dialog.STATE.MAIN_RESIDENT;
 
-            // TODO: devoir 3
             // notification system
             case NOTIFS_RESIDENT : 
+                ArrayList<String> schedule = new ArrayList<>();
+                
+                System.out.println(Language.ask_for_schedule(Dialog.choice_language));
+                System.out.println(Date.week_schedule());
+                schedule.add(ask(Language.ask_for_correct_format_schedule(Dialog.choice_language)));
+                schedule.add(ask(Language.anything_else(Dialog.choice_language)));
                 return Dialog.STATE.MAIN_RESIDENT;
             
-            // 
+            // donner des plages horaires de disponibilites
             case PLANIF_RESIDENT :
                 return Dialog.STATE.MAIN_RESIDENT;
             
+            // plan a request
             case REQUEST_RESIDENT : 
                 return Dialog.STATE.MAIN_RESIDENT;
 
+            // vote for an existing request
             case VOTE_RESIDENT : 
                 return Dialog.STATE.MAIN_RESIDENT;
 
+            // signal a problem
             case SIGNAL_PRB_RESIDENT : 
+                return Dialog.STATE.MAIN_RESIDENT;
+
+            // search for a specific impediment
+            case IMPEDIMENT_RESIDENT :
                 return Dialog.STATE.MAIN_RESIDENT;
 
 

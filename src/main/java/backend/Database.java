@@ -11,6 +11,7 @@ import Instances.User.Type;
 import UI_UX.Dialog;
 import Utils.Language;
 import Utils.Parser;
+import Utils.Parser.Impediment;
 import Utils.Parser.Record;
 import metrics.*;
 
@@ -23,11 +24,13 @@ public class Database implements java.io.Serializable {
     private static Hashtable<String, Admin>             adminHashtable = new Hashtable<>();
 
     private static Hashtable<Integer, Project>          projectHashtable = new Hashtable<>();
+    private static Hashtable<Integer, Impediment>       impedimentHashtable = new Hashtable<>();
     private static Hashtable<District_name, District>   districtHashtable = new Hashtable<>();
 
     private static User activeUser;
     // JSON URL to get the ongoing projects
-    String ongoingProjectsURL = "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=cc41b532-f12d-40fb-9f55-eb58c9a2b12b";
+    String projectsURL = "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=cc41b532-f12d-40fb-9f55-eb58c9a2b12b";
+    String impedimentsURL = "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=a2bc8014-488c-495d-941b-e7ae1999d1bd";
 
     public enum District_name{
         placeholder
@@ -70,7 +73,7 @@ public class Database implements java.io.Serializable {
 
     /**
      * 
-     * @param u
+     * @param u User
      */
     public void addUser(User u){
         userHashtable.put(u.getMail(), u);
@@ -171,9 +174,15 @@ public class Database implements java.io.Serializable {
     }
 
     private void init_records(){
-        for (Parser.Record record : Parser.getRecords(ongoingProjectsURL)) {
+        for (Parser.Record record : Parser.getRecords(projectsURL)) {
             Project project = toProject(record);
             projectHashtable.put(project.id, project);
+        }
+    }
+
+    private void init_impediments(){
+        for (Parser.Impediment rimp : Parser.getImpediments(impedimentsURL)){
+            impedimentHashtable.put(rimp.id, rimp);
         }
     }
 
@@ -189,6 +198,7 @@ public class Database implements java.io.Serializable {
         );
         return new Project(
             record.id,
+            record.official_id,
             record.permit_permit_id,
             record.permitcategory,
             record.contractnumber,
@@ -214,6 +224,7 @@ public class Database implements java.io.Serializable {
     private void init(int mockUsers, int mockIntervenants, int mockResidents){
         init_records();
         init_districts();
+        init_impediments();
 
         Faker faker = new Faker();
         for (int i = 0; i < mockUsers; i++) {

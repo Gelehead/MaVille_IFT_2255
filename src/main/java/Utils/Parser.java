@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import UI_UX.Dialog;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -54,6 +56,7 @@ public class Parser {
         public String occupancy_name;
         public String submittercategory;
         public String organizationname;
+// deprecated parameters
 /*         public String duration_days_mon_active;
         public String duration_days_mon_all_day_round;
         public String duration_days_tue_active;
@@ -99,6 +102,68 @@ public class Parser {
         }
     }
 
+    @JsonIgnoreProperties({"fields"})
+    public static class RootImpediment {
+        public String help;
+        public boolean success;
+        public Resultimpediment result;
+    }
+
+    @JsonIgnoreProperties({"fields"})
+    public static class Resultimpediment {
+        @JsonProperty("include_total")
+        public boolean includeTotal;
+        public int limit;
+        @JsonProperty("records_format")
+        public String recordsFormat;
+        @JsonProperty("resource_id")
+        public String resourceId;
+        public List<Impediment> records;
+        @JsonProperty("total_estimation_threshold")
+        public String totalEstimationThreshold;
+        public List<Object> fields;  // This will be ignored during deserialization
+        public Object _links;
+        public int total;
+        public boolean total_was_estimated;
+    }
+    
+    public static class Impediment {
+        @JsonProperty("_id")
+        public int id;
+        @JsonProperty("id_request")
+        public String idRequest;
+        public String streetid;
+        public String streetimpactwidth;
+        public String streetimpacttype;
+        public String nbfreeparkingplace;
+        public String sidewalk_blockedtype;
+        public String backsidewalk_blockedtype;
+        public String bikepath_blockedtype;
+        public String name;
+        public String shortname;
+        public String fromname;
+        public String fromshortname;
+        public String toname;
+        public String toshortname;
+        public String length;
+        public String isarterial;
+        public String stmimpact_blockedtype;
+        public String otherproviderimpact_blockedtype;
+        public String reservedlane_blockedtype;
+    
+        @Override
+        public String toString() {
+            return String.format("ID: %d, Street: %s, Length: %s, Is Arterial: %s", id, name, length, isarterial);
+        }
+
+        public boolean affects(String s){
+            if (streetid.toLowerCase().contains(s.toLowerCase())){return true;}
+            if (fromname.toLowerCase().contains(s.toLowerCase())){return true;}
+            if (toname.toLowerCase().contains(s.toLowerCase())){return true;}
+            return false;
+        }
+    }
+
     // Method to fetch JSON data from a URL
     //TODO: implement an offline method, so the program can work without url
     public static String fetchJsonFromUrl(String jsonUrl) throws IOException {
@@ -138,11 +203,57 @@ public class Parser {
         return jsonResponse.toString(); */
     }
 
+        /** Gets all impediments (entraves) and put them into the database
+     * 
+     * @param filePath
+     */
+    public static List<Impediment> getImpediments(String jsonURL){
+        System.out.println(Language.fetching_records(Dialog.choice_language));
+        try {
+            // test to mesure how much time each operation takes
+            java.sql.Timestamp start1 = Timestamp.from(java.time.Instant.now());
+
+            ObjectMapper om = new ObjectMapper();
+            om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+            java.sql.Timestamp end1 = Timestamp.from(java.time.Instant.now());
+            Duration duration1 = Duration.between(start1.toInstant(), end1.toInstant());
+            System.out.println(duration1.toMillis());
+
+
+
+            java.sql.Timestamp start2 = Timestamp.from(java.time.Instant.now());
+
+            String JsonResponse = fetchJsonFromUrl(jsonURL);
+
+            java.sql.Timestamp end2 = Timestamp.from(java.time.Instant.now());
+            Duration duration2 = Duration.between(start2.toInstant(), end2.toInstant());
+            System.out.println(duration2.toMillis());
+
+
+            java.sql.Timestamp start = Timestamp.from(java.time.Instant.now());
+
+            RootImpediment root = om.readValue(JsonResponse, RootImpediment.class);
+
+            java.sql.Timestamp end = Timestamp.from(java.time.Instant.now());
+            Duration duration = Duration.between(start.toInstant(), end.toInstant());
+            System.out.println(duration.toMillis());
+
+
+            return root.result.records;
+        } 
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /** Gets all records and put them into the database
      * 
      * @param filePath
      */
     public static List<Record> getRecords(String jsonURL){
+        System.out.println(Language.fetching_records(Dialog.choice_language));
         try {
             // test to mesure how much time each operation takes
             java.sql.Timestamp start1 = Timestamp.from(java.time.Instant.now());
