@@ -55,5 +55,7 @@ public class Dialog {
             // after each menu interaction, the state changes and a new menu is handled
             state = Speaker.menu(state, database);
         }
+
+        System.out.println(Language.byebye(choice_language));
     }
 }

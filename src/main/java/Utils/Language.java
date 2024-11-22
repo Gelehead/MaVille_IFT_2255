@@ -11,6 +11,241 @@ public class Language {
         ENGLISH
     }
 
+    public static String ask_for_title(language language){
+        switch (language) {
+            case FRENCH:
+                return "Entrez un titre";
+            case ENGLISH : 
+                return "placeholder ask_for_project_search_query";
+            default:
+                return "";
+        } 
+    }
+
+    public static String ask_for_project_search_query(language language){
+        switch (language) {
+            case FRENCH:
+                return """
+                Choisissez parmis les options suivantes un critere de recherche
+                [1] titre
+                [2] type de travaux
+                [3] progrès du projet
+                [4] Rue
+            """;
+            case ENGLISH : 
+                return "placeholder ask_for_project_search_query";
+            default:
+                return "";
+        } 
+    }
+
+    public static String request_title(language language){
+        switch (language) {
+            case FRENCH:
+                return "Donnez un titre à votre requete";
+            case ENGLISH : 
+                return "Give a title to your request";
+            default:
+                return "";
+        }        
+    }
+
+    public static String request_hi_UwU(language language){
+        switch (language) {
+            case FRENCH:
+                return "Entrez une nouvelle requete";
+            case ENGLISH : 
+                return "Enter a new request";
+            default:
+                return "";
+        }
+    }
+
+    public static String request_reason(language language){
+        switch (language) {
+            case FRENCH:
+                return "Donnez une raison parmis les suivantes\n" + reasonMenu(language);
+            case ENGLISH :
+                return "give a reason amongst the following ones\n" + reasonMenu(language);
+            default:
+                return "";
+        }
+    }
+
+    public static String request_district(language language){
+        switch (language) {
+            case FRENCH:
+                return "Donnez un quartier parmis les quartiers suivants\n" + districtMenu(language);
+            case ENGLISH :
+                return "Give a district amongst the following options \n" + districtMenu(language);
+            default:
+                return "";
+        }
+    }
+
+    public static String districtMenu(language language){
+        switch (language) {
+            case FRENCH:
+                return "";
+            case ENGLISH :
+                return "";        
+            default:
+                return "";
+        }
+    }
+
+    public static String request_start(language language){
+        switch (language) {
+            case FRENCH:
+                return "date de début (JJMMAAAA_HHMM) : ";
+            case ENGLISH :
+                return "starting date (DDMMYYYY_HHMM) : ";
+            default:
+                return "";
+        }
+    }
+
+    public static String request_end(language language){
+        switch (language) {
+            case FRENCH:
+                return "date de fin (JJMMAAAA_HHMM) : ";
+            case ENGLISH :
+                return "end date (DDMMYYYY_HHMM) : ";
+            default:
+                return "";
+        }
+    }
+
+    public static String request_description(language language){
+        switch (language) {
+            case FRENCH:
+                return "Donnez une brève description des travaux : ";
+            case ENGLISH :
+                return "Give a short description of the road work desired : ";
+            default:
+                return "";
+        }
+    }
+
+    public static String request_streetid(language language){
+        switch (language) {
+            case FRENCH:
+                return "rue principale des travaux : ";
+            case ENGLISH :
+                return "main road needing work : ";
+            default:
+                return "";
+        }
+    }
+
+    public static String request_fromname(language language){
+        switch (language) {
+            case FRENCH:
+                return "Route d intersection 1 :";
+            case ENGLISH :
+                return "Intersecting road 1 : ";
+            default:
+                return "";
+        }
+    }
+
+    public static String request_toname(language language){
+        switch (language) {
+            case FRENCH:
+                return "Route d intersection 2 :";
+            case ENGLISH :
+                return "Intersecting road 2 : ";
+            default:
+                return "";
+        }
+    }
+
+    public static String request_length(language language){
+        switch (language) {
+            case FRENCH:
+                return "longueur de l'entrave : ";
+            case ENGLISH :
+                return "length of the road work :";
+            default:
+                return "";
+        }
+    }
+
+    public static String byebye(language language){
+        switch (language) {
+            case FRENCH:
+                return "Merci de votre visite, au plaisir de vous revoir très bientôt.";
+            case ENGLISH :
+                return "Thank you for using us, we hope to see you again very soon.";
+            default:
+                return "";
+        }
+    }
+
+    public static String no_impediment_found(language language){
+        switch (language) {
+            case FRENCH:
+                return "Désolé, aucune entrave correspondant à vos spécification n'a été trouvé";
+            case ENGLISH:
+                return "Sorry, no impediment corresponding to your demands have been found";
+            default:
+                return "";
+        }
+    }
+
+    public static String impediment_by_id(language language){
+        switch (language) {
+            case FRENCH:
+                return "Recherche par ID de project";
+            case ENGLISH : 
+                return "Search by project id";
+            default:
+                return "";
+        }
+    }
+
+    public static String impediment_by_road(language language){
+        switch (language) {
+            case FRENCH:
+                return "Quelle rue voulez-vous rechercher?";
+            case ENGLISH : 
+                return "What road do you want to search for";
+            default:
+                return "";
+        }
+    }
+
+    public static String search_for_specific_impediment(language language){
+        switch (language) {
+            case FRENCH:
+                return  
+                """ 
+                Chercher par :
+                [1] route
+                [2] Travail associé
+                """;
+            case ENGLISH :
+                return """
+                Search by :
+                [1] road 
+                [2] similar project  
+                """;
+            default:
+                return "";
+        }
+    }
+
+    public static String anything_else(language language){
+        switch (language) {
+            case FRENCH:
+                return "voulez vous entrer autre chose?";
+            case ENGLISH :
+                return "do you want to keep adding more?";
+            default:
+                return "";
+        }
+    }
+
     public static String ask_for_correct_format_schedule(language language){
         switch (language) {
             case FRENCH:
@@ -111,7 +346,7 @@ public class Language {
                     [5] Travaux liés aux transports en commun
                     [6] Travaux de signalisation et éclairage
                     [7] Travaux souterrains
-                    [8] Travaux résidentiel
+                    [8] Travaux résidentiels
                     [9] Entretien urbain
                     [10] Entretien des réseaux de télécommunication
                     [11] Raison non prise en charge
@@ -310,7 +545,7 @@ public class Language {
                                 "[4] Planifier un projet\n" +
                                 "[5] Faire une requête de travail\n" +
                                 "[6] Accepter ou refuser la candidature d'un travail\n" +
-                                "[7] Signaler un problème\n" +
+                                "[7] Signaler un problème ( non implemente ) \n" +
                                 "[8] Consulter les entraves \n" +
                                 "[9] Revenir au menu principal\n" + 
                                 "[10] Quitter\n" + 
@@ -322,7 +557,7 @@ public class Language {
                                     "[4] Plan a project\n" +
                                     "[5] Submit a work request\n" +
                                     "[6] Accept or reject a job application\n" +
-                                    "[7] Report a problem\n" +
+                                    "[7] Report a problem ( not implemented )\n" +
                                     "[8] Search for a specific Impediment\n" +
                                     "[9] Go back to main menu\n" +
                                     "[10] Quit\n" +

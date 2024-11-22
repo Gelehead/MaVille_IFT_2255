@@ -108,6 +108,25 @@ public class Date {
         """;
     }
 
+    // Static method to parse dates in the JJMMAAAA HHMM format
+    public static Date parse(String input) {
+        if (input == null) {
+            throw new IllegalArgumentException("Invalid date format. Expected format: JJMMAAAA HHMM");
+        }
+
+        try {
+            int day = Integer.parseInt(input.substring(0, 2));
+            int month = Integer.parseInt(input.substring(2, 4));
+            int year = Integer.parseInt(input.substring(4, 8));
+            int hour = Integer.parseInt(input.substring(9, 11));
+            int minute = Integer.parseInt(input.substring(11, 13));
+
+            return new Date(year, month, day, hour, minute, 0);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid numeric values in date string: " + input, e);
+        }
+    }
+
     @Override
     public String toString() {
         return String.format("%04d-%02d-%02dT%02d:%02d:%02d", year, month, day, hour, minute, second);

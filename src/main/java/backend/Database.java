@@ -26,6 +26,7 @@ public class Database implements java.io.Serializable {
     private static Hashtable<Integer, Project>          projectHashtable = new Hashtable<>();
     private static Hashtable<Integer, Impediment>       impedimentHashtable = new Hashtable<>();
     private static Hashtable<District_name, District>   districtHashtable = new Hashtable<>();
+    private static Hashtable<Long, Request>             requestHashtable = new Hashtable<>();
 
     private static User activeUser;
     // JSON URL to get the ongoing projects
@@ -65,7 +66,12 @@ public class Database implements java.io.Serializable {
                 for (int pid : projectHashtable.keySet()) {
                     System.out.println(projectHashtable.get(pid).toString());
                 }
-                break; 
+                break;
+            case IMPEDIMENT:
+                for (int iid : impedimentHashtable.keySet()) {
+                    System.out.println(projectHashtable.get(iid).toString());
+                }
+                break;
             default:
                 break;
         }
@@ -113,9 +119,18 @@ public class Database implements java.io.Serializable {
         projectHashtable.put(p.id, p);
     }
 
+    /**
+     * 
+     * @param r request
+     */
+    public void addRequest(Request r){
+        requestHashtable.put(r.getId(), r);
+    }
+
     // TODO: placeholder, change when time allows
     public District getDistrict(District_name name){return new District(name);}
 
+    public Request getRequest(long id){return requestHashtable.get(id);}
     public Resident getResident(String mail){return residentHashtable.get(mail);}
     public Intervenant getIntervenant(String mail){return intervenantHashtable.get(mail);}
     public User getUser(String mail){return userHashtable.get(mail);}
@@ -147,7 +162,7 @@ public class Database implements java.io.Serializable {
 
         /**
      * 
-     * @return ArrayList<Resident> residentList
+     * @return ArrayList<Project> projectlist
      */
     public ArrayList<Project> getProjectList(){
         ArrayList<Project> projecList = new ArrayList<>();
@@ -155,6 +170,26 @@ public class Database implements java.io.Serializable {
             projecList.add(p);
         }
         return projecList;
+    }
+
+    /**
+     * 
+     * @return ArrayList<Resident> residentList
+     */
+    public ArrayList<Impediment> getImpedimentList(){
+        ArrayList<Impediment> impedimenList = new ArrayList<>();
+        for (Impediment i : impedimentHashtable.values()){
+            impedimenList.add(i);
+        }
+        return impedimenList;
+    }
+
+    public ArrayList<Request> getRequestList(){
+        ArrayList<Request> requestList = new ArrayList<>();
+        for (Request r : requestHashtable.values()){
+            requestList.add(r);
+        }
+        return requestList;
     }
 
     public boolean authentify(String mail, String pw){
@@ -203,6 +238,7 @@ public class Database implements java.io.Serializable {
             record.permitcategory,
             record.contractnumber,
             record.reason_category,
+            "no given title",
             districtHashtable.get(toDistrict_name(record.boroughid)),
             record.duration_start_date,
             record.duration_end_date,

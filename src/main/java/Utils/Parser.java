@@ -208,7 +208,7 @@ public class Parser {
      * @param filePath
      */
     public static List<Impediment> getImpediments(String jsonURL){
-        System.out.println(Language.fetching_records(Dialog.choice_language));
+        System.out.println(Language.fetching_impediments(Dialog.choice_language));
         try {
             // test to mesure how much time each operation takes
             java.sql.Timestamp start1 = Timestamp.from(java.time.Instant.now());

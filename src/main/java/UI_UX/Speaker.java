@@ -4,9 +4,12 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+
 import Instances.*;
 import Instances.Project.Progress;
 import Utils.Language;
+import Utils.Parser.Impediment;
 import backend.Database;
 import metrics.Date;
 
@@ -30,6 +33,13 @@ public class Speaker {
         String answer = s.nextLine();
         
         return answer;
+    }
+
+    public static String ask_inline(String question){
+        System.out.print(question);
+        String a = s.next();
+
+        return a;
     }
 
     public static void welcome(){
@@ -202,89 +212,120 @@ public class Speaker {
 
             // any project 
             case RECHERCHER_PROJET_RESIDENT:
-                Project.Reason chosen_reason;
-                String r = ask(Language.reasonMenu(Dialog.choice_language));
-                switch (r) {
+                String query = ask(Language.ask_for_project_search_query(Dialog.choice_language));
+                switch (query) {
                     case "1":
-                        chosen_reason = Project.Reason.Travaux_routiers;
+                        String title = ask_inline(Language.ask_for_title(Dialog.choice_language));
+                        boolean none = true;
+                        for (Project p : database.getProjectList()) {
+                            if (p.getTitle().equals(title)){
+                                System.out.println(p.toString());
+                                none = false;
+                            }
+                        }
+                        if (none) {System.out.println(Language.no_project_found(Dialog.choice_language));}
                         break;
                     case "2":
-                        chosen_reason = Project.Reason.Travaux_de_gaz_ou_électricité;
+                        Project.Reason chosen_reason;
+                        String r = ask(Language.reasonMenu(Dialog.choice_language));
+                        switch (r) {
+                            case "1":
+                                chosen_reason = Project.Reason.Travaux_routiers;
+                                break;
+                            case "2":
+                                chosen_reason = Project.Reason.Travaux_de_gaz_ou_électricité;
+                                break;
+                            case "3":
+                                chosen_reason = Project.Reason.Construction_ou_rénovation;
+                                break;
+                            case "4":
+                                chosen_reason = Project.Reason.Entretien_paysager;
+                                break;
+                            case "5":
+                                chosen_reason = Project.Reason.Travaux_liés_aux_transports_en_commun;
+                                break;
+                            case "6":
+                                chosen_reason = Project.Reason.Travaux_de_signalisation_et_éclairage;
+                                break;
+                            case "7":
+                                chosen_reason = Project.Reason.Travaux_souterrains;
+                                break;
+                            case "8":
+                                chosen_reason = Project.Reason.Travaux_résidentiel;
+                                break;
+                            case "9":
+                                chosen_reason = Project.Reason.Entretien_urbain;
+                                break;
+                            case "10":
+                                chosen_reason = Project.Reason.Entretien_des_réseaux_de_télécommunication;
+                                break;
+                            case "11":
+                                chosen_reason = Project.Reason.UNHANDLED_REASON;
+                                break;
+                            case "12":
+                                chosen_reason = Project.Reason.Autre;
+                                break;
+                            default:
+                                chosen_reason = Project.Reason.UNHANDLED_REASON;
+                                throw new IllegalArgumentException("Invalid choice: " + r);
+                        }
+                        boolean none2 = true;
+                        for (Project p : database.getProjectList()) {
+                            if (p.getReason() == chosen_reason){
+                                System.out.println(p.toString());
+                                none2 = false;
+                            }
+                        }
+                        if (none2) {System.out.println(Language.no_project_found(Dialog.choice_language));}
                         break;
-                    case "3":
-                        chosen_reason = Project.Reason.Construction_ou_rénovation;
-                        break;
-                    case "4":
-                        chosen_reason = Project.Reason.Entretien_paysager;
-                        break;
-                    case "5":
-                        chosen_reason = Project.Reason.Travaux_liés_aux_transports_en_commun;
-                        break;
-                    case "6":
-                        chosen_reason = Project.Reason.Travaux_de_signalisation_et_éclairage;
-                        break;
-                    case "7":
-                        chosen_reason = Project.Reason.Travaux_souterrains;
-                        break;
-                    case "8":
-                        chosen_reason = Project.Reason.Travaux_résidentiel;
-                        break;
-                    case "9":
-                        chosen_reason = Project.Reason.Entretien_urbain;
-                        break;
-                    case "10":
-                        chosen_reason = Project.Reason.Entretien_des_réseaux_de_télécommunication;
-                        break;
-                    case "11":
-                        chosen_reason = Project.Reason.UNHANDLED_REASON;
-                        break;
-                    case "12":
-                        chosen_reason = Project.Reason.Autre;
-                        break;
-                    default:
-                        chosen_reason = Project.Reason.UNHANDLED_REASON;
-                        throw new IllegalArgumentException("Invalid choice: " + r);
-                }
+
+                    case "3" :
+                        Project.Progress chosen_progress; 
+                        String prog = ask(Language.progressMenu(Dialog.choice_language));
+                        switch (prog) {
+                            case "1":
+                                chosen_progress = Progress.NOT_STARTED;
+                                break;
+                            case "2":
+                                chosen_progress = Progress.IN_PROGRESS;
+                                break;
+                            case "3":
+                                chosen_progress = Progress.FINISHED;
+                                break;
+                            case "4":
+                                chosen_progress = Progress.PLACEHOLDER;
+                                break;
+                            default:
+                                throw new IllegalArgumentException("Invalid choice: " + prog);
+                        }
+                        boolean none3 = true;
+                        for (Project p : database.getProjectList()) {
+                            if (p.getStatus() == chosen_progress){
+                                System.out.println(p.toString());
+                                none3 = false;
+                            }
+                        }
+                        if (none3) {System.out.println(Language.no_project_found(Dialog.choice_language));}
                 
-
-                Project.Progress chosen_progress; 
-                String prog = ask(Language.progressMenu(Dialog.choice_language));
-                switch (prog) {
-                    case "1":
-                        chosen_progress = Progress.NOT_STARTED;
-                        break;
-                    case "2":
-                        chosen_progress = Progress.IN_PROGRESS;
-                        break;
-                    case "3":
-                        chosen_progress = Progress.FINISHED;
-                        break;
-                    case "4":
-                        chosen_progress = Progress.PLACEHOLDER;
-                        break;
+                    case "4" : 
+                        District chosen_district = District.handle_district(Language.request_district(Dialog.choice_language));
+                        boolean none4 = true;
+                        for (Project p : database.getProjectList()) {
+                            if (p.getDistrict() == chosen_district){
+                                System.out.println(p.toString());
+                                none4 = false;
+                            }
+                        }
+                        if (none4) {System.out.println(Language.no_project_found(Dialog.choice_language));}
                     default:
-                        throw new IllegalArgumentException("Invalid choice: " + r);
+                        throw new IllegalArgumentException("Invalid choice: " + query);
                 }
-
-                boolean none = true;
-                for (Project p : database.getProjectList()) {
-                    if (p.getStatus() == chosen_progress && p.getReason() == chosen_reason){
-                        System.out.println(p.toString());
-                        none = false;
-                    }
-                }
-                if (none) {System.out.println(Language.no_project_found(Dialog.choice_language));}
 
                 return Dialog.STATE.MAIN_RESIDENT;
 
             // notification system
             case NOTIFS_RESIDENT : 
-                ArrayList<String> schedule = new ArrayList<>();
                 
-                System.out.println(Language.ask_for_schedule(Dialog.choice_language));
-                System.out.println(Date.week_schedule());
-                schedule.add(ask(Language.ask_for_correct_format_schedule(Dialog.choice_language)));
-                schedule.add(ask(Language.anything_else(Dialog.choice_language)));
                 return Dialog.STATE.MAIN_RESIDENT;
             
             // donner des plages horaires de disponibilites
@@ -293,10 +334,31 @@ public class Speaker {
             
             // plan a request
             case REQUEST_RESIDENT : 
+                System.out.println(Language.request_hi_UwU(Dialog.choice_language));
+                Request request = new Request(
+                    Request.handle_reason(ask_inline(Language.request_reason(Dialog.choice_language))), 
+                    Request.handle_district(ask_inline(Language.request_district(Dialog.choice_language))), 
+                    Date.parse(ask_inline(Language.request_start(Dialog.choice_language))), 
+                    //Date.parse(ask_inline(Language.request_end(Dialog.choice_language))), 
+                    ask_inline(Language.request_streetid(Dialog.choice_language)), 
+                    ask_inline(Language.request_fromname(Dialog.choice_language)), 
+                    ask_inline(Language.request_toname(Dialog.choice_language)), 
+                    Double.parseDouble(ask_inline(Language.request_length(Dialog.choice_language))),
+                    ask(Language.request_description(Dialog.choice_language)),
+                    ask(Language.request_title(Dialog.choice_language)),
+                    database.getActiveUser()
+                );
+                database.addRequest(request);
                 return Dialog.STATE.MAIN_RESIDENT;
 
             // vote for an existing request
             case VOTE_RESIDENT : 
+                ArrayList<String> schedule = new ArrayList<>();
+                    
+                System.out.println(Language.ask_for_schedule(Dialog.choice_language));
+                System.out.println(Date.week_schedule());
+                schedule.add(ask(Language.ask_for_correct_format_schedule(Dialog.choice_language)));
+                schedule.add(ask(Language.anything_else(Dialog.choice_language)));
                 return Dialog.STATE.MAIN_RESIDENT;
 
             // signal a problem
@@ -304,7 +366,21 @@ public class Speaker {
                 return Dialog.STATE.MAIN_RESIDENT;
 
             // search for a specific impediment
+            // TODO:test 
             case IMPEDIMENT_RESIDENT :
+                
+                boolean byroad = ask(Language.search_for_specific_impediment(Dialog.choice_language)) == "1";
+                String info = ask(byroad ? Language.impediment_by_road(Dialog.choice_language) : Language.impediment_by_id(Dialog.choice_language));
+
+                boolean none_road = true;
+                for (Impediment i : database.getImpedimentList()) {
+                    // if the user said they want to search by road, test the road, else test the id
+                    if (byroad ? i.affects(info) : i.idRequest.equals(info)){
+                        System.out.println(i.toString());
+                        none_road = false;
+                    }
+                }
+                if (none_road) {System.out.println(Language.no_impediment_found(Dialog.choice_language));}
                 return Dialog.STATE.MAIN_RESIDENT;
 
 

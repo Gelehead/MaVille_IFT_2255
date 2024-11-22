@@ -1,4 +1,6 @@
 package Instances;
+import java.util.ArrayList;
+
 import metrics.*;
 
 public class Project {
@@ -14,6 +16,7 @@ public class Project {
     private Coordinates coordinates;
 
     private Reason reason;
+    private String title;
     
     private String occupancy;
     private String organization;
@@ -23,6 +26,8 @@ public class Project {
     private String permit_id;
     private String permit_category;
     private long contract_number;
+
+    private ArrayList<Project> logs = new ArrayList<>();
 
     //probably needs like "NEGOTIATING", "REFUSED", "ABANDONED", and more
     public enum Progress {
@@ -68,7 +73,7 @@ public class Project {
     (
         int id, String bigId,
         String permit_id, String permit_category, String contract_number,
-        String reason,
+        String reason, String title,
         District district, 
         String start, String end, 
         String occupancy, String organization, String submitter_category,
@@ -82,6 +87,7 @@ public class Project {
         this.contract_number = contract_number == null ? 0 : Long.parseLong(contract_number);
 
         this.reason = toReason(reason);
+        this.title = title;
 
         // TODO: adjust parsing for districts
         this.district = district;
@@ -95,6 +101,9 @@ public class Project {
         this.submitter_category = submitter_category;
 
         this.coordinates = co;
+
+        // logs will be used to keep track of project changes
+        logs.add(this);
     }
 
     private Progress getProgress(){
@@ -156,4 +165,5 @@ public class Project {
     public Date getStart_date() {return start_date;}
     public Progress getStatus() {return status;}
     public String getSubmitter_category() {return submitter_category;}
+    public String getTitle() {return title;}
 }

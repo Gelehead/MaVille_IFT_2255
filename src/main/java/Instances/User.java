@@ -1,4 +1,7 @@
 package Instances;
+
+import java.util.ArrayList;
+
 public class User {
 
     public static enum Type {
@@ -11,16 +14,14 @@ public class User {
 
         // trust, this is relevant 
         // used in the database.printall
-        PROJECT
-    }
-
-    public enum Notifications {
-        
+        PROJECT,
+        IMPEDIMENT,
     }
 
     // first name, last name, email, password
     private String fname, lname, mail, pw;
     public Type type = Type.USER;
+    private ArrayList<District> subscriptions;
 
     public User(){}
 
@@ -33,11 +34,16 @@ public class User {
         this.pw = pw;
     }
 
+    public void addToSubscriptions(District d){
+        this.subscriptions.add(d);
+    }
+
     // getters
     public String getLname() {return this.lname;}
     public String getMail() {return this.mail;}
     public String getPw() {return this.pw;}
     public String getFname() {return this.fname;}
+    public ArrayList<District> getSubscriptions() {return subscriptions;}
 
     // setters
     public void setLname(String lname) {this.lname = lname;}

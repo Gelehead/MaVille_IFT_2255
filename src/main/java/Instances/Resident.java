@@ -1,5 +1,7 @@
 package Instances;
 
+import java.util.ArrayList;
+
 import backend.Database.District_name;
 
 public class Resident extends User{
@@ -7,6 +9,7 @@ public class Resident extends User{
     // TODO: make a phonenum parser 
     private String address, phoneNum;
     private int birthDay;
+    private ArrayList<District> notifications = new ArrayList<>();
 
     //TODO: create hashmap of districts with enum as key
     private District_name district;
@@ -18,6 +21,7 @@ public class Resident extends User{
         this.phoneNum = phoneNum;
         this.address = address;
         this.birthDay = birthDay;
+        notifications.add(District.getDistrict(address));
     }
 
     @Override
