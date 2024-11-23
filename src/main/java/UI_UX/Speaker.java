@@ -1,5 +1,6 @@
 package UI_UX;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,11 +9,11 @@ import Instances.*;
 import Instances.Intervenant.InType;
 import Instances.Project.Progress;
 import Utils.Language;
+import Utils.Schedule;
 import Utils.Parser.Impediment;
 import backend.Database;
-import metrics.Date;
-
-// TODO : handle invalid input 
+import backend.Database.District_name;
+import metrics.Date; 
 
 public class Speaker {
     private static final Scanner s = new Scanner(System.in);
@@ -157,12 +158,12 @@ public class Speaker {
                         }
 
                         intervenant.setFname(fname);
-                        resident.setLname(lname);
-                        resident.setMail(mail);
-                        resident.setPw(pw);
+                        intervenant.setLname(lname);
+                        intervenant.setMail(mail);
+                        intervenant.setPw(pw);
 
                         intervenant.setInType(intype);
-                        intervenant.setCityId(Integer.parseInt(ask_inline(Language.Qcityid(Dialog.choice_language))));
+                        intervenant.setCityId(Integer.parseInt(ask(Language.Qcityid(Dialog.choice_language))));
 
                         database.addIntervenant(intervenant);
                         database.setActiveUser(intervenant);
@@ -319,7 +320,7 @@ public class Speaker {
                         if (none3) {System.out.println(Language.no_project_found(Dialog.choice_language));}
                 
                     case "4" : 
-                        District chosen_district = District.handleDistrictChoice(Language.request_district(Dialog.choice_language));
+                        District chosen_district = database.getDistrict(District.handleDistrictChoice(Language.request_district(Dialog.choice_language)));
                         boolean none4 = true;
                         for (Project p : database.getProjectList()) {
                             if (p.getDistrict() == chosen_district){
@@ -340,7 +341,7 @@ public class Speaker {
                 System.out.println(Language.subscribe_to_new_district(Dialog.choice_language));
                 String choice_district = ask(Language.districtMenu(Dialog.choice_language));
 
-                District d = District.handleDistrictChoice(choice_district);
+                District d = database.getDistrict(District.handleDistrictChoice(choice_district));
 
                 // add it to the active user ( the one using the app ) 's subscriptions
                 database.getActiveUser().addToSubscriptions(d);
@@ -377,7 +378,7 @@ public class Speaker {
                 System.out.println(Language.request_hi_UwU(Dialog.choice_language));
                 Request request = new Request(
                     Request.handle_reason(ask_inline(Language.request_reason(Dialog.choice_language))), 
-                    District.handleDistrictChoice(ask_inline(Language.request_district(Dialog.choice_language))), 
+                    database.getDistrict(District.handleDistrictChoice(ask_inline(Language.request_district(Dialog.choice_language)))), 
                     Date.parse(ask_inline(Language.request_start(Dialog.choice_language))), 
                     //Date.parse(ask_inline(Language.request_end(Dialog.choice_language))), 
                     ask_inline(Language.request_streetid(Dialog.choice_language)), 
@@ -403,6 +404,7 @@ public class Speaker {
 
             // signal a problem
             case SIGNAL_PRB_RESIDENT : 
+                System.out.println(Language.NotImplemented_SignalerProbleme(null));
                 return Dialog.STATE.MAIN_RESIDENT;
 
             // search for a specific impediment
@@ -429,13 +431,10 @@ public class Speaker {
 
                 switch (choixIntervenant) {
                     case "1":
-                           System.out.println("La fonctionnalité pour soumettre un nouveau projet n'est pas encore implémentée");
-                            return Dialog.STATE.NEW_PROJECT_INTERVENANT;
+                        return Dialog.STATE.NEW_PROJECT_INTERVENANT;
                     case "2":
-                        System.out.println("La fonctionnalité pour soumettre une mise à jour du projet n'est pas encore implémentée");
                         return Dialog.STATE.UPDATE_INTERVENANT;
                     case "3":
-                        System.out.println("La fonctionnalité pour soumettre une candidature à une requête de travail n'est pas encore implémentée");
                         return Dialog.STATE.REQUEST_INTERVENANT;
                     case "4":
                         database.setActiveUser(null);
@@ -445,13 +444,42 @@ public class Speaker {
             }
 
             case NEW_PROJECT_INTERVENANT:
-                return null;
+                System.out.println(Language.request_hi_UwU(Dialog.choice_language));
+                Schedule project_Schedule = new Schedule();
+                District_name project_district = District.handleDistrictChoice(ask_inline(Language.request_district(Dialog.choice_language)));
+                Project project = new Project(
+                    // title
+                    ask(Language.project_title(Dialog.choice_language)),
+                    // description
+                    ask(Language.request_description(Dialog.choice_language)),
+                    //id
+                    database.getProjectList().size(),
+                    // long id
+                    String.valueOf(new Random().nextLong()),
+                    // reason
+                    Request.handle_reason(ask_inline(Language.request_reason(Dialog.choice_language))), 
+                    // district
+                    database.getDistrict(project_district),
+                    // streets
+                    collectStreetNames(),
+                    //start and en
+                    Date.parse(ask_inline(Language.request_start(Dialog.choice_language))), 
+                    Date.parse(ask_inline(Language.request_end(Dialog.choice_language))), 
+                    // schedule
+                    project_Schedule,
+                    //submitter
+                    database.getActiveUser()
+                );
+                project_Schedule.runCLI();
+                database.addProject(project);
+                database.send_notif(project_district, project);
+                return Dialog.STATE.MAIN_INTERVENANT;
 
             case UPDATE_INTERVENANT :
-                return null;
+                return Dialog.STATE.MAIN_INTERVENANT;
 
             case REQUEST_INTERVENANT :
-                return null;
+                return Dialog.STATE.MAIN_INTERVENANT;
 
 
             case MAIN_ADMIN:
@@ -491,6 +519,29 @@ public class Speaker {
             default:
                 return Dialog.STATE.QUIT;
         }
+    }
+
+    public static String[] collectStreetNames() {
+        ArrayList<String> streetNames = new ArrayList<>();
+
+        System.out.println("Enter street names (type 'exit' to finish):");
+
+        while (true) {
+            System.out.print("Street name: ");
+            String input = ask().trim();
+
+            if (input.equalsIgnoreCase("exit")) {
+                break; 
+            }
+
+            if (!input.isEmpty()) {
+                streetNames.add(input); 
+            } else {
+                System.out.println("Street name cannot be empty. Please try again.");
+            }
+        }
+        // Convert the ArrayList to a String array
+        return streetNames.toArray(new String[0]);
     }
 
     @SuppressWarnings("unused")

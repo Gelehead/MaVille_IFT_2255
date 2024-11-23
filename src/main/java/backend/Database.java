@@ -11,8 +11,11 @@ import Instances.*;
 import Instances.Intervenant.InType;
 import Instances.User.Type;
 import UI_UX.Dialog;
+import Utils.GeoJSON;
 import Utils.Language;
 import Utils.Parser;
+import Utils.GeoJSON.Feature;
+import Utils.Geocoding;
 import Utils.Parser.Impediment;
 import Utils.Parser.Record;
 import metrics.*;
@@ -34,10 +37,45 @@ public class Database implements java.io.Serializable {
     // JSON URL to get the ongoing projects
     String projectsURL = "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=cc41b532-f12d-40fb-9f55-eb58c9a2b12b";
     String impedimentsURL = "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=a2bc8014-488c-495d-941b-e7ae1999d1bd";
+    public String geoJSONfilePath = "extern/data/limites-administratives-agglomeration-nad83.geojson";
 
-    public enum District_name{
-        placeholder
+    public enum District_name {
+        LaSalle,
+        Dollard_des_Ormeaux,
+        Côte_Saint_Luc,
+        Villeray_Saint_Michel_Parc_Extension,
+        Rosemont_La_Petite_Patrie,
+        Hampstead,
+        Senneville,
+        Le_Plateau_Mont_Royal,
+        Sainte_Anne_de_Bellevue,
+        Montreal_Ouest,
+        Cote_des_Neiges_Notre_Dame_de_Grace,
+        Ile_Bizard_Sainte_Genevieve,
+        Beaconsfield,
+        Anjou,
+        Verdun,
+        Le_Sud_Ouest,
+        Mercier_Hochelaga_Maisonneuve,
+        Montreal_Est,
+        Lachine,
+        Saint_Leonard,
+        Montreal_Nord,
+        Outremont,
+        Ile_Dorval,
+        Mont_Royal,
+        Pointe_Claire,
+        Dorval,
+        Pierrefonds_Roxboro,
+        Riviere_des_Prairies_Pointe_aux_Trembl,
+        Ahuntsic_Cartierville,
+        Saint_Laurent,
+        Ville_Marie,
+        Kirkland,
+        Baie_D_Urfe,
+        Westmount
     }
+    
 
     public Database(){
         init();
@@ -130,7 +168,7 @@ public class Database implements java.io.Serializable {
     }
 
     // TODO: placeholder, change when time allows
-    public District getDistrict(District_name name){return new District(name);}
+    public District getDistrict(District_name name){return districtHashtable.get(name);}
 
     public Request getRequest(long id){return requestHashtable.get(id);}
     public Resident getResident(String mail){return residentHashtable.get(mail);}
@@ -207,7 +245,15 @@ public class Database implements java.io.Serializable {
 
     // TODO: complete placeholder
     private void init_districts(){
-        districtHashtable.put(District_name.placeholder, new District(District_name.placeholder));
+        GeoJSON geoJSON = Parser.getgeojson(geoJSONfilePath);
+        for (Feature f : geoJSON.getFeatures()) {
+            District d = new District(
+                toDistrict_name(f.getProperties().getNom()),
+                f.getGeometry(),
+                f.getProperties().getCodeMamh()
+            );
+            districtHashtable.put(toDistrict_name(f.getProperties().getNom()), d);
+        }
     }
 
     private void init_records(){
@@ -223,10 +269,71 @@ public class Database implements java.io.Serializable {
         }
     }
 
-    // TODO: placeholder 
-    private District_name toDistrict_name(String s){
-        return District_name.placeholder;
+    public static District getDistrict(String address) {
+        try {
+            // Get the coordinates of the address
+            double[] coordinates = Geocoding.getCoordinates(address);
+            double latitude = coordinates[0];
+            double longitude = coordinates[1];
+
+            // Iterate through all districts in the database to check which district contains the point
+            for (District d : districtHashtable.values()) {
+                if (d.getGeometry().contains(latitude, longitude)) {
+                    return d; // Return the district if it contains the point
+                }
+            }
+
+            // If no district contains the point, return null or throw an exception
+            return null; // or throw new IllegalArgumentException("No district found for the given address.");
+        } catch (Exception e) {
+            // Handle errors, such as invalid address or API failure
+            e.printStackTrace();
+            return null;
+        }
     }
+
+    private District_name toDistrict_name(String s) {
+        switch (s) {
+            case "LaSalle":                              return District_name.LaSalle;
+            case "Dollard-des-Ormeaux":                  return District_name.Dollard_des_Ormeaux;
+            case "Côte-Saint-Luc":                       return District_name.Côte_Saint_Luc;
+            case "Villeray-Saint-Michel-Parc-Extension": return District_name.Villeray_Saint_Michel_Parc_Extension;
+            case "Rosemont-La Petite-Patrie":            return District_name.Rosemont_La_Petite_Patrie;
+            case "Hampstead":                            return District_name.Hampstead;
+            case "Senneville":                           return District_name.Senneville;
+            case "Le Plateau-Mont-Royal":                return District_name.Le_Plateau_Mont_Royal;
+            case "Sainte-Anne-de-Bellevue":              return District_name.Sainte_Anne_de_Bellevue;
+            case "Montréal-Ouest":                       return District_name.Montreal_Ouest;
+            case "Côte-des-Neiges-Notre-Dame-de-Grâce":  return District_name.Cote_des_Neiges_Notre_Dame_de_Grace;
+            case "L'Île-Bizard-Sainte-Geneviève":        return District_name.Ile_Bizard_Sainte_Genevieve;
+            case "Beaconsfield":                         return District_name.Beaconsfield;
+            case "Anjou":                                return District_name.Anjou;
+            case "Verdun":                               return District_name.Verdun;
+            case "Le Sud-Ouest":                         return District_name.Le_Sud_Ouest;
+            case "Mercier-Hochelaga-Maisonneuve":        return District_name.Mercier_Hochelaga_Maisonneuve;
+            case "Montréal-Est":                         return District_name.Montreal_Est;
+            case "Lachine":                              return District_name.Lachine;
+            case "Saint-Léonard":                        return District_name.Saint_Leonard;
+            case "Montréal-Nord":                        return District_name.Montreal_Nord;
+            case "Outremont":                            return District_name.Outremont;
+            case "L'Île-Dorval" :                        return District_name.Ile_Dorval;
+            case "Mont-Royal":                           return District_name.Mont_Royal;
+            case "Pointe-Claire":                        return District_name.Pointe_Claire;
+            case "Dorval":                               return District_name.Dorval;
+            case "Pierrefonds-Roxboro":                  return District_name.Pierrefonds_Roxboro;
+            case "Rivière-des-Prairies-Pointe-aux-Trembles": return District_name.Riviere_des_Prairies_Pointe_aux_Trembl;
+            case "Ahuntsic-Cartierville":                return District_name.Ahuntsic_Cartierville;
+            case "St-Laurent":                        return District_name.Saint_Laurent;
+            case "Saint-Laurent":                        return District_name.Saint_Laurent;
+            case "Ville-Marie":                          return District_name.Ville_Marie;
+            case "Kirkland":                             return District_name.Kirkland;
+            case "Baie-D'Urfé":                          return District_name.Baie_D_Urfe;
+            case "Westmount":                            return District_name.Westmount;
+            default:
+                throw new IllegalArgumentException("Unknown district name: " + s);
+        }
+    }
+    
 
     private Project toProject(Record record){
         Coordinates co = new Coordinates(
@@ -300,6 +407,14 @@ public class Database implements java.io.Serializable {
         }
 
         addAdmin(new Admin(null, null, null, null, "Herobrine"));
+    }
+
+    public void send_notif(District_name project_district, Project project) {
+        for (Resident r : getResidentList()){
+            if ( r.geDistrict() == project_district){
+                
+            }
+        }
     }
 
     private InType intypeRoulette(){

@@ -1,6 +1,7 @@
 package Instances;
 import java.util.ArrayList;
 
+import Utils.Schedule;
 import metrics.*;
 
 public class Project {
@@ -32,6 +33,7 @@ public class Project {
     //probably needs like "NEGOTIATING", "REFUSED", "ABANDONED", and more
     public enum Progress {
         // for projects
+        PLANNED,
         NOT_STARTED,
         IN_PROGRESS,
         FINISHED,
@@ -67,6 +69,35 @@ public class Project {
 
         Autre,
         UNHANDLED_REASON
+    }
+
+    public Project
+    (
+        String title, String description,
+        int id, String bigId,
+        Reason reason,
+        District district, 
+        String[] streets,
+        Date start, Date end, 
+        Schedule schedule,
+        User submitter
+    )
+    {
+        this.id = id;
+        this.bigId = bigId;
+
+        this.reason = reason;
+        this.title = title;
+
+        // TODO: adjust parsing for districts
+        this.district = district;
+
+        this.start_date = start;
+        this.end_date = end;
+        this.status = Progress.PLANNED;
+
+        // logs will be used to keep track of project changes
+        logs.add(this);
     }
 
     public Project

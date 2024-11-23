@@ -42,6 +42,10 @@ public class User {
         this.subscriptions.add(d);
     }
 
+    public void add_notification(Notification notif){
+        notifications.add(notif);
+    }
+
     public void update_schedule(){
         schedule.runCLI();
     }

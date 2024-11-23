@@ -7,12 +7,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.FileReader;
 import UI_UX.Dialog;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.sql.Timestamp;
-import java.time.Duration;
 import java.util.List;
 public class Parser {
 
@@ -209,36 +208,12 @@ public class Parser {
     public static List<Impediment> getImpediments(String jsonURL){
         System.out.println(Language.fetching_impediments(Dialog.choice_language));
         try {
-            // test to mesure how much time each operation takes
-            java.sql.Timestamp start1 = Timestamp.from(java.time.Instant.now());
-
             ObjectMapper om = new ObjectMapper();
             om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-            java.sql.Timestamp end1 = Timestamp.from(java.time.Instant.now());
-            Duration duration1 = Duration.between(start1.toInstant(), end1.toInstant());
-            System.out.println(duration1.toMillis());
-
-
-
-            java.sql.Timestamp start2 = Timestamp.from(java.time.Instant.now());
-
             String JsonResponse = fetchJsonFromUrl(jsonURL);
 
-            java.sql.Timestamp end2 = Timestamp.from(java.time.Instant.now());
-            Duration duration2 = Duration.between(start2.toInstant(), end2.toInstant());
-            System.out.println(duration2.toMillis());
-
-
-            java.sql.Timestamp start = Timestamp.from(java.time.Instant.now());
-
             RootImpediment root = om.readValue(JsonResponse, RootImpediment.class);
-
-            java.sql.Timestamp end = Timestamp.from(java.time.Instant.now());
-            Duration duration = Duration.between(start.toInstant(), end.toInstant());
-            System.out.println(duration.toMillis());
-
-
             return root.result.records;
         } 
         catch (IOException e) {
@@ -254,35 +229,12 @@ public class Parser {
     public static List<Record> getRecords(String jsonURL){
         System.out.println(Language.fetching_records(Dialog.choice_language));
         try {
-            // test to mesure how much time each operation takes
-            java.sql.Timestamp start1 = Timestamp.from(java.time.Instant.now());
-
             ObjectMapper om = new ObjectMapper();
             om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-            java.sql.Timestamp end1 = Timestamp.from(java.time.Instant.now());
-            Duration duration1 = Duration.between(start1.toInstant(), end1.toInstant());
-            System.out.println(duration1.toMillis());
-
-
-
-            java.sql.Timestamp start2 = Timestamp.from(java.time.Instant.now());
-
             String JsonResponse = fetchJsonFromUrl(jsonURL);
 
-            java.sql.Timestamp end2 = Timestamp.from(java.time.Instant.now());
-            Duration duration2 = Duration.between(start2.toInstant(), end2.toInstant());
-            System.out.println(duration2.toMillis());
-
-
-            java.sql.Timestamp start = Timestamp.from(java.time.Instant.now());
-
             Root root = om.readValue(JsonResponse, Root.class);
-
-            java.sql.Timestamp end = Timestamp.from(java.time.Instant.now());
-            Duration duration = Duration.between(start.toInstant(), end.toInstant());
-            System.out.println(duration.toMillis());
-
 
             return root.result.records;
         } 
@@ -338,4 +290,18 @@ public class Parser {
         return content.toString();
     }
 
+    public static GeoJSON getgeojson(String filePath){
+        System.out.println(Language.fetching_districts(Dialog.choice_language));
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            // Replace with the actual path to your GeoJSON file
+            File geoJsonFile = new File(filePath);
+            GeoJSON geoJSON = mapper.readValue(geoJsonFile, GeoJSON.class);
+
+            return geoJSON;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

@@ -11,6 +11,7 @@ public class Language {
         ENGLISH
     }
 
+
     public static String planifMenu(language language){
         switch (language) {
             case FRENCH:
@@ -80,6 +81,17 @@ public class Language {
         }        
     }
 
+    public static String project_title(language language){
+        switch (language) {
+            case FRENCH:
+                return "Donnez un titre à votre projet";
+            case ENGLISH : 
+                return "Give a title to your project";
+            default:
+                return "";
+        }        
+    }
+
     public static String request_hi_UwU(language language){
         switch (language) {
             case FRENCH:
@@ -113,16 +125,87 @@ public class Language {
         }
     }
 
-    public static String districtMenu(language language){
+    public static String districtMenu(language language) {
         switch (language) {
             case FRENCH:
-                return "";
-            case ENGLISH :
-                return "";        
+                return """
+                    [1] LaSalle
+                    [2] Dollard-des-Ormeaux
+                    [3] Côte-Saint-Luc
+                    [4] Villeray-Saint-Michel-Parc-Extension
+                    [5] Rosemont-La Petite-Patrie
+                    [6] Hampstead
+                    [7] Senneville
+                    [8] Le Plateau-Mont-Royal
+                    [9] Sainte-Anne-de-Bellevue
+                    [10] Montréal-Ouest
+                    [11] Côte-des-Neiges-Notre-Dame-de-Grâce
+                    [12] L'Île-Bizard-Sainte-Geneviève
+                    [13] Beaconsfield
+                    [14] Anjou
+                    [15] Verdun
+                    [16] Le Sud-Ouest
+                    [17] Mercier-Hochelaga-Maisonneuve
+                    [18] Montréal-Est
+                    [19] Lachine
+                    [20] Saint-Léonard
+                    [21] Montréal-Nord
+                    [22] Outremont
+                    [23] L'Île-Dorval
+                    [24] Mont-Royal
+                    [25] Pointe-Claire
+                    [26] Dorval
+                    [27] Pierrefonds-Roxboro
+                    [28] Rivière-des-Prairies-Pointe-aux-Trembles
+                    [29] Ahuntsic-Cartierville
+                    [30] Saint-Laurent
+                    [31] Ville-Marie
+                    [32] Kirkland
+                    [33] Baie-D'Urfé
+                    [34] Westmount
+                    """;
+            case ENGLISH:
+                return """
+                    [1] LaSalle
+                    [2] Dollard-des-Ormeaux
+                    [3] Côte-Saint-Luc
+                    [4] Villeray-Saint-Michel-Parc-Extension
+                    [5] Rosemont-La Petite-Patrie
+                    [6] Hampstead
+                    [7] Senneville
+                    [8] Le Plateau-Mont-Royal
+                    [9] Sainte-Anne-de-Bellevue
+                    [10] Montréal-Ouest
+                    [11] Côte-des-Neiges-Notre-Dame-de-Grâce
+                    [12] L'Île-Bizard-Sainte-Geneviève
+                    [13] Beaconsfield
+                    [14] Anjou
+                    [15] Verdun
+                    [16] Le Sud-Ouest
+                    [17] Mercier-Hochelaga-Maisonneuve
+                    [18] Montréal-Est
+                    [19] Lachine
+                    [20] Saint-Léonard
+                    [21] Montréal-Nord
+                    [22] Outremont
+                    [23] L'Île-Dorval
+                    [24] Mont-Royal
+                    [25] Pointe-Claire
+                    [26] Dorval
+                    [27] Pierrefonds-Roxboro
+                    [28] Rivière-des-Prairies-Pointe-aux-Trembles
+                    [29] Ahuntsic-Cartierville
+                    [30] Saint-Laurent
+                    [31] Ville-Marie
+                    [32] Kirkland
+                    [33] Baie-D'Urfé
+                    [34] Westmount
+                    """;
             default:
                 return "";
         }
     }
+    
 
     public static String request_start(language language){
         switch (language) {
@@ -315,6 +398,17 @@ public class Language {
                 return "Requête de travaux...";
             case ENGLISH :
                 return "fetching records...";
+            default:
+                return "";
+        }
+    }
+
+    public static String fetching_districts(language language){
+        switch (language) {
+            case FRENCH:
+                return "Requête de quartiers...";
+            case ENGLISH :
+                return "fetching boroughs...";
             default:
                 return "";
         }
