@@ -33,6 +33,18 @@ public class Date {
         if (month < 1 || month > 12 || day < 1 || day > 31 || hour < 0 || hour > 23 || minute < 0 || minute > 59 || second < 0 || second > 59) {
             throw new IllegalArgumentException("Invalid date/time values");
         }
+        // Vérification pour février
+        if (month == 2) {
+            if ((year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))) { //  bissextile
+                if (day > 29) {
+                    throw new IllegalArgumentException("Invalid date/time values");
+                }
+            } else { //  non bissextile
+                if (day > 28) {
+                    throw new IllegalArgumentException("Invalid date/time values");
+                }
+            }
+        }
     }
 
     public static Date format(String s) {

@@ -1,0 +1,40 @@
+{
+  "result": {
+    "records": [
+      {
+        "_id": 1,
+        "id": "661e83541c002b0019d3f0e1",
+        "permit_permit_id": "OCC-2404GD14400158",
+        "contractnumber": "2215",
+        "boroughid": "Rivière-des-Prairies-Pointe-aux-Trembles",
+        "permitcategory": "Travaux",
+        "currentstatus": "Permis émis",
+        "duration_start_date": "2024-04-21T20:00:00Z",
+        "duration_end_date": "2024-11-30T18:59:59Z",
+        "reason_category": "Entretien",
+        "occupancy_name": "Ruelle",
+        "submittercategory": "Entrepreneur sous contrat avec la Ville de Montréal",
+        "organizationname": "Les entreprises Roseneige",
+        "longitude": "-73.5096272494279",
+        "latitude": "45.66137940908389"
+      },
+      {
+        "_id": 2,
+        "id": "661e63d418cecc00196d0110",
+        "permit_permit_id": "OCC-2404EZ13436315",
+        "contractnumber": "18078",
+        "boroughid": "Pierrefonds-Roxboro",
+        "permitcategory": "Travaux",
+        "currentstatus": "Permis émis",
+        "duration_start_date": "2024-04-21T20:00:00Z",
+        "duration_end_date": "2024-11-30T18:59:59Z",
+        "reason_category": "Entretien",
+        "occupancy_name": "Ruelle",
+        "submittercategory": "Entrepreneur sous contrat avec la Ville de Montréal",
+        "organizationname": "Les entreprises Pierrefonds",
+        "longitude": "-73.6156272494279",
+        "latitude": "45.48137940908389"
+      }
+    ]
+  }
+}

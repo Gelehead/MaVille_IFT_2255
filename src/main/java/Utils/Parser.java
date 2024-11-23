@@ -4,9 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import java.io.FileReader;
 import UI_UX.Dialog;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -292,4 +291,51 @@ public class Parser {
         }
         return null;
     }
+
+    ///  Pour tester le parsing sans le url à partir des fichiers test local////
+
+    //  lire fichiers locaux et les parser en projets
+    public static List<Record> getRecordsFromLocalFile(String filePath) {
+        try {
+            String jsonContent = readFileAsString(filePath);
+            // Utiliser ObjectMapper pour convertir JSON en objets
+            ObjectMapper om = new ObjectMapper();
+            om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+            Root root = om.readValue(jsonContent, Root.class);
+            return root.result.records;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // Lire des fichiers locaux et les parser en entraves
+    public static List<Impediment> getImpedimentsFromLocalFile(String filePath) {
+        try {
+            String jsonContent = readFileAsString(filePath);
+            // Utiliser ObjectMapper pour convertir JSON en objets
+            ObjectMapper om = new ObjectMapper();
+            om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+            RootImpediment root = om.readValue(jsonContent, RootImpediment.class);
+            return root.result.records;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // Méthode lit un fichier comme String
+    private static String readFileAsString(String filePath) throws IOException {
+        StringBuilder content = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                content.append(line).append("\n");
+            }
+        }
+        return content.toString();
+    }
+
 }
