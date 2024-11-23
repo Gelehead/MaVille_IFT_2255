@@ -1,8 +1,8 @@
 package Instances;
 
+import java.util.ArrayList;
 import java.util.Random;
 
-import backend.Database;
 import metrics.Date;
 
 public class Request {
@@ -18,14 +18,17 @@ public class Request {
     private Project.Progress progress;
 
     // subsequent project and impediment will have the same id
-    private long id = new Random().nextLong();
+    public long id = new Random().nextLong();
     private District district;
     private Date start;
     private Date end;
     private String streetid, fromname, toname;
     private double length;
     private String description, title;
-    private User user;
+    
+    private User requestingUser;
+    private ArrayList<Intervenant> supportingIntervenants = new ArrayList<>();
+
 
     public Request(
         Project.Reason reason, District district,
@@ -43,7 +46,7 @@ public class Request {
         this.description = description;
         this.length = length;
         this.title = title;
-        this.user = user;
+        this.requestingUser = user;
     }
 
     public static Project.Reason handle_reason(String s){
@@ -65,13 +68,8 @@ public class Request {
         }
     }
 
-    // TODO: finish once and for all this district thing
-    public static District handle_district(String s){
-        switch (s) {
-            case "1": return new District(Database.District_name.placeholder);         
-            default: return new District(Database.District_name.placeholder);
-                
-        }
+    public void addSupportingIntervenant(Intervenant i){
+        this.supportingIntervenants.add(i);
     }
 
     // getters 
@@ -88,5 +86,7 @@ public class Request {
     public String getToname() {return toname;}
     public String getDescription() {return description;}
     public String getTitle() {return title;}
-    public User getUser() {return user;}
+    public User getUser() {return requestingUser;}
+    public User getRequestingUser() {return requestingUser;}
+    public ArrayList<Intervenant> getSupportingIntervenants() {return supportingIntervenants;}
 }

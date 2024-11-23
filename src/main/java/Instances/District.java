@@ -2,6 +2,7 @@ package Instances;
 import Utils.*;
 import backend.Database;
 import backend.Database.District_name;
+import metrics.Address;
 // specific convex hull problem
 // https://en.wikipedia.org/wiki/Gift_wrapping_algorithm
 public class District {
@@ -24,8 +25,14 @@ public class District {
         return new District(Database.District_name.placeholder);
     }
 
-    public static District handle_district(String districtString){
+    public static District handleDistrictChoice(Address address){
         return new District(Database.District_name.placeholder);
+    }
+
+    // handles the district choice in Langugae.districtMenu
+    public static District handleDistrictChoice(String choice_district) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleDistrictChoice'");
     }
 
 }

@@ -2,6 +2,8 @@ package Instances;
 
 import java.util.ArrayList;
 
+import Utils.Schedule;
+
 public class User {
 
     public static enum Type {
@@ -22,6 +24,8 @@ public class User {
     private String fname, lname, mail, pw;
     public Type type = Type.USER;
     private ArrayList<District> subscriptions;
+    private ArrayList<Notification> notifications;
+    private Schedule schedule = new Schedule();
 
     public User(){}
 
@@ -38,12 +42,18 @@ public class User {
         this.subscriptions.add(d);
     }
 
+    public void update_schedule(){
+        schedule.runCLI();
+    }
+
     // getters
     public String getLname() {return this.lname;}
     public String getMail() {return this.mail;}
     public String getPw() {return this.pw;}
     public String getFname() {return this.fname;}
+    public ArrayList<Notification> getNotifications() {return notifications;}
     public ArrayList<District> getSubscriptions() {return subscriptions;}
+    public Schedule getSchedule() {return schedule;}
 
     // setters
     public void setLname(String lname) {this.lname = lname;}

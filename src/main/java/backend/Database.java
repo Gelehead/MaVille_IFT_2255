@@ -3,10 +3,12 @@ package backend;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.NoSuchElementException;
+import java.util.Random;
 
 import com.github.javafaker.Faker;
 
 import Instances.*;
+import Instances.Intervenant.InType;
 import Instances.User.Type;
 import UI_UX.Dialog;
 import Utils.Language;
@@ -273,7 +275,7 @@ public class Database implements java.io.Serializable {
         }
 
         for (int i = 0; i < mockResidents; i++) {
-            addResident(new Resident(
+            Resident newRes = new Resident(
                 faker.name().firstName(), 
                 faker.name().lastName(), 
                 faker.internet().emailAddress(), 
@@ -281,7 +283,9 @@ public class Database implements java.io.Serializable {
                 faker.phoneNumber().phoneNumber().intern(),
                 faker.address().fullAddress().toLowerCase(),
                 (int) faker.date().birthday().getTime()
-            ));
+            );
+            newRes.getSchedule().generateMockSchedule();
+            addResident(newRes);
         }
 
         for (int i = 0; i < mockUsers; i++) {
@@ -290,14 +294,29 @@ public class Database implements java.io.Serializable {
                 faker.name().lastName(), 
                 faker.internet().emailAddress(), 
                 faker.internet().password(),
-                faker.funnyName().toString()
+                intypeRoulette(),
+                new Random().nextInt(100000000)
             ));
         }
 
         addAdmin(new Admin(null, null, null, null, "Herobrine"));
     }
 
+    private InType intypeRoulette(){
+        int n = new Random().nextInt(4);
+        switch (n) {
+            case 0: return InType.Individual;
+            case 1: return InType.Private_entrepreneur;
+            case 2: return InType.Public_enterprise;
+            default: return InType.Unhandled;
+        }
+    }
+
+    public Resident getActiveUser_Resident() {return (Resident) activeUser;}
+    public Intervenant getActiveUser_Intervenant() {return (Intervenant) activeUser;}
+
+    public User getActiveUser() {return activeUser;}
+
     //setters
     public void setActiveUser(User activeUser) {Database.activeUser = activeUser;}
-    public User getActiveUser() {return activeUser;}
 }

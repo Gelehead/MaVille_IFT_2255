@@ -1,7 +1,6 @@
 package Instances;
 
 import java.util.ArrayList;
-
 import backend.Database.District_name;
 
 public class Resident extends User{

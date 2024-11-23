@@ -4,9 +4,8 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-
 import Instances.*;
+import Instances.Intervenant.InType;
 import Instances.Project.Progress;
 import Utils.Language;
 import Utils.Parser.Impediment;
@@ -33,6 +32,10 @@ public class Speaker {
         String answer = s.nextLine();
         
         return answer;
+    }
+
+    public static String ask(){
+        return s.nextLine();
     }
 
     public static String ask_inline(String question){
@@ -94,7 +97,7 @@ public class Speaker {
                     System.out.println(Language.tooMuchIncorrectTries(Dialog.choice_language));
                     return Dialog.STATE.INITIAL;
                 }
-                return database.userType(database.getUser(login_mail)).equals(User.Type.INTERVENANT) ? 
+                return database.getUser(login_mail).type.equals(User.Type.INTERVENANT) ? 
                     Dialog.STATE.MAIN_INTERVENANT
                     : Dialog.STATE.MAIN_RESIDENT;
 
@@ -109,7 +112,7 @@ public class Speaker {
 
                 // main menu (mail address, pw and user type)
                 String mail = ask(Language.Qmail(Dialog.choice_language));
-                while (!isValidEmail(mail)){mail = ask(Language.EnterValidEmail(Dialog.choice_language));}
+                while ((!isValidEmail(mail) || (database.exists(mail)))){mail = ask(Language.EnterValidEmail_NotAlreadyInDatabase(Dialog.choice_language));}
 
                 String pw = ask("Entrer votre mot de passe : ");
                 while (!isSecurePassword(pw)){pw = ask("Entrer un mot de passe valide :" +
@@ -140,14 +143,26 @@ public class Speaker {
 
                         return Dialog.STATE.MAIN_RESIDENT;
                     case INTERVENANT:
-                        String enterprise = ask(Language.Qenterprise(Dialog.choice_language));
+                        String sInType = ask(Language.QinType(Dialog.choice_language));
+                        InType intype;
+                        switch (sInType) {
+                            case "1" : intype = Intervenant.InType.Public_enterprise;
+                                break;
+                            case "2" : intype = Intervenant.InType.Private_entrepreneur;
+                                break;
+                            case "3" : intype = Intervenant.InType.Individual;
+                                break;
+                            default : intype = Intervenant.InType.Unhandled;
+                                break;
+                        }
 
                         intervenant.setFname(fname);
                         resident.setLname(lname);
                         resident.setMail(mail);
                         resident.setPw(pw);
 
-                        intervenant.setEnterprise(enterprise);
+                        intervenant.setInType(intype);
+                        intervenant.setCityId(Integer.parseInt(ask_inline(Language.Qcityid(Dialog.choice_language))));
 
                         database.addIntervenant(intervenant);
                         database.setActiveUser(intervenant);
@@ -181,16 +196,12 @@ public class Speaker {
                     case "3":
                         return Dialog.STATE.NOTIFS_RESIDENT;
                     case "4":
-                        System.out.println(Language.NotImplemented_PlanifierProjet(Dialog.choice_language));
                         return Dialog.STATE.PLANIF_RESIDENT;
                     case "5":
-                        System.out.println(Language.NotImplemented_RequeteTravail(Dialog.choice_language));
                         return Dialog.STATE.REQUEST_RESIDENT;
                     case "6":
-                        System.out.println(Language.NotImplemented_AccepterRefuserCandidature(Dialog.choice_language));
                         return Dialog.STATE.VOTE_RESIDENT;
                     case "7":
-                        System.out.println(Language.NotImplemented_SignalerProbleme(Dialog.choice_language));
                         return Dialog.STATE.SIGNAL_PRB_RESIDENT;
                     case "8":
                         return Dialog.STATE.IMPEDIMENT_RESIDENT;
@@ -308,7 +319,7 @@ public class Speaker {
                         if (none3) {System.out.println(Language.no_project_found(Dialog.choice_language));}
                 
                     case "4" : 
-                        District chosen_district = District.handle_district(Language.request_district(Dialog.choice_language));
+                        District chosen_district = District.handleDistrictChoice(Language.request_district(Dialog.choice_language));
                         boolean none4 = true;
                         for (Project p : database.getProjectList()) {
                             if (p.getDistrict() == chosen_district){
@@ -325,11 +336,40 @@ public class Speaker {
 
             // notification system
             case NOTIFS_RESIDENT : 
+                // ask for a new district to subscribe to
+                System.out.println(Language.subscribe_to_new_district(Dialog.choice_language));
+                String choice_district = ask(Language.districtMenu(Dialog.choice_language));
+
+                District d = District.handleDistrictChoice(choice_district);
+
+                // add it to the active user ( the one using the app ) 's subscriptions
+                database.getActiveUser().addToSubscriptions(d);
                 
+                // return to main menu
                 return Dialog.STATE.MAIN_RESIDENT;
             
             // donner des plages horaires de disponibilites
             case PLANIF_RESIDENT :
+                String planif_string = ask(Language.planifMenu(Dialog.choice_language));
+                switch (planif_string) {
+                    case "1":
+                        System.out.println(database.getActiveUser().toString());
+                        database.getActiveUser().update_schedule();
+                        break;
+                    case "2":
+                        boolean none_planif = true;
+                        for (Resident r : database.getResidentList()) {
+                            if (r.geDistrict() == database.getActiveUser_Resident().geDistrict()){
+                                System.out.println(r.getFname() + "   " + r.getLname());
+                                r.getSchedule().printSchedule();
+                                System.out.println();
+                                none_planif = false;
+                            }
+                        }
+                        if (none_planif) {System.out.println(Language.no_user_found(Dialog.choice_language));}
+                    default:
+                        break;
+                }
                 return Dialog.STATE.MAIN_RESIDENT;
             
             // plan a request
@@ -337,7 +377,7 @@ public class Speaker {
                 System.out.println(Language.request_hi_UwU(Dialog.choice_language));
                 Request request = new Request(
                     Request.handle_reason(ask_inline(Language.request_reason(Dialog.choice_language))), 
-                    Request.handle_district(ask_inline(Language.request_district(Dialog.choice_language))), 
+                    District.handleDistrictChoice(ask_inline(Language.request_district(Dialog.choice_language))), 
                     Date.parse(ask_inline(Language.request_start(Dialog.choice_language))), 
                     //Date.parse(ask_inline(Language.request_end(Dialog.choice_language))), 
                     ask_inline(Language.request_streetid(Dialog.choice_language)), 

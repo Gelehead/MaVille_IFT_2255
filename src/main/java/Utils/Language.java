@@ -11,6 +11,36 @@ public class Language {
         ENGLISH
     }
 
+    public static String planifMenu(language language){
+        switch (language) {
+            case FRENCH:
+                return """
+                Que désirez vous faire ?
+                [1] Modifier mon emploi du temps
+                [2] Consulter les emplois du temps d'autres personnes du quartier
+                """;
+            case ENGLISH : 
+            return """
+                What should we do ?
+                [1] Modify my own schedule
+                [2] See schedules of neighbours
+                """;
+            default:
+                return "";
+        } 
+    }
+
+    public static String subscribe_to_new_district(language language){
+        switch (language) {
+            case FRENCH:
+                return "Entrez un quartier sur lequel vous voulez recevoir des nouvelles";
+            case ENGLISH : 
+                return "choose a new district to subscribe to";
+            default:
+                return "";
+        } 
+    }
+
     public static String ask_for_title(language language){
         switch (language) {
             case FRENCH:
@@ -301,6 +331,17 @@ public class Language {
         }
     }
 
+    public static String no_user_found(language language){
+        switch (language) {
+            case FRENCH:
+                return "Désolé, aucun utilisateur correspondant à vos spécification n'a été trouvé";
+            case ENGLISH:
+                return "Sorry, no user corresponding to your demands have been found";
+            default:
+                return "";
+        }
+    }
+
     public static String not_implemented_filter_project_search(language language){
         switch (language) {
             case FRENCH:
@@ -491,6 +532,36 @@ public class Language {
             default: return "";
         }
     }
+    
+    public static String Qcityid(language language){
+        switch (language) {
+            case FRENCH: return "Entrez votre indentifiant de ville";
+            case ENGLISH: return "Please enter your city ID";
+            default: return "";
+        }
+    }
+
+    public static String QinType(language language) {
+        switch (language) {
+            case FRENCH: 
+                return """
+                Entrez la catégorie qui vous représente le mieux :
+                [1] Entreprise publique
+                [2] Entrepreneur privé
+                [3] Particulier 
+                """;
+            case ENGLISH: 
+                return """
+                Enter the category that best represents you:
+                [1] Public enterprise
+                [2] Private entrepreneur
+                [3] Individual
+                """;
+            default: 
+                return "";
+        }
+    }
+    
 
     public static String Qphone(language language){
         switch (language) {
@@ -584,10 +655,10 @@ public class Language {
         }
     }
 
-    public static String EnterValidEmail(language language){
+    public static String EnterValidEmail_NotAlreadyInDatabase(language language){
         switch (language) {
-            case FRENCH: return "Entrer une adresse mail valide : ";
-            case ENGLISH: return "Please enter a valid mail adress";
+            case FRENCH: return "Votre addresse mail et invalide ou existe deja dans la base de donnees : ";
+            case ENGLISH: return "Your mail adress is either invalid or already exists in the database";
             default: return "";
         }
     }
