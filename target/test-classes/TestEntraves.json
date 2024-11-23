@@ -1,0 +1,26 @@
+{
+  "result": {
+    "records": [
+      {
+        "_id": 1,
+        "id_request": "65b40710675f6600194688fe",
+        "streetid": "avenue Earnscliffe",
+        "streetimpactwidth": "0-3 mètres",
+        "streetimpacttype": "Aucun impact / non applicable",
+        "name": "avenue Earnscliffe",
+        "length": "294.68",
+        "isarterial": "t"
+      },
+      {
+        "_id": 2,
+        "id_request": "671fd1d6d2c76f001aa8bea8",
+        "streetid": "avenue Louis-Hébert",
+        "streetimpactwidth": "0-3 mètres",
+        "streetimpacttype": "Voie de stationnement obstruée",
+        "name": "avenue Louis-Hébert",
+        "length": "216.2",
+        "isarterial": "f"
+      }
+    ]
+  }
+}
