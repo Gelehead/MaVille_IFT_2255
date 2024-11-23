@@ -17,11 +17,6 @@ Pour exécuter l'application MaVille, assurez-vous d'avoir Java installé sur vo
 ## Code 
 _Note: we called "travaux" "projects" because it makes more sense than "works" or "renovations"_
 
-### Left to do
- - [ ] Consulter les travaux en cours ou à venir.
- - [ ] Consulter les entraves
- - [ ] Soumettre une requête de travail
- - [ ] Consulter la liste des requêtes de travail
 
 ### Impediment - Project relationship
 Although there isn't any clear relationship between a project's "id" and an impediment (entrave) 's "id_request", when creating new projects, we made sure to have those 2 ids be linked between each other.
@@ -47,13 +42,14 @@ Le prototype de l'application est disponible en tant que fichier exécutable JAR
 
 ## Debugging 
 
-(Note : TODO, pas encore implémenté)
 Pour debugger le prototype, la plupart des réponses demandant un code, mail ou autre informations personnelles peuvent être contournées en entrant "1"
 
 ## Contact
 
 
 ## Afterword
-
+- Ajout d'une interface graphique.
+- Renforcement des fonctionnalités de recherche et d'affichage.
+- Extension du système de notifications.
 
 
