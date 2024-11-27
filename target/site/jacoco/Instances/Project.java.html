@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Project.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MaVille</a> &gt; <a href="index.source.html" class="el_package">Instances</a> &gt; <span class="el_source">Project.java</span></div><h1>Project.java</h1><pre class="source lang-java linenums">package Instances;
+import java.util.ArrayList;
+
+import Utils.Schedule;
+import metrics.*;
+
+public class Project {
+
+    //actual parameters
+    public int id;
+    public String bigId;
+    private Date start_date;
+    private Date end_date;
+    private District district;
+
+    private Progress status;
+    private Coordinates coordinates;
+
+    private Reason reason;
+    private String title;
+    
+    private String occupancy;
+    private String organization;
+    private String submitter_category;
+
+    // not that useful parameters
+    private String permit_id;
+    private String permit_category;
+    private long contract_number;
+
+<span class="nc" id="L31">    private ArrayList&lt;Project&gt; logs = new ArrayList&lt;&gt;();</span>
+
+    //probably needs like &quot;NEGOTIATING&quot;, &quot;REFUSED&quot;, &quot;ABANDONED&quot;, and more
+<span class="fc" id="L34">    public enum Progress {</span>
+        // for projects
+<span class="fc" id="L36">        PLANNED,</span>
+<span class="fc" id="L37">        NOT_STARTED,</span>
+<span class="fc" id="L38">        IN_PROGRESS,</span>
+<span class="fc" id="L39">        FINISHED,</span>
+
+        // for requests
+<span class="fc" id="L42">        SUBMITTED,</span>
+<span class="fc" id="L43">        REFUSED,</span>
+<span class="fc" id="L44">        ACCEPTED,</span>
+
+<span class="fc" id="L46">        PLACEHOLDER</span>
+    }
+
+
+<span class="nc" id="L50">    public enum Reason {</span>
+<span class="nc" id="L51">        Travaux_routiers,</span>
+<span class="nc" id="L52">        Travaux_de_gaz_ou_électricité,</span>
+<span class="nc" id="L53">        Construction_ou_rénovation,</span>
+<span class="nc" id="L54">        Entretien_paysager,</span>
+<span class="nc" id="L55">        Travaux_liés_aux_transports_en_commun,</span>
+<span class="nc" id="L56">        Travaux_de_signalisation_et_éclairage,</span>
+<span class="nc" id="L57">        Travaux_souterrains,</span>
+<span class="nc" id="L58">        Travaux_résidentiel,</span>
+<span class="nc" id="L59">        Entretien_urbain,</span>
+<span class="nc" id="L60">        Entretien_des_réseaux_de_télécommunication,</span>
+
+        /* Construction_rénovation_sans_excavation,
+        Construction_rénovation_avec_excavation,
+        Égouts_et_aqueducs__Réhabilitation,
+        Égouts_et_aqueducs__Excavation,
+        Égouts_et_aqueducs__Inspection_et_nettoyage,
+        Réseaux_routier__Réfection_et_travaux_corrélatifs,
+        S_3_Infrastructure_souterraine_majeure__Massifs_et_conduits, */
+
+<span class="nc" id="L70">        Autre,</span>
+<span class="nc" id="L71">        UNHANDLED_REASON</span>
+    }
+
+    public Project
+    (
+        String title, String description,
+        int id, String bigId,
+        Reason reason,
+        District district, 
+        String[] streets,
+        Date start, Date end, 
+        Schedule schedule,
+        User submitter
+    )
+<span class="nc" id="L85">    {</span>
+<span class="nc" id="L86">        this.id = id;</span>
+<span class="nc" id="L87">        this.bigId = bigId;</span>
+
+<span class="nc" id="L89">        this.reason = reason;</span>
+<span class="nc" id="L90">        this.title = title;</span>
+
+        // TODO: adjust parsing for districts
+<span class="nc" id="L93">        this.district = district;</span>
+
+<span class="nc" id="L95">        this.start_date = start;</span>
+<span class="nc" id="L96">        this.end_date = end;</span>
+<span class="nc" id="L97">        this.status = Progress.PLANNED;</span>
+
+        // logs will be used to keep track of project changes
+<span class="nc" id="L100">        logs.add(this);</span>
+<span class="nc" id="L101">    }</span>
+
+    public Project
+    (
+        int id, String bigId,
+        String permit_id, String permit_category, String contract_number,
+        String reason, String title,
+        District district, 
+        String start, String end, 
+        String occupancy, String organization, String submitter_category,
+        Coordinates co)
+<span class="nc" id="L112">    {</span>
+<span class="nc" id="L113">        this.id = id;</span>
+<span class="nc" id="L114">        this.bigId = bigId;</span>
+
+<span class="nc" id="L116">        this.permit_id = permit_id;</span>
+<span class="nc" id="L117">        this.permit_category = permit_category;</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">        this.contract_number = contract_number == null ? 0 : Long.parseLong(contract_number);</span>
+
+<span class="nc" id="L120">        this.reason = toReason(reason);</span>
+<span class="nc" id="L121">        this.title = title;</span>
+
+        // TODO: adjust parsing for districts
+<span class="nc" id="L124">        this.district = district;</span>
+
+<span class="nc" id="L126">        this.start_date = Date.format(start);</span>
+<span class="nc" id="L127">        this.end_date = Date.format(end);</span>
+<span class="nc" id="L128">        this.status = getProgress();</span>
+
+<span class="nc" id="L130">        this.occupancy = occupancy;</span>
+<span class="nc" id="L131">        this.organization = organization;</span>
+<span class="nc" id="L132">        this.submitter_category = submitter_category;</span>
+
+<span class="nc" id="L134">        this.coordinates = co;</span>
+
+        // logs will be used to keep track of project changes
+<span class="nc" id="L137">        logs.add(this);</span>
+<span class="nc" id="L138">    }</span>
+
+    private Progress getProgress(){
+<span class="nc" id="L141">        return Date.projectProgress(this.start_date, this.end_date);</span>
+    }
+
+    private Reason toReason(String s){
+<span class="nc bnc" id="L145" title="All 9 branches missed.">        switch (s) {</span>
+            case &quot;S-3 Infrastructure souterraine majeure - Massifs et conduits&quot;:
+<span class="nc" id="L147">                return Reason.Travaux_souterrains;</span>
+            case &quot;Autre&quot;:
+<span class="nc" id="L149">                return Reason.Autre;</span>
+            case &quot;Construction/rénovation sans excavation&quot;:
+<span class="nc" id="L151">                return Reason.Construction_ou_rénovation;</span>
+            case &quot;Construction/rénovation avec excavation&quot; :
+<span class="nc" id="L153">                return Reason.Construction_ou_rénovation;</span>
+            case &quot;Égouts et aqueducs - Réhabilitation&quot; : 
+<span class="nc" id="L155">                return Reason.Travaux_souterrains;</span>
+            case &quot;Égouts et aqueducs - Inspection et nettoyage&quot; : 
+<span class="nc" id="L157">                return Reason.Travaux_souterrains;</span>
+            case &quot;Égouts et aqueducs - Excavation&quot; :
+<span class="nc" id="L159">                return Reason.Travaux_souterrains;</span>
+            case &quot;Réseaux routier - Réfection et travaux corrélatifs&quot;:
+<span class="nc" id="L161">                return Reason.Travaux_routiers;</span>
+            default:
+<span class="nc" id="L163">                return Reason.UNHANDLED_REASON;</span>
+        }
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L169">        String res = &quot;&quot;;</span>
+<span class="nc" id="L170">        res += (&quot;  ID: &quot; + id + &quot;\n&quot;);</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">        res += (&quot;  Borough: &quot; + (district == null ? &quot;district is null&quot; : district.name) + &quot;\n&quot;);</span>
+<span class="nc" id="L172">        res += (&quot;  Start Date: &quot; + start_date+ &quot;\n&quot;);</span>
+<span class="nc" id="L173">        res += (&quot;  End Date: &quot; + end_date + &quot;\n&quot;);</span>
+<span class="nc" id="L174">        res += (&quot;  Longitude: &quot; + coordinates.longitude+ &quot;\n&quot;);</span>
+<span class="nc" id="L175">        res += (&quot;  Latitude: &quot; + coordinates.latitude + &quot;\n&quot;);</span>
+<span class="nc" id="L176">        res += (&quot;  reason: &quot; + this.reason + &quot;\n&quot;);</span>
+<span class="nc" id="L177">        res += (&quot;  Submitter category: &quot; + this.submitter_category + &quot;\n&quot;);</span>
+<span class="nc" id="L178">        res += (&quot;  contract number: &quot; + this.contract_number + &quot;\n&quot;);</span>
+<span class="nc" id="L179">        res += (&quot;  occupancy: &quot; + this.occupancy + &quot;\n&quot;);</span>
+<span class="nc" id="L180">        res += (&quot;  organization: &quot; + this.organization + &quot;\n&quot;);</span>
+<span class="nc" id="L181">        res += (&quot;  progress: &quot; + this.status + &quot;\n&quot;);</span>
+
+<span class="nc" id="L183">        return res;</span>
+    }
+
+    // getters 
+<span class="nc" id="L187">    public long getContract_number() {return contract_number;}</span>
+<span class="nc" id="L188">    public Coordinates getCoordinates() {return coordinates;}</span>
+<span class="nc" id="L189">    public District getDistrict() {return district;}</span>
+<span class="nc" id="L190">    public Date getEnd_date() {return end_date;}</span>
+<span class="nc" id="L191">    public String getOccupancy() {return occupancy;}</span>
+<span class="nc" id="L192">    public String getOrganization() {return organization;}</span>
+<span class="nc" id="L193">    public String getPermit_category() {return permit_category;}</span>
+<span class="nc" id="L194">    public String getPermit_id() {return permit_id;}</span>
+<span class="nc" id="L195">    public Reason getReason() {return reason;}</span>
+<span class="nc" id="L196">    public Date getStart_date() {return start_date;}</span>
+<span class="nc" id="L197">    public Progress getStatus() {return status;}</span>
+<span class="nc" id="L198">    public String getSubmitter_category() {return submitter_category;}</span>
+<span class="nc" id="L199">    public String getTitle() {return title;}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

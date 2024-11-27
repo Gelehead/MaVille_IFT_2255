@@ -2,32 +2,178 @@
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.NoSuchElementException;
+import java.util.Random;
 
-import Users.*;
+import com.github.javafaker.Faker;
+
+import Instances.*;
+import Instances.Intervenant.InType;
+import Instances.User.Type;
+import UI_UX.Dialog;
+import Utils.GeoJSON;
+import Utils.Language;
+import Utils.Parser;
+import Utils.GeoJSON.Feature;
+import Utils.Geocoding;
+import Utils.Parser.Impediment;
+import Utils.Parser.Record;
+import metrics.*;
 
 public class Database implements java.io.Serializable {
+    
     // users are registered and saved via their email, most unique and clear identification method
-    private final Hashtable&lt;String, Intervenant&gt; intervenantHashtable;
-    private final Hashtable&lt;String, Resident&gt; residentHashtable;
+<span class="nc" id="L26">    private static Hashtable&lt;String, User&gt;              userHashtable = new Hashtable&lt;&gt;();</span>
+<span class="nc" id="L27">    private static Hashtable&lt;String, Intervenant&gt;       intervenantHashtable = new Hashtable&lt;&gt;();</span>
+<span class="nc" id="L28">    private static Hashtable&lt;String, Resident&gt;          residentHashtable = new Hashtable&lt;&gt;();</span>
+<span class="nc" id="L29">    private static Hashtable&lt;String, Admin&gt;             adminHashtable = new Hashtable&lt;&gt;();</span>
 
-<span class="nc" id="L13">    public Database(){</span>
-<span class="nc" id="L14">        intervenantHashtable = new Hashtable&lt;&gt;();</span>
-<span class="nc" id="L15">        residentHashtable = new Hashtable&lt;&gt;();</span>
-<span class="nc" id="L16">    }</span>
+<span class="nc" id="L31">    private static Hashtable&lt;Integer, Project&gt;          projectHashtable = new Hashtable&lt;&gt;();</span>
+<span class="nc" id="L32">    private static Hashtable&lt;Integer, Impediment&gt;       impedimentHashtable = new Hashtable&lt;&gt;();</span>
+<span class="nc" id="L33">    private static Hashtable&lt;District_name, District&gt;   districtHashtable = new Hashtable&lt;&gt;();</span>
+<span class="nc" id="L34">    private static Hashtable&lt;Long, Request&gt;             requestHashtable = new Hashtable&lt;&gt;();</span>
+
+    private static User activeUser;
+    // JSON URL to get the ongoing projects
+<span class="nc" id="L38">    String projectsURL = &quot;https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=cc41b532-f12d-40fb-9f55-eb58c9a2b12b&quot;;</span>
+<span class="nc" id="L39">    String impedimentsURL = &quot;https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=a2bc8014-488c-495d-941b-e7ae1999d1bd&quot;;</span>
+<span class="nc" id="L40">    public String geoJSONfilePath = &quot;extern/data/limites-administratives-agglomeration-nad83.geojson&quot;;</span>
+
+<span class="nc" id="L42">    public enum District_name {</span>
+<span class="nc" id="L43">        LaSalle,</span>
+<span class="nc" id="L44">        Dollard_des_Ormeaux,</span>
+<span class="nc" id="L45">        Côte_Saint_Luc,</span>
+<span class="nc" id="L46">        Villeray_Saint_Michel_Parc_Extension,</span>
+<span class="nc" id="L47">        Rosemont_La_Petite_Patrie,</span>
+<span class="nc" id="L48">        Hampstead,</span>
+<span class="nc" id="L49">        Senneville,</span>
+<span class="nc" id="L50">        Le_Plateau_Mont_Royal,</span>
+<span class="nc" id="L51">        Sainte_Anne_de_Bellevue,</span>
+<span class="nc" id="L52">        Montreal_Ouest,</span>
+<span class="nc" id="L53">        Cote_des_Neiges_Notre_Dame_de_Grace,</span>
+<span class="nc" id="L54">        Ile_Bizard_Sainte_Genevieve,</span>
+<span class="nc" id="L55">        Beaconsfield,</span>
+<span class="nc" id="L56">        Anjou,</span>
+<span class="nc" id="L57">        Verdun,</span>
+<span class="nc" id="L58">        Le_Sud_Ouest,</span>
+<span class="nc" id="L59">        Mercier_Hochelaga_Maisonneuve,</span>
+<span class="nc" id="L60">        Montreal_Est,</span>
+<span class="nc" id="L61">        Lachine,</span>
+<span class="nc" id="L62">        Saint_Leonard,</span>
+<span class="nc" id="L63">        Montreal_Nord,</span>
+<span class="nc" id="L64">        Outremont,</span>
+<span class="nc" id="L65">        Ile_Dorval,</span>
+<span class="nc" id="L66">        Mont_Royal,</span>
+<span class="nc" id="L67">        Pointe_Claire,</span>
+<span class="nc" id="L68">        Dorval,</span>
+<span class="nc" id="L69">        Pierrefonds_Roxboro,</span>
+<span class="nc" id="L70">        Riviere_des_Prairies_Pointe_aux_Trembl,</span>
+<span class="nc" id="L71">        Ahuntsic_Cartierville,</span>
+<span class="nc" id="L72">        Saint_Laurent,</span>
+<span class="nc" id="L73">        Ville_Marie,</span>
+<span class="nc" id="L74">        Kirkland,</span>
+<span class="nc" id="L75">        Baie_D_Urfe,</span>
+<span class="nc" id="L76">        Westmount</span>
+    }
+    
+
+<span class="nc" id="L80">    public Database(){</span>
+<span class="nc" id="L81">        init();</span>
+<span class="nc" id="L82">    }</span>
+
+<span class="nc" id="L84">    public Database(int mockIntervenants, int mockResidents, int mockUsers){</span>
+<span class="nc" id="L85">        init(mockUsers, mockIntervenants, mockResidents);</span>
+<span class="nc" id="L86">    }</span>
+
+    public void printAll(Type utype){
+<span class="nc bnc" id="L89" title="All 6 branches missed.">        switch (utype) {</span>
+            case USER: 
+<span class="nc bnc" id="L91" title="All 2 branches missed.">                for (String uk : userHashtable.keySet()) {</span>
+<span class="nc" id="L92">                    System.out.println(userHashtable.get(uk).toString());</span>
+<span class="nc" id="L93">                }</span>
+<span class="nc" id="L94">                break;</span>
+            case RESIDENT :
+<span class="nc bnc" id="L96" title="All 2 branches missed.">                for (String rk : residentHashtable.keySet()) {</span>
+<span class="nc" id="L97">                    System.out.println(residentHashtable.get(rk).toString());</span>
+<span class="nc" id="L98">                }</span>
+<span class="nc" id="L99">                break;</span>
+            case INTERVENANT :
+<span class="nc bnc" id="L101" title="All 2 branches missed.">                for (String ik : intervenantHashtable.keySet()) {</span>
+<span class="nc" id="L102">                    System.out.println(intervenantHashtable.get(ik).toString());</span>
+<span class="nc" id="L103">                }</span>
+<span class="nc" id="L104">                break;</span>
+            case PROJECT :
+<span class="nc bnc" id="L106" title="All 2 branches missed.">                for (int pid : projectHashtable.keySet()) {</span>
+<span class="nc" id="L107">                    System.out.println(projectHashtable.get(pid).toString());</span>
+<span class="nc" id="L108">                }</span>
+<span class="nc" id="L109">                break;</span>
+            case IMPEDIMENT:
+<span class="nc bnc" id="L111" title="All 2 branches missed.">                for (int iid : impedimentHashtable.keySet()) {</span>
+<span class="nc" id="L112">                    System.out.println(projectHashtable.get(iid).toString());</span>
+<span class="nc" id="L113">                }</span>
+<span class="nc" id="L114">                break;</span>
+            default:
+                break;
+        }
+<span class="nc" id="L118">    }</span>
+
+    /**
+     * 
+     * @param u User
+     */
+    public void addUser(User u){
+<span class="nc" id="L125">        userHashtable.put(u.getMail(), u);</span>
+<span class="nc" id="L126">    }</span>
 
     /**
      * 
      * @param i Intervenant
      */
-<span class="nc" id="L22">    public void addIntervenant(Intervenant i){intervenantHashtable.put(i.getMail(), i);}</span>
+    public void addIntervenant(Intervenant i){
+<span class="nc" id="L133">        userHashtable.put(i.getMail(), i);</span>
+<span class="nc" id="L134">        intervenantHashtable.put(i.getMail(), i);</span>
+<span class="nc" id="L135">    }</span>
 
     /**
      * 
      * @param r resident
      */
-<span class="nc" id="L28">    public void addResident(Resident r){residentHashtable.put(r.getMail(), r);}</span>
+    public void addResident(Resident r){
+<span class="nc" id="L142">        userHashtable.put(r.getMail(), r);</span>
+<span class="nc" id="L143">        residentHashtable.put(r.getMail(), r);</span>
+<span class="nc" id="L144">    }</span>
 
-<span class="nc" id="L30">    public Resident getResident(String mail){return this.residentHashtable.get(mail);}</span>
+    /**
+     * 
+     * @param a admin
+     */
+    public void addAdmin(Admin a){
+<span class="nc" id="L151">        adminHashtable.put(a.getUsername(), a);</span>
+<span class="nc" id="L152">    }</span>
+
+    /**
+     * 
+     * @param p project
+     */
+    public void addProject(Project p){
+<span class="nc" id="L159">        projectHashtable.put(p.id, p);</span>
+<span class="nc" id="L160">    }</span>
+
+    /**
+     * 
+     * @param r request
+     */
+    public void addRequest(Request r){
+<span class="nc" id="L167">        requestHashtable.put(r.getId(), r);</span>
+<span class="nc" id="L168">    }</span>
+
+    // TODO: placeholder, change when time allows
+<span class="nc" id="L171">    public District getDistrict(District_name name){return districtHashtable.get(name);}</span>
+
+<span class="nc" id="L173">    public Request getRequest(long id){return requestHashtable.get(id);}</span>
+<span class="nc" id="L174">    public Resident getResident(String mail){return residentHashtable.get(mail);}</span>
+<span class="nc" id="L175">    public Intervenant getIntervenant(String mail){return intervenantHashtable.get(mail);}</span>
+<span class="nc" id="L176">    public User getUser(String mail){return userHashtable.get(mail);}</span>
 
 
     /** Method to get Intervenant list from the database
@@ -35,11 +181,11 @@ public class Database implements java.io.Serializable {
      * @return Arraylist&lt;Intervenant&gt; intervenantList
      */
     public ArrayList&lt;Intervenant&gt; getIntervenantList(){
-<span class="nc" id="L38">        ArrayList&lt;Intervenant&gt; intervenantList = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L39" title="All 2 branches missed.">        for (Intervenant i : intervenantHashtable.values()){</span>
-<span class="nc" id="L40">            intervenantList.add(i);</span>
-<span class="nc" id="L41">        }</span>
-<span class="nc" id="L42">        return intervenantList;</span>
+<span class="nc" id="L184">        ArrayList&lt;Intervenant&gt; intervenantList = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">        for (Intervenant i : intervenantHashtable.values()){</span>
+<span class="nc" id="L186">            intervenantList.add(i);</span>
+<span class="nc" id="L187">        }</span>
+<span class="nc" id="L188">        return intervenantList;</span>
     }
 
     /**
@@ -47,11 +193,246 @@ public class Database implements java.io.Serializable {
      * @return ArrayList&lt;Resident&gt; residentList
      */
     public ArrayList&lt;Resident&gt; getResidentList(){
-<span class="nc" id="L50">        ArrayList&lt;Resident&gt; residentList = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L51" title="All 2 branches missed.">        for (Resident i : residentHashtable.values()){</span>
-<span class="nc" id="L52">            residentList.add(i);</span>
-<span class="nc" id="L53">        }</span>
-<span class="nc" id="L54">        return residentList;</span>
+<span class="nc" id="L196">        ArrayList&lt;Resident&gt; residentList = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">        for (Resident i : residentHashtable.values()){</span>
+<span class="nc" id="L198">            residentList.add(i);</span>
+<span class="nc" id="L199">        }</span>
+<span class="nc" id="L200">        return residentList;</span>
     }
+
+        /**
+     * 
+     * @return ArrayList&lt;Project&gt; projectlist
+     */
+    public ArrayList&lt;Project&gt; getProjectList(){
+<span class="nc" id="L208">        ArrayList&lt;Project&gt; projecList = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">        for (Project p : projectHashtable.values()){</span>
+<span class="nc" id="L210">            projecList.add(p);</span>
+<span class="nc" id="L211">        }</span>
+<span class="nc" id="L212">        return projecList;</span>
+    }
+
+    /**
+     * 
+     * @return ArrayList&lt;Resident&gt; residentList
+     */
+    public ArrayList&lt;Impediment&gt; getImpedimentList(){
+<span class="nc" id="L220">        ArrayList&lt;Impediment&gt; impedimenList = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">        for (Impediment i : impedimentHashtable.values()){</span>
+<span class="nc" id="L222">            impedimenList.add(i);</span>
+<span class="nc" id="L223">        }</span>
+<span class="nc" id="L224">        return impedimenList;</span>
+    }
+
+    public ArrayList&lt;Request&gt; getRequestList(){
+<span class="nc" id="L228">        ArrayList&lt;Request&gt; requestList = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">        for (Request r : requestHashtable.values()){</span>
+<span class="nc" id="L230">            requestList.add(r);</span>
+<span class="nc" id="L231">        }</span>
+<span class="nc" id="L232">        return requestList;</span>
+    }
+
+    public boolean authentify(String mail, String pw){
+<span class="nc" id="L236">        return userHashtable.get(mail).getPw().equals(pw);</span>
+    }
+    public boolean exists(String mail){
+<span class="nc" id="L239">        return userHashtable.containsKey(mail);</span>
+    }
+    public User.Type userType(User user){
+<span class="nc bnc" id="L242" title="All 2 branches missed.">        if (!exists(user.getMail())){throw new NoSuchElementException(Language.noSuchUser(Dialog.choice_language, user.getMail()));}</span>
+<span class="nc" id="L243">        return user.type;</span>
+    }
+
+    // TODO: complete placeholder
+    private void init_districts(){
+<span class="nc" id="L248">        GeoJSON geoJSON = Parser.getgeojson(geoJSONfilePath);</span>
+<span class="nc bnc" id="L249" title="All 2 branches missed.">        for (Feature f : geoJSON.getFeatures()) {</span>
+<span class="nc" id="L250">            District d = new District(</span>
+<span class="nc" id="L251">                toDistrict_name(f.getProperties().getNom()),</span>
+<span class="nc" id="L252">                f.getGeometry(),</span>
+<span class="nc" id="L253">                f.getProperties().getCodeMamh()</span>
+            );
+<span class="nc" id="L255">            districtHashtable.put(toDistrict_name(f.getProperties().getNom()), d);</span>
+<span class="nc" id="L256">        }</span>
+<span class="nc" id="L257">    }</span>
+
+    private void init_records(){
+<span class="nc bnc" id="L260" title="All 2 branches missed.">        for (Parser.Record record : Parser.getRecords(projectsURL)) {</span>
+<span class="nc" id="L261">            Project project = toProject(record);</span>
+<span class="nc" id="L262">            projectHashtable.put(project.id, project);</span>
+<span class="nc" id="L263">        }</span>
+<span class="nc" id="L264">    }</span>
+
+    private void init_impediments(){
+<span class="nc bnc" id="L267" title="All 2 branches missed.">        for (Parser.Impediment rimp : Parser.getImpediments(impedimentsURL)){</span>
+<span class="nc" id="L268">            impedimentHashtable.put(rimp.id, rimp);</span>
+<span class="nc" id="L269">        }</span>
+<span class="nc" id="L270">    }</span>
+
+    public static District getDistrict(String address) {
+        try {
+            // Get the coordinates of the address
+<span class="nc" id="L275">            double[] coordinates = Geocoding.getCoordinates(address);</span>
+<span class="nc" id="L276">            double latitude = coordinates[0];</span>
+<span class="nc" id="L277">            double longitude = coordinates[1];</span>
+
+            // Iterate through all districts in the database to check which district contains the point
+<span class="nc bnc" id="L280" title="All 2 branches missed.">            for (District d : districtHashtable.values()) {</span>
+<span class="nc bnc" id="L281" title="All 2 branches missed.">                if (d.getGeometry().contains(latitude, longitude)) {</span>
+<span class="nc" id="L282">                    return d; // Return the district if it contains the point</span>
+                }
+<span class="nc" id="L284">            }</span>
+
+            // If no district contains the point, return null or throw an exception
+<span class="nc" id="L287">            return null; // or throw new IllegalArgumentException(&quot;No district found for the given address.&quot;);</span>
+<span class="nc" id="L288">        } catch (Exception e) {</span>
+            // Handle errors, such as invalid address or API failure
+<span class="nc" id="L290">            e.printStackTrace();</span>
+<span class="nc" id="L291">            return null;</span>
+        }
+    }
+
+    private District_name toDistrict_name(String s) {
+<span class="nc bnc" id="L296" title="All 36 branches missed.">        switch (s) {</span>
+<span class="nc" id="L297">            case &quot;LaSalle&quot;:                              return District_name.LaSalle;</span>
+<span class="nc" id="L298">            case &quot;Dollard-des-Ormeaux&quot;:                  return District_name.Dollard_des_Ormeaux;</span>
+<span class="nc" id="L299">            case &quot;Côte-Saint-Luc&quot;:                       return District_name.Côte_Saint_Luc;</span>
+<span class="nc" id="L300">            case &quot;Villeray-Saint-Michel-Parc-Extension&quot;: return District_name.Villeray_Saint_Michel_Parc_Extension;</span>
+<span class="nc" id="L301">            case &quot;Rosemont-La Petite-Patrie&quot;:            return District_name.Rosemont_La_Petite_Patrie;</span>
+<span class="nc" id="L302">            case &quot;Hampstead&quot;:                            return District_name.Hampstead;</span>
+<span class="nc" id="L303">            case &quot;Senneville&quot;:                           return District_name.Senneville;</span>
+<span class="nc" id="L304">            case &quot;Le Plateau-Mont-Royal&quot;:                return District_name.Le_Plateau_Mont_Royal;</span>
+<span class="nc" id="L305">            case &quot;Sainte-Anne-de-Bellevue&quot;:              return District_name.Sainte_Anne_de_Bellevue;</span>
+<span class="nc" id="L306">            case &quot;Montréal-Ouest&quot;:                       return District_name.Montreal_Ouest;</span>
+<span class="nc" id="L307">            case &quot;Côte-des-Neiges-Notre-Dame-de-Grâce&quot;:  return District_name.Cote_des_Neiges_Notre_Dame_de_Grace;</span>
+<span class="nc" id="L308">            case &quot;L'Île-Bizard-Sainte-Geneviève&quot;:        return District_name.Ile_Bizard_Sainte_Genevieve;</span>
+<span class="nc" id="L309">            case &quot;Beaconsfield&quot;:                         return District_name.Beaconsfield;</span>
+<span class="nc" id="L310">            case &quot;Anjou&quot;:                                return District_name.Anjou;</span>
+<span class="nc" id="L311">            case &quot;Verdun&quot;:                               return District_name.Verdun;</span>
+<span class="nc" id="L312">            case &quot;Le Sud-Ouest&quot;:                         return District_name.Le_Sud_Ouest;</span>
+<span class="nc" id="L313">            case &quot;Mercier-Hochelaga-Maisonneuve&quot;:        return District_name.Mercier_Hochelaga_Maisonneuve;</span>
+<span class="nc" id="L314">            case &quot;Montréal-Est&quot;:                         return District_name.Montreal_Est;</span>
+<span class="nc" id="L315">            case &quot;Lachine&quot;:                              return District_name.Lachine;</span>
+<span class="nc" id="L316">            case &quot;Saint-Léonard&quot;:                        return District_name.Saint_Leonard;</span>
+<span class="nc" id="L317">            case &quot;Montréal-Nord&quot;:                        return District_name.Montreal_Nord;</span>
+<span class="nc" id="L318">            case &quot;Outremont&quot;:                            return District_name.Outremont;</span>
+<span class="nc" id="L319">            case &quot;L'Île-Dorval&quot; :                        return District_name.Ile_Dorval;</span>
+<span class="nc" id="L320">            case &quot;Mont-Royal&quot;:                           return District_name.Mont_Royal;</span>
+<span class="nc" id="L321">            case &quot;Pointe-Claire&quot;:                        return District_name.Pointe_Claire;</span>
+<span class="nc" id="L322">            case &quot;Dorval&quot;:                               return District_name.Dorval;</span>
+<span class="nc" id="L323">            case &quot;Pierrefonds-Roxboro&quot;:                  return District_name.Pierrefonds_Roxboro;</span>
+<span class="nc" id="L324">            case &quot;Rivière-des-Prairies-Pointe-aux-Trembles&quot;: return District_name.Riviere_des_Prairies_Pointe_aux_Trembl;</span>
+<span class="nc" id="L325">            case &quot;Ahuntsic-Cartierville&quot;:                return District_name.Ahuntsic_Cartierville;</span>
+<span class="nc" id="L326">            case &quot;St-Laurent&quot;:                        return District_name.Saint_Laurent;</span>
+<span class="nc" id="L327">            case &quot;Saint-Laurent&quot;:                        return District_name.Saint_Laurent;</span>
+<span class="nc" id="L328">            case &quot;Ville-Marie&quot;:                          return District_name.Ville_Marie;</span>
+<span class="nc" id="L329">            case &quot;Kirkland&quot;:                             return District_name.Kirkland;</span>
+<span class="nc" id="L330">            case &quot;Baie-D'Urfé&quot;:                          return District_name.Baie_D_Urfe;</span>
+<span class="nc" id="L331">            case &quot;Westmount&quot;:                            return District_name.Westmount;</span>
+            default:
+<span class="nc" id="L333">                throw new IllegalArgumentException(&quot;Unknown district name: &quot; + s);</span>
+        }
+    }
+    
+
+    private Project toProject(Record record){
+<span class="nc" id="L339">        Coordinates co = new Coordinates(</span>
+<span class="nc bnc" id="L340" title="All 2 branches missed.">            record.longitude == null ? 0 : Double.parseDouble(record.longitude), </span>
+<span class="nc bnc" id="L341" title="All 2 branches missed.">            record.longitude == null ? 0 : Double.parseDouble(record.latitude)</span>
+        );
+<span class="nc" id="L343">        return new Project(</span>
+            record.id,
+            record.official_id,
+            record.permit_permit_id,
+            record.permitcategory,
+            record.contractnumber,
+            record.reason_category,
+            &quot;no given title&quot;,
+<span class="nc" id="L351">            districtHashtable.get(toDistrict_name(record.boroughid)),</span>
+            record.duration_start_date,
+            record.duration_end_date,
+            record.occupancy_name,
+            record.organizationname,
+            record.submittercategory,
+            co
+        );
+    }
+
+    /** Usage of Faker library to ease the false information creation
+     *  
+     */
+    private void init(){
+<span class="nc" id="L365">        init(10, 3, 7);</span>
+<span class="nc" id="L366">    }</span>
+
+    // real init function
+    private void init(int mockUsers, int mockIntervenants, int mockResidents){
+<span class="nc" id="L370">        init_records();</span>
+<span class="nc" id="L371">        init_districts();</span>
+<span class="nc" id="L372">        init_impediments();</span>
+
+<span class="nc" id="L374">        Faker faker = new Faker();</span>
+<span class="nc bnc" id="L375" title="All 2 branches missed.">        for (int i = 0; i &lt; mockUsers; i++) {</span>
+<span class="nc" id="L376">            addUser(new User(</span>
+<span class="nc" id="L377">                faker.name().firstName(), </span>
+<span class="nc" id="L378">                faker.name().lastName(), </span>
+<span class="nc" id="L379">                faker.internet().emailAddress(), </span>
+<span class="nc" id="L380">                faker.internet().password()</span>
+            ));
+        }
+
+<span class="nc bnc" id="L384" title="All 2 branches missed.">        for (int i = 0; i &lt; mockResidents; i++) {</span>
+<span class="nc" id="L385">            Resident newRes = new Resident(</span>
+<span class="nc" id="L386">                faker.name().firstName(), </span>
+<span class="nc" id="L387">                faker.name().lastName(), </span>
+<span class="nc" id="L388">                faker.internet().emailAddress(), </span>
+<span class="nc" id="L389">                faker.internet().password(),</span>
+<span class="nc" id="L390">                faker.phoneNumber().phoneNumber().intern(),</span>
+<span class="nc" id="L391">                faker.address().fullAddress().toLowerCase(),</span>
+<span class="nc" id="L392">                (int) faker.date().birthday().getTime()</span>
+            );
+<span class="nc" id="L394">            newRes.getSchedule().generateMockSchedule();</span>
+<span class="nc" id="L395">            addResident(newRes);</span>
+        }
+
+<span class="nc bnc" id="L398" title="All 2 branches missed.">        for (int i = 0; i &lt; mockUsers; i++) {</span>
+<span class="nc" id="L399">            addIntervenant(new Intervenant(</span>
+<span class="nc" id="L400">                faker.name().firstName(), </span>
+<span class="nc" id="L401">                faker.name().lastName(), </span>
+<span class="nc" id="L402">                faker.internet().emailAddress(), </span>
+<span class="nc" id="L403">                faker.internet().password(),</span>
+<span class="nc" id="L404">                intypeRoulette(),</span>
+<span class="nc" id="L405">                new Random().nextInt(100000000)</span>
+            ));
+        }
+
+<span class="nc" id="L409">        addAdmin(new Admin(null, null, null, null, &quot;Herobrine&quot;));</span>
+<span class="nc" id="L410">    }</span>
+
+    public void send_notif(District_name project_district, Project project) {
+<span class="nc bnc" id="L413" title="All 2 branches missed.">        for (Resident r : getResidentList()){</span>
+<span class="nc bnc" id="L414" title="All 2 branches missed.">            if ( r.geDistrict() == project_district){</span>
+                
+            }
+<span class="nc" id="L417">        }</span>
+<span class="nc" id="L418">    }</span>
+
+    private InType intypeRoulette(){
+<span class="nc" id="L421">        int n = new Random().nextInt(4);</span>
+<span class="nc bnc" id="L422" title="All 4 branches missed.">        switch (n) {</span>
+<span class="nc" id="L423">            case 0: return InType.Individual;</span>
+<span class="nc" id="L424">            case 1: return InType.Private_entrepreneur;</span>
+<span class="nc" id="L425">            case 2: return InType.Public_enterprise;</span>
+<span class="nc" id="L426">            default: return InType.Unhandled;</span>
+        }
+    }
+
+<span class="nc" id="L430">    public Resident getActiveUser_Resident() {return (Resident) activeUser;}</span>
+<span class="nc" id="L431">    public Intervenant getActiveUser_Intervenant() {return (Intervenant) activeUser;}</span>
+
+<span class="nc" id="L433">    public User getActiveUser() {return activeUser;}</span>
+
+    //setters
+<span class="nc" id="L436">    public void setActiveUser(User activeUser) {Database.activeUser = activeUser;}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

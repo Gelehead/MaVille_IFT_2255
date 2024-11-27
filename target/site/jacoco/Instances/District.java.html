@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>District.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MaVille</a> &gt; <a href="index.source.html" class="el_package">Instances</a> &gt; <span class="el_source">District.java</span></div><h1>District.java</h1><pre class="source lang-java linenums">package Instances;
+import Utils.GeoJSON.Geometry;
+import backend.Database.District_name;
+public class District {
+    District_name name;
+    Geometry geometry;
+    String mamh;
+
+    // placeholder, should contain all informationo from the GeoJSON
+<span class="nc" id="L10">    public District(District_name name, Geometry geometry, String mamh){</span>
+<span class="nc" id="L11">        this.name = name;</span>
+<span class="nc" id="L12">        this.geometry = geometry;</span>
+<span class="nc" id="L13">        this.mamh = mamh;</span>
+<span class="nc" id="L14">    }</span>
+
+    public boolean containsPoint(double latitude, double longitude) {
+<span class="nc" id="L17">        return this.geometry.contains(latitude, longitude);</span>
+    }
+
+    public static District_name handleDistrictChoice(String choice_district) {
+<span class="nc bnc" id="L21" title="All 35 branches missed.">        switch (choice_district) {</span>
+            case &quot;1&quot;:
+<span class="nc" id="L23">                return District_name.LaSalle;</span>
+            case &quot;2&quot;:
+<span class="nc" id="L25">                return District_name.Dollard_des_Ormeaux;</span>
+            case &quot;3&quot;:
+<span class="nc" id="L27">                return District_name.Côte_Saint_Luc;</span>
+            case &quot;4&quot;:
+<span class="nc" id="L29">                return District_name.Villeray_Saint_Michel_Parc_Extension;</span>
+            case &quot;5&quot;:
+<span class="nc" id="L31">                return District_name.Rosemont_La_Petite_Patrie;</span>
+            case &quot;6&quot;:
+<span class="nc" id="L33">                return District_name.Hampstead;</span>
+            case &quot;7&quot;:
+<span class="nc" id="L35">                return District_name.Senneville;</span>
+            case &quot;8&quot;:
+<span class="nc" id="L37">                return District_name.Le_Plateau_Mont_Royal;</span>
+            case &quot;9&quot;:
+<span class="nc" id="L39">                return District_name.Sainte_Anne_de_Bellevue;</span>
+            case &quot;10&quot;:
+<span class="nc" id="L41">                return District_name.Montreal_Ouest;</span>
+            case &quot;11&quot;:
+<span class="nc" id="L43">                return District_name.Cote_des_Neiges_Notre_Dame_de_Grace;</span>
+            case &quot;12&quot;:
+<span class="nc" id="L45">                return District_name.Ile_Bizard_Sainte_Genevieve;</span>
+            case &quot;13&quot;:
+<span class="nc" id="L47">                return District_name.Beaconsfield;</span>
+            case &quot;14&quot;:
+<span class="nc" id="L49">                return District_name.Anjou;</span>
+            case &quot;15&quot;:
+<span class="nc" id="L51">                return District_name.Verdun;</span>
+            case &quot;16&quot;:
+<span class="nc" id="L53">                return District_name.Le_Sud_Ouest;</span>
+            case &quot;17&quot;:
+<span class="nc" id="L55">                return District_name.Mercier_Hochelaga_Maisonneuve;</span>
+            case &quot;18&quot;:
+<span class="nc" id="L57">                return District_name.Montreal_Est;</span>
+            case &quot;19&quot;:
+<span class="nc" id="L59">                return District_name.Lachine;</span>
+            case &quot;20&quot;:
+<span class="nc" id="L61">                return District_name.Saint_Leonard;</span>
+            case &quot;21&quot;:
+<span class="nc" id="L63">                return District_name.Montreal_Nord;</span>
+            case &quot;22&quot;:
+<span class="nc" id="L65">                return District_name.Outremont;</span>
+            case &quot;23&quot;:
+<span class="nc" id="L67">                return District_name.Ile_Dorval;</span>
+            case &quot;24&quot;:
+<span class="nc" id="L69">                return District_name.Mont_Royal;</span>
+            case &quot;25&quot;:
+<span class="nc" id="L71">                return District_name.Pointe_Claire;</span>
+            case &quot;26&quot;:
+<span class="nc" id="L73">                return District_name.Dorval;</span>
+            case &quot;27&quot;:
+<span class="nc" id="L75">                return District_name.Pierrefonds_Roxboro;</span>
+            case &quot;28&quot;:
+<span class="nc" id="L77">                return District_name.Riviere_des_Prairies_Pointe_aux_Trembl;</span>
+            case &quot;29&quot;:
+<span class="nc" id="L79">                return District_name.Ahuntsic_Cartierville;</span>
+            case &quot;30&quot;:
+<span class="nc" id="L81">                return District_name.Saint_Laurent;</span>
+            case &quot;31&quot;:
+<span class="nc" id="L83">                return District_name.Ville_Marie;</span>
+            case &quot;32&quot;:
+<span class="nc" id="L85">                return District_name.Kirkland;</span>
+            case &quot;33&quot;:
+<span class="nc" id="L87">                return District_name.Baie_D_Urfe;</span>
+            case &quot;34&quot;:
+<span class="nc" id="L89">                return District_name.Westmount;</span>
+            default:
+<span class="nc" id="L91">                throw new IllegalArgumentException(&quot;Invalid district choice: &quot; + choice_district);</span>
+        }
+    }
+
+    //getters 
+    public Geometry getGeometry() {
+<span class="nc" id="L97">        return geometry;</span>
+    }
+    public String getMamh() {
+<span class="nc" id="L100">        return mamh;</span>
+    }
+    public District_name getName() {
+<span class="nc" id="L103">        return name;</span>
+    }
+
+
+    // setters 
+    public void setGeometry(Geometry geometry) {
+<span class="nc" id="L109">        this.geometry = geometry;</span>
+<span class="nc" id="L110">    }</span>
+    public void setMamh(String mamh) {
+<span class="nc" id="L112">        this.mamh = mamh;</span>
+<span class="nc" id="L113">    }</span>
+    public void setName(District_name name) {
+<span class="nc" id="L115">        this.name = name;</span>
+<span class="nc" id="L116">    }</span>
+    
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

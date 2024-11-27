@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Date.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MaVille</a> &gt; <a href="index.source.html" class="el_package">metrics</a> &gt; <span class="el_source">Date.java</span></div><h1>Date.java</h1><pre class="source lang-java linenums">package metrics;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
+import Instances.Project.Progress;
+
+//TODO: really not optimized, java already has a date class and 
+// the whole class is centered around it, re do the whole class
+public class Date {
+    int year, month, day, hour, minute, second;
+
+<span class="fc" id="L15">    public Date(int year, int month, int day) {</span>
+<span class="fc" id="L16">        validateDate(year, month, day, 0, 0, 0);</span>
+<span class="fc" id="L17">        this.year = year;</span>
+<span class="fc" id="L18">        this.month = month;</span>
+<span class="fc" id="L19">        this.day = day;</span>
+<span class="fc" id="L20">    }</span>
+
+<span class="fc" id="L22">    public Date(int year, int month, int day, int hour, int minute, int second) {</span>
+<span class="fc" id="L23">        validateDate(year, month, day, hour, minute, second);</span>
+<span class="fc" id="L24">        this.year = year;</span>
+<span class="fc" id="L25">        this.month = month;</span>
+<span class="fc" id="L26">        this.day = day;</span>
+<span class="fc" id="L27">        this.hour = hour;</span>
+<span class="fc" id="L28">        this.minute = minute;</span>
+<span class="fc" id="L29">        this.second = second;</span>
+<span class="fc" id="L30">    }</span>
+
+    private static void validateDate(int year, int month, int day, int hour, int minute, int second) {
+<span class="pc bpc" id="L33" title="8 of 20 branches missed.">        if (month &lt; 1 || month &gt; 12 || day &lt; 1 || day &gt; 31 || hour &lt; 0 || hour &gt; 23 || minute &lt; 0 || minute &gt; 59 || second &lt; 0 || second &gt; 59) {</span>
+<span class="fc" id="L34">            throw new IllegalArgumentException(&quot;Invalid date/time values&quot;);</span>
+        }
+        // Vérification pour février
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        if (month == 2) {</span>
+<span class="pc bpc" id="L38" title="3 of 6 branches missed.">            if ((year % 4 == 0 &amp;&amp; (year % 100 != 0 || year % 400 == 0))) { //  bissextile</span>
+<span class="pc bpc" id="L39" title="1 of 2 branches missed.">                if (day &gt; 29) {</span>
+<span class="nc" id="L40">                    throw new IllegalArgumentException(&quot;Invalid date/time values&quot;);</span>
+                }
+            } else { //  non bissextile
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">                if (day &gt; 28) {</span>
+<span class="fc" id="L44">                    throw new IllegalArgumentException(&quot;Invalid date/time values&quot;);</span>
+                }
+            }
+        }
+<span class="fc" id="L48">    }</span>
+
+    public static Date format(String s) {
+        try {
+<span class="nc" id="L52">            Instant instant = Instant.parse(s);</span>
+    
+<span class="nc" id="L54">            ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());</span>
+    
+<span class="nc" id="L56">            return new Date(</span>
+<span class="nc" id="L57">                zonedDateTime.getYear(),</span>
+<span class="nc" id="L58">                zonedDateTime.getMonthValue(),</span>
+<span class="nc" id="L59">                zonedDateTime.getDayOfMonth(),</span>
+<span class="nc" id="L60">                zonedDateTime.getHour(),</span>
+<span class="nc" id="L61">                zonedDateTime.getMinute(),</span>
+<span class="nc" id="L62">                zonedDateTime.getSecond()</span>
+            );
+<span class="fc" id="L64">        } catch (Exception e) {</span>
+<span class="fc" id="L65">            throw new IllegalArgumentException(&quot;Invalid date format: &quot; + s, e);</span>
+        }
+    }
+    
+
+    public static Progress projectProgress(Date s, Date e) {
+<span class="fc" id="L71">        Instant nowInstant = Instant.now();</span>
+<span class="fc" id="L72">        ZonedDateTime zonedDateTime = nowInstant.atZone(ZoneId.systemDefault());</span>
+<span class="fc" id="L73">        Date now = new Date(</span>
+<span class="fc" id="L74">            zonedDateTime.getYear(),</span>
+<span class="fc" id="L75">            zonedDateTime.getMonthValue(),</span>
+<span class="fc" id="L76">            zonedDateTime.getDayOfMonth(),</span>
+<span class="fc" id="L77">            zonedDateTime.getHour(),</span>
+<span class="fc" id="L78">            zonedDateTime.getMinute(),</span>
+<span class="fc" id="L79">            zonedDateTime.getSecond()</span>
+        );
+
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (before(now, s)) {</span>
+<span class="fc" id="L83">            return Progress.NOT_STARTED;</span>
+        }
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        if (after(now, e)) {</span>
+<span class="fc" id="L86">            return Progress.FINISHED;</span>
+        }
+<span class="fc" id="L88">        return Progress.IN_PROGRESS;</span>
+    }
+
+    public static boolean before(Date d, Date now) {
+<span class="fc" id="L92">        return toLocalDateTime(d).isBefore(toLocalDateTime(now));</span>
+    }
+
+    public static boolean after(Date d, Date now) {
+<span class="fc" id="L96">        return toLocalDateTime(d).isAfter(toLocalDateTime(now));</span>
+    }
+
+    private static LocalDateTime toLocalDateTime(Date d) {
+<span class="fc" id="L100">        return LocalDateTime.of(</span>
+            d.year, 
+            d.month, 
+            d.day, 
+            d.hour, 
+            d.minute, 
+            d.second
+        );
+    }
+
+    public static String week_schedule(){
+<span class="nc" id="L111">        return &quot;&quot;&quot;</span>
+                   8h30 | 9h30 | 10h30 | 11h30 | 12h30 | 13h30 | 14h30 | 15h30 | 16h30 | 17h30 | 18h30 | 19h30 | 20h30 | 21h30 | 22h30 |
+        Mon       ----  | ---- | ----- | ----- | ----  | ----  | ----- | ----- | ----  | ----  | ----- | ----- | ----  | ----  | ----- |
+        Tue       ----  | ---- | ----- | ----- | ----  | ----  | ----- | ----- | ----  | ----  | ----- | ----- | ----  | ----  | ----- |
+        Wed       ----  | ---- | ----- | ----- | ----  | ----  | ----- | ----- | ----  | ----  | ----- | ----- | ----  | ----  | ----- |
+        Thu       ----  | ---- | ----- | ----- | ----  | ----  | ----- | ----- | ----  | ----  | ----- | ----- | ----  | ----  | ----- |
+        Fri       ----  | ---- | ----- | ----- | ----  | ----  | ----- | ----- | ----  | ----  | ----- | ----- | ----  | ----  | ----- |
+        Sat       ----  | ---- | ----- | ----- | ----  | ----  | ----- | ----- | ----  | ----  | ----- | ----- | ----  | ----  | ----- |
+        Sun       ----  | ---- | ----- | ----- | ----  | ----  | ----- | ----- | ----  | ----  | ----- | ----- | ----  | ----  | ----- |
+        &quot;&quot;&quot;;
+    }
+
+    // Static method to parse dates in the JJMMAAAA HHMM format
+    public static Date parse(String input) {
+<span class="nc bnc" id="L125" title="All 2 branches missed.">        if (input == null) {</span>
+<span class="nc" id="L126">            throw new IllegalArgumentException(&quot;Invalid date format. Expected format: JJMMAAAA HHMM&quot;);</span>
+        }
+
+        try {
+<span class="nc" id="L130">            int day = Integer.parseInt(input.substring(0, 2));</span>
+<span class="nc" id="L131">            int month = Integer.parseInt(input.substring(2, 4));</span>
+<span class="nc" id="L132">            int year = Integer.parseInt(input.substring(4, 8));</span>
+<span class="nc" id="L133">            int hour = Integer.parseInt(input.substring(9, 11));</span>
+<span class="nc" id="L134">            int minute = Integer.parseInt(input.substring(11, 13));</span>
+
+<span class="nc" id="L136">            return new Date(year, month, day, hour, minute, 0);</span>
+<span class="nc" id="L137">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L138">            throw new IllegalArgumentException(&quot;Invalid numeric values in date string: &quot; + input, e);</span>
+        }
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L144">        return String.format(&quot;%04d-%02d-%02dT%02d:%02d:%02d&quot;, year, month, day, hour, minute, second);</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -11,6 +11,28 @@ public class Language {
         ENGLISH
     }
 
+    public static String  requestSearchQuery(language language){
+        switch (language) {
+            case FRENCH:
+                return """
+                Entrez une option de recherche ?
+                [1] type de travaux 
+                [2] Quartier
+                [3] Date dans lequel le projet serait en cours 
+                [4] Voir toutes les requêtes
+                """;
+            case ENGLISH : 
+            return """
+                What should we do ?
+                [1] type of request
+                [2] District
+                [3] Date where project would be active
+                [4] get all requests
+                """;
+            default:
+                return "";
+        } 
+    }
 
     public static String planifMenu(language language){
         switch (language) {
@@ -79,6 +101,17 @@ public class Language {
             default:
                 return "";
         }        
+    }
+
+    public static String enter_adress(language language){
+        switch (language) {
+            case FRENCH:
+                return "Entrez une addresse";
+            case ENGLISH : 
+                return "Please enter an adress";
+            default:
+                return "";
+        } 
     }
 
     public static String project_title(language language){
@@ -213,6 +246,17 @@ public class Language {
                 return "date de début (JJMMAAAA_HHMM) : ";
             case ENGLISH :
                 return "starting date (DDMMYYYY_HHMM) : ";
+            default:
+                return "";
+        }
+    }
+
+    public static String request_date(language language){
+        switch (language) {
+            case FRENCH:
+                return "Entrez une date (JJMMAAAA_HHMM) : ";
+            case ENGLISH :
+                return "Please enter a date (DDMMYYYY_HHMM) : ";
             default:
                 return "";
         }
@@ -517,17 +561,23 @@ public class Language {
                 [2] Tous les projects
                 [3] Menu principal
                 [4] quit
-                [5] test function
+                [5] Tous les districts
+                [6] Toutes les entraves
+                [7] trouver quartier par addresse
                     """;
             case ENGLISH: return """
                 [1] Get all Users
                 [2] get all projects
                 [3] Main menu
                 [4] quit 
+                [5] get all districts
+                [6] get all impediments
+                [7] get district by adress
                     """;
             default: return "";
         }
     }
+
 
     public static String noSuchUser(language language, String mail){
         switch (language) {
@@ -737,13 +787,15 @@ public class Language {
                                 "[1] Soumettre un nouveau projet\n" +
                                 "[2] Soumettre une mise à jour du projet\n" +
                                 "[3] Soumettre une candidature à une requête de travail\n" +
-                                "[4] Quitter\n" +
+                                "[4] Revenir au menu principal\n" + 
+                                "[5] Quitter\n" +
                                 "Choisissez une option : ";
             case ENGLISH: return "Contractor main menu:\n" +
                                     "[1] Submit a new project\n" +
                                     "[2] Submit a project update\n" +
                                     "[3] Apply for a work request\n" +
-                                    "[4] Quit\n" +
+                                    "[4] Go back to main menu\n" +
+                                    "[5] Quit\n" +
                                     "Choose an option: ";
             default: return "";
         }

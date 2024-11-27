@@ -4,13 +4,21 @@ import backend.Database.District_name;
 public class District {
     District_name name;
     Geometry geometry;
-    String mamh;
+    String mamh, type, code3c;
+    int codeId;
 
     // placeholder, should contain all informationo from the GeoJSON
-    public District(District_name name, Geometry geometry, String mamh){
+    public District(
+        District_name name, Geometry geometry, String mamh,
+        String type, int codeId, String code3c
+    )
+    {
         this.name = name;
         this.geometry = geometry;
         this.mamh = mamh;
+        this.code3c = code3c;
+        this.type = type;
+        this.codeId = codeId;
     }
 
     public boolean containsPoint(double latitude, double longitude) {
@@ -90,6 +98,15 @@ public class District {
             default:
                 throw new IllegalArgumentException("Invalid district choice: " + choice_district);
         }
+    }
+
+    @Override
+    public String toString() {
+        return name + "\n"
+        + "type : " + type + "\n"
+        + "mamh : " + mamh + "\n"
+        + "code3C : " + code3c + "\n"
+        + "code ID : " + codeId + "\n";
     }
 
     //getters 

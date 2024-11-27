@@ -9,6 +9,8 @@ import com.github.javafaker.Faker;
 
 import Instances.*;
 import Instances.Intervenant.InType;
+import Instances.Project.Progress;
+import Instances.Project.Reason;
 import Instances.User.Type;
 import UI_UX.Dialog;
 import Utils.GeoJSON;
@@ -167,9 +169,7 @@ public class Database implements java.io.Serializable {
         requestHashtable.put(r.getId(), r);
     }
 
-    // TODO: placeholder, change when time allows
     public District getDistrict(District_name name){return districtHashtable.get(name);}
-
     public Request getRequest(long id){return requestHashtable.get(id);}
     public Resident getResident(String mail){return residentHashtable.get(mail);}
     public Intervenant getIntervenant(String mail){return intervenantHashtable.get(mail);}
@@ -212,6 +212,76 @@ public class Database implements java.io.Serializable {
         return projecList;
     }
 
+    public ArrayList<District> getDistrictList(){
+        ArrayList<District> districtList = new ArrayList<>();
+        for (District d : districtHashtable.values()) {
+            districtList.add(d);
+        }
+        return districtList;
+    }
+
+    // every relevant options to search project by
+    public ArrayList<Project> getProjectsBy(Reason reason){
+        ArrayList<Project> byReasonList = new ArrayList<>();
+        for (Project p : getProjectList()) {
+            if (p.getReason() == reason){
+                byReasonList.add(p);
+            }
+        }
+        if (!byReasonList.isEmpty()) {
+            throw new NoSuchElementException(Language.no_project_found(Dialog.choice_language));
+        }
+        return byReasonList;
+    }
+    public ArrayList<Project> getProjectsBy(District district){
+        ArrayList<Project> byDistrictList = new ArrayList<>();
+        for (Project p : getProjectList()) {
+            if (p.getDistrict() == district){
+                byDistrictList.add(p);
+            }
+        }
+        if (!byDistrictList.isEmpty()) {
+            throw new NoSuchElementException(Language.no_project_found(Dialog.choice_language));
+        }
+        return byDistrictList;
+    }
+    public ArrayList<Project> getProjectsBy(String title){
+        ArrayList<Project> byList = new ArrayList<>();
+        for (Project p : getProjectList()) {
+            if (p.getTitle().contains(title)){
+                byList.add(p);
+            }
+        }
+        if (!byList.isEmpty()) {
+            throw new NoSuchElementException(Language.no_project_found(Dialog.choice_language));
+        }
+        return byList;
+    }
+    public ArrayList<Project> getProjectsBy(Progress progress){
+        ArrayList<Project> byList = new ArrayList<>();
+        for (Project p : getProjectList()) {
+            if (p.getStatus() == progress){
+                byList.add(p);
+            }
+        }
+        if (!byList.isEmpty()) {
+            throw new NoSuchElementException(Language.no_project_found(Dialog.choice_language));
+        }
+        return byList;
+    }
+    public ArrayList<Project> getProjectsBy(Date activeDate){
+        ArrayList<Project> byList = new ArrayList<>();
+        for (Project p : getProjectList()) {
+            if (Date.after(activeDate, p.getStart_date()) && Date.before(activeDate, p.getEnd_date())){
+                byList.add(p);
+            }
+        }
+        if (!byList.isEmpty()) {
+            throw new NoSuchElementException(Language.no_project_found(Dialog.choice_language));
+        }
+        return byList;
+    }
+
     /**
      * 
      * @return ArrayList<Resident> residentList
@@ -230,6 +300,67 @@ public class Database implements java.io.Serializable {
             requestList.add(r);
         }
         return requestList;
+    }
+    // every relevant options to search request by
+    public ArrayList<Request> getRequestsBy(Reason reason){
+        ArrayList<Request> byReasonList = new ArrayList<>();
+        for (Request r : getRequestList()) {
+            if (r.getReason() == reason){
+                byReasonList.add(r);
+            }
+        }
+        if (!byReasonList.isEmpty()) {
+            throw new NoSuchElementException(Language.no_project_found(Dialog.choice_language));
+        }
+        return byReasonList;
+    }
+    public ArrayList<Request> getRequestsBy(String title){
+        ArrayList<Request> byReasonList = new ArrayList<>();
+        for (Request r : getRequestList()) {
+            if (r.getTitle().contains(title)){
+                byReasonList.add(r);
+            }
+        }
+        if (!byReasonList.isEmpty()) {
+            throw new NoSuchElementException(Language.no_project_found(Dialog.choice_language));
+        }
+        return byReasonList;
+    }
+    public ArrayList<Request> getRequestsBy(Progress progress){
+        ArrayList<Request> byReasonList = new ArrayList<>();
+        for (Request r : getRequestList()) {
+            if (r.getProgress() == progress){
+                byReasonList.add(r);
+            }
+        }
+        if (!byReasonList.isEmpty()) {
+            throw new NoSuchElementException(Language.no_project_found(Dialog.choice_language));
+        }
+        return byReasonList;
+    }
+    public ArrayList<Request> getRequestsBy(District district){
+        ArrayList<Request> byReasonList = new ArrayList<>();
+        for (Request r : getRequestList()) {
+            if (r.getDistrict() == district){
+                byReasonList.add(r);
+            }
+        }
+        if (!byReasonList.isEmpty()) {
+            throw new NoSuchElementException(Language.no_project_found(Dialog.choice_language));
+        }
+        return byReasonList;
+    }
+    public ArrayList<Request> getRequestsBy(Date activeDate){
+        ArrayList<Request> byList = new ArrayList<>();
+        for (Request r : getRequestList()) {
+            if (Date.after(activeDate, r.getStart()) && Date.before(activeDate, r.getEnd())){
+                byList.add(r);
+            }
+        }
+        if (!byList.isEmpty()) {
+            throw new NoSuchElementException(Language.no_project_found(Dialog.choice_language));
+        }
+        return byList;
     }
 
     public boolean authentify(String mail, String pw){
@@ -250,7 +381,10 @@ public class Database implements java.io.Serializable {
             District d = new District(
                 toDistrict_name(f.getProperties().getNom()),
                 f.getGeometry(),
-                f.getProperties().getCodeMamh()
+                f.getProperties().getCodeMamh(),
+                f.getProperties().getType(),
+                f.getProperties().getCodeId(),
+                f.getProperties().getCode3C()
             );
             districtHashtable.put(toDistrict_name(f.getProperties().getNom()), d);
         }
@@ -292,6 +426,7 @@ public class Database implements java.io.Serializable {
         }
     }
 
+    // no better place or method to do that
     private District_name toDistrict_name(String s) {
         switch (s) {
             case "LaSalle":                              return District_name.LaSalle;
@@ -367,8 +502,8 @@ public class Database implements java.io.Serializable {
 
     // real init function
     private void init(int mockUsers, int mockIntervenants, int mockResidents){
-        init_records();
         init_districts();
+        init_records();
         init_impediments();
 
         Faker faker = new Faker();

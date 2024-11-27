@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GeoJSON.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MaVille</a> &gt; <a href="index.source.html" class="el_package">Utils</a> &gt; <span class="el_source">GeoJSON.java</span></div><h1>GeoJSON.java</h1><pre class="source lang-java linenums">package Utils;
+
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+<span class="nc" id="L7">public class GeoJSON {</span>
+    private String type;
+    private CRS crs;
+    private List&lt;Feature&gt; features;
+
+    // Getters and Setters
+<span class="nc" id="L13">    public String getType() { return type; }</span>
+<span class="nc" id="L14">    public void setType(String type) { this.type = type; }</span>
+
+<span class="nc" id="L16">    public CRS getCrs() { return crs; }</span>
+<span class="nc" id="L17">    public void setCrs(CRS crs) { this.crs = crs; }</span>
+
+<span class="nc" id="L19">    public List&lt;Feature&gt; getFeatures() { return features; }</span>
+<span class="nc" id="L20">    public void setFeatures(List&lt;Feature&gt; features) { this.features = features; }</span>
+
+    // Static Nested Classes
+<span class="nc" id="L23">    public static class CRS {</span>
+        private String type;
+        private Properties properties;
+
+<span class="nc" id="L27">        public String getType() { return type; }</span>
+<span class="nc" id="L28">        public void setType(String type) { this.type = type; }</span>
+
+<span class="nc" id="L30">        public Properties getProperties() { return properties; }</span>
+<span class="nc" id="L31">        public void setProperties(Properties properties) { this.properties = properties; }</span>
+    }
+
+<span class="nc" id="L34">    public static class Properties {</span>
+        private String name;
+
+<span class="nc" id="L37">        public String getName() { return name; }</span>
+<span class="nc" id="L38">        public void setName(String name) { this.name = name; }</span>
+    }
+
+<span class="nc" id="L41">    public static class Feature {</span>
+        private String type;
+        private FeatureProperties properties;
+        private Geometry geometry;
+
+<span class="nc" id="L46">        public String getType() { return type; }</span>
+<span class="nc" id="L47">        public void setType(String type) { this.type = type; }</span>
+
+<span class="nc" id="L49">        public FeatureProperties getProperties() { return properties; }</span>
+<span class="nc" id="L50">        public void setProperties(FeatureProperties properties) { this.properties = properties; }</span>
+
+<span class="nc" id="L52">        public Geometry getGeometry() { return geometry; }</span>
+<span class="nc" id="L53">        public void setGeometry(Geometry geometry) { this.geometry = geometry; }</span>
+    }
+
+<span class="nc" id="L56">    public static class FeatureProperties {</span>
+        @JsonProperty(&quot;CODEID&quot;)
+        private int codeId;
+
+        @JsonProperty(&quot;NOM&quot;)
+        private String nom;
+
+        @JsonProperty(&quot;NOM_OFFICIEL&quot;)
+        private String nomOfficiel;
+
+        @JsonProperty(&quot;CODEMAMH&quot;)
+        private String codeMamh;
+
+        @JsonProperty(&quot;CODE_3C&quot;)
+        private String code3C;
+
+        @JsonProperty(&quot;NUM&quot;)
+        private int num;
+
+        @JsonProperty(&quot;ABREV&quot;)
+        private String abrev;
+
+        @JsonProperty(&quot;TYPE&quot;)
+        private String type;
+
+        @JsonProperty(&quot;COMMENT&quot;)
+        private String comment;
+
+        @JsonProperty(&quot;DATEMODIF&quot;)
+        private String dateModif;
+
+<span class="nc" id="L87">        public String getAbrev() {return abrev;}</span>
+<span class="nc" id="L88">        public String getCode3C() {return code3C;}</span>
+<span class="nc" id="L89">        public int getCodeId() {return codeId;}</span>
+<span class="nc" id="L90">        public String getCodeMamh() {return codeMamh;}</span>
+<span class="nc" id="L91">        public String getComment() {return comment;}</span>
+<span class="nc" id="L92">        public String getDateModif() {return dateModif;}</span>
+<span class="nc" id="L93">        public String getNom() {return nom;}</span>
+<span class="nc" id="L94">        public String getNomOfficiel() {return nomOfficiel;}</span>
+<span class="nc" id="L95">        public int getNum() {return num;}</span>
+<span class="nc" id="L96">        public String getType() {return type;}</span>
+
+        public void setAbrev(String abrev) {
+<span class="nc" id="L99">            this.abrev = abrev;</span>
+<span class="nc" id="L100">        }</span>
+        public void setCode3C(String code3c) {
+<span class="nc" id="L102">            code3C = code3c;</span>
+<span class="nc" id="L103">        }</span>
+        public void setCodeId(int codeId) {
+<span class="nc" id="L105">            this.codeId = codeId;</span>
+<span class="nc" id="L106">        }</span>
+        public void setCodeMamh(String codeMamh) {
+<span class="nc" id="L108">            this.codeMamh = codeMamh;</span>
+<span class="nc" id="L109">        }</span>
+        public void setComment(String comment) {
+<span class="nc" id="L111">            this.comment = comment;</span>
+<span class="nc" id="L112">        }</span>
+        public void setDateModif(String dateModif) {
+<span class="nc" id="L114">            this.dateModif = dateModif;</span>
+<span class="nc" id="L115">        }</span>
+        public void setNom(String nom) {
+<span class="nc" id="L117">            this.nom = nom;</span>
+<span class="nc" id="L118">        }</span>
+        public void setNomOfficiel(String nomOfficiel) {
+<span class="nc" id="L120">            this.nomOfficiel = nomOfficiel;</span>
+<span class="nc" id="L121">        }</span>
+        public void setNum(int num) {
+<span class="nc" id="L123">            this.num = num;</span>
+<span class="nc" id="L124">        }</span>
+        public void setType(String type) {
+<span class="nc" id="L126">            this.type = type;</span>
+<span class="nc" id="L127">        }</span>
+    }
+
+<span class="nc" id="L130">    public static class Geometry {</span>
+        private String type;
+        private List&lt;List&lt;List&lt;List&lt;Double&gt;&gt;&gt;&gt; coordinates;
+
+<span class="nc" id="L134">        public String getType() { return type; }</span>
+<span class="nc" id="L135">        public void setType(String type) { this.type = type; }</span>
+
+<span class="nc" id="L137">        public List&lt;List&lt;List&lt;List&lt;Double&gt;&gt;&gt;&gt; getCoordinates() { return coordinates; }</span>
+        public void setCoordinates(List&lt;List&lt;List&lt;List&lt;Double&gt;&gt;&gt;&gt; coordinates) {
+<span class="nc" id="L139">            this.coordinates = coordinates;</span>
+<span class="nc" id="L140">        }</span>
+
+        public boolean contains(double latitude, double longitude) {
+            // Outer boundary is the first ring of the first feature
+<span class="nc" id="L144">            List&lt;List&lt;Double&gt;&gt; outerBoundary = coordinates.get(0).get(0);</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">            if (!isPointInPolygon(latitude, longitude, outerBoundary)) {</span>
+<span class="nc" id="L146">                return false; // Point is outside the outer boundary</span>
+            }
+
+            // Check inner boundaries (holes)
+<span class="nc bnc" id="L150" title="All 2 branches missed.">            for (int i = 1; i &lt; coordinates.get(0).size(); i++) {</span>
+<span class="nc" id="L151">                List&lt;List&lt;Double&gt;&gt; innerBoundary = coordinates.get(0).get(i);</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">                if (isPointInPolygon(latitude, longitude, innerBoundary)) {</span>
+<span class="nc" id="L153">                    return false; // Point is inside a hole</span>
+                }
+            }
+
+<span class="nc" id="L157">            return true;</span>
+        }
+
+        /**
+         * Determines if a point is within a polygon using the ray-casting algorithm.
+         *
+         * @param latitude  The latitude of the point.
+         * @param longitude The longitude of the point.
+         * @param polygon   The polygon represented as a list of [longitude, latitude] points.
+         * @return true if the point is within the polygon, false otherwise.
+         */
+        private boolean isPointInPolygon(double latitude, double longitude, List&lt;List&lt;Double&gt;&gt; polygon) {
+<span class="nc" id="L169">            boolean inside = false;</span>
+<span class="nc" id="L170">            int n = polygon.size();</span>
+
+<span class="nc bnc" id="L172" title="All 2 branches missed.">            for (int i = 0, j = n - 1; i &lt; n; j = i++) {</span>
+<span class="nc" id="L173">                double xi = polygon.get(i).get(1); // Latitude of vertex i</span>
+<span class="nc" id="L174">                double yi = polygon.get(i).get(0); // Longitude of vertex i</span>
+<span class="nc" id="L175">                double xj = polygon.get(j).get(1); // Latitude of vertex j</span>
+<span class="nc" id="L176">                double yj = polygon.get(j).get(0); // Longitude of vertex j</span>
+
+                // Check if point is within the boundary of the edge
+<span class="nc bnc" id="L179" title="All 8 branches missed.">                boolean intersect = ((yi &gt; longitude) != (yj &gt; longitude)) &amp;&amp;</span>
+                        (latitude &lt; (xj - xi) * (longitude - yi) / (yj - yi) + xi);
+<span class="nc bnc" id="L181" title="All 2 branches missed.">                if (intersect) {</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">                    inside = !inside;</span>
+                }
+            }
+
+<span class="nc" id="L186">            return inside;</span>
+        }
+    }
+}
+
+    
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

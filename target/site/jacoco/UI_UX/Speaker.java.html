@@ -1,49 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Speaker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MaVille</a> &gt; <a href="index.source.html" class="el_package">UI_UX</a> &gt; <span class="el_source">Speaker.java</span></div><h1>Speaker.java</h1><pre class="source lang-java linenums">package UI_UX;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// TODO : handle invalid input 
+import Instances.*;
+import Instances.Intervenant.InType;
+import Instances.Project.Progress;
+import Utils.Language;
+import Utils.Schedule;
+import Utils.Parser.Impediment;
+import backend.Database;
+import backend.Database.District_name;
+import metrics.Date; 
 
-<span class="nc" id="L8">public class Speaker {</span>
-<span class="nc" id="L9">    private static final Scanner s = new Scanner(System.in);</span>
+<span class="nc" id="L18">public class Speaker {</span>
+<span class="fc" id="L19">    private static final Scanner s = new Scanner(System.in);</span>
     private static final String EMAIL_REGEX = &quot;^[a-zA-Z0-9_+&amp;*-]+(?:\\.[a-zA-Z0-9_+&amp;*-]+)*@&quot; +
             &quot;(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$&quot;;
     private static final String PASSWORD_REGEX = 
     &quot;^(?=.*[0-9])&quot; +         // at least one digit
     &quot;(?=.*[a-z])&quot; +          // at least one lowercase letter
     &quot;(?=.*[A-Z])&quot; +          // at least one uppercase letter
-    &quot;(?=.*[@#$%^&amp;+=])&quot; +     // at least one special character
+    &quot;(?=.*[@#$%^&amp;+=?_])&quot; +     // at least one special character
     &quot;(?=\\S+$).{8,}$&quot;;       // no whitespace, at least 8 characters
-<span class="nc" id="L18">    private static final Pattern pattern = Pattern.compile(PASSWORD_REGEX);</span>
-
-    // put menu states here
-<span class="nc" id="L21">    public enum STATE {</span>
-<span class="nc" id="L22">        INITIAL,</span>
-
-<span class="nc" id="L24">        RESIDENT_MAIN,</span>
-<span class="nc" id="L25">        RESIDENT_TRAVAUX,</span>
-<span class="nc" id="L26">        RESIDENT_NOTIFS,</span>
-<span class="nc" id="L27">        RESIDENT_PLANIF,</span>
-<span class="nc" id="L28">        RESIDENT_ABCD,</span>
-
-<span class="nc" id="L30">        MAIN_INTERVENANT,</span>
-
-<span class="nc" id="L32">        QUIT,</span>
-
-<span class="nc" id="L34">        PLACEHOLDER,</span>
-    }
+<span class="fc" id="L28">    private static final Pattern pattern = Pattern.compile(PASSWORD_REGEX);</span>
 
     // prints in the command line the question and returns as a string the answer of the user
     public static String ask(String question){
-<span class="nc" id="L39">        System.out.println(question);</span>
-<span class="nc" id="L40">        String answer = s.nextLine();</span>
+<span class="nc" id="L32">        System.out.println(question);</span>
+<span class="nc" id="L33">        String answer = s.nextLine();</span>
         
-<span class="nc" id="L42">        return answer;</span>
+<span class="nc" id="L35">        return answer;</span>
+    }
+
+    public static String ask(){
+<span class="nc" id="L39">        return s.nextLine();</span>
+    }
+
+    public static String ask_inline(String question){
+<span class="nc" id="L43">        System.out.print(question);</span>
+<span class="nc" id="L44">        String a = s.next();</span>
+
+<span class="nc" id="L46">        return a;</span>
     }
 
     public static void welcome(){
-<span class="nc" id="L46">        String introduction = </span>
+<span class="nc" id="L50">        String introduction = </span>
         &quot;&quot;&quot; 
         note : best enjoyed with a wide window
         ---------------------------------------------------------
@@ -56,113 +60,513 @@ import java.util.regex.Pattern;
         ╚═╝░░░░░╚═╝╚═╝░░╚═╝  ░░░╚═╝░░░╚═╝╚══════╝╚══════╝╚══════╝
         ----------------------------------------------------------
         &quot;&quot;&quot;;
-<span class="nc" id="L59">        System.out.println(introduction);</span>
-<span class="nc" id="L60">    }</span>
+<span class="nc" id="L63">        System.out.println(introduction);</span>
+<span class="nc" id="L64">    }</span>
 
     // STATE is part of an enum list
     // must return the next state after asking which way the user wants to go
-    public static Speaker.STATE menu(Speaker.STATE STATE){
-<span class="nc bnc" id="L65" title="All 5 branches missed.">        switch (STATE) {</span>
-            case INITIAL:
-                // main menu (mail address, pw and user type)
-<span class="nc" id="L68">                String mail = Speaker.ask(&quot;Entrer votre adresse mail : &quot;);</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">                while (!isValidEmail(mail)){mail = Speaker.ask(&quot;Entrer une adresse mail valide : &quot;);}</span>
-
-<span class="nc" id="L71">                String pw = Speaker.ask(&quot;Entrer votre mot de passe : &quot;);</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">                while (!isSecurePassword(pw)){pw = Speaker.ask(&quot;Entrer un mot de passe valide :&quot; +</span>
-                                                                &quot;\n(&gt;=1 number, &gt;= 1 lowercase and upercase character, &gt;= 1 special character (@#$%^&amp;+=), 8+ characters, no whitespaces)&quot;);}
-                
-<span class="nc" id="L75">                String userType = Speaker.ask(Utils.Language.QUserType());</span>
-<span class="nc bnc" id="L76" title="All 3 branches missed.">                switch (userType) {</span>
+    public static Dialog.STATE menu(Dialog.STATE STATE, Database database){
+<span class="nc bnc" id="L69" title="All 19 branches missed.">        switch (STATE) {</span>
+            case INITIAL: 
+<span class="nc" id="L71">                String a = ask(Language.Qinitial(Dialog.choice_language));</span>
+<span class="nc bnc" id="L72" title="All 4 branches missed.">                switch (a) {</span>
                     case &quot;1&quot;:
-<span class="nc" id="L78">                        return Speaker.STATE.RESIDENT_MAIN;</span>
-                    
+<span class="nc" id="L74">                        return Dialog.STATE.REGISTER;</span>
                     case &quot;2&quot;:
-<span class="nc" id="L81">                        return Speaker.STATE.MAIN_INTERVENANT;</span>
-                
+<span class="nc" id="L76">                        return Dialog.STATE.LOGIN;</span>
+                    case &quot;3&quot;:
+<span class="nc" id="L78">                        System.out.println(&quot;You are an admin&quot;);</span>
+<span class="nc" id="L79">                        return Dialog.STATE.MAIN_ADMIN;</span>
                     default:
-<span class="nc" id="L84">                        System.out.println(&quot;Choix invalide ,veuillez entrer 1 (résident) ou 2 (intervenant&quot;);</span>
-<span class="nc" id="L85">                        return Speaker.STATE.INITIAL;</span>
+<span class="nc" id="L81">                        return Dialog.STATE.INITIAL;</span>
                 }
 
-            case RESIDENT_MAIN:
-<span class="nc" id="L89">                String choixResident = ask(Utils.Language.Main_menu_resident());</span>
 
-<span class="nc bnc" id="L91" title="All 10 branches missed.">                switch (choixResident) {</span>
+            case LOGIN:
+
+<span class="nc" id="L87">                String login_mail = ask(Language.Qmail(Dialog.choice_language));</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">                while (!database.exists(login_mail)) {</span>
+<span class="nc" id="L89">                    login_mail = ask(Language.MailNotInDatabase(Dialog.choice_language));</span>
+                }
+<span class="nc" id="L91">                String password = ask(Language.Qpassword(Dialog.choice_language));</span>
+<span class="nc" id="L92">                int tries = 0;</span>
+<span class="nc bnc" id="L93" title="All 4 branches missed.">                while (!database.authentify(login_mail, password) &amp;&amp; (tries &lt; 4)) {</span>
+<span class="nc" id="L94">                    tries += 1;</span>
+<span class="nc" id="L95">                    password = ask(Language.IncorrectPassword(Dialog.choice_language));</span>
+                }
+<span class="nc bnc" id="L97" title="All 2 branches missed.">                if ( tries &gt; 3 ){</span>
+<span class="nc" id="L98">                    System.out.println(Language.tooMuchIncorrectTries(Dialog.choice_language));</span>
+<span class="nc" id="L99">                    return Dialog.STATE.INITIAL;</span>
+                }
+<span class="nc bnc" id="L101" title="All 2 branches missed.">                return database.getUser(login_mail).type.equals(User.Type.INTERVENANT) ? </span>
+<span class="nc" id="L102">                    Dialog.STATE.MAIN_INTERVENANT</span>
+<span class="nc" id="L103">                    : Dialog.STATE.MAIN_RESIDENT;</span>
+
+
+            case REGISTER:
+
+<span class="nc" id="L108">                String s = ask(Utils.Language.QUserType(Dialog.choice_language));</span>
+<span class="nc bnc" id="L109" title="All 4 branches missed.">                User.Type userType = s.equals(&quot;1&quot;) ? User.Type.RESIDENT : s.equals(&quot;2&quot;) ? User.Type.INTERVENANT : User.Type.ADMIN;</span>
+
+<span class="nc" id="L111">                String fname = ask(Language.Qfname(Dialog.choice_language));</span>
+<span class="nc" id="L112">                String lname = ask(Language.Qlname(Dialog.choice_language));</span>
+
+                // main menu (mail address, pw and user type)
+<span class="nc" id="L115">                String mail = ask(Language.Qmail(Dialog.choice_language));</span>
+<span class="nc bnc" id="L116" title="All 4 branches missed.">                while ((!isValidEmail(mail) || (database.exists(mail)))){mail = ask(Language.EnterValidEmail_NotAlreadyInDatabase(Dialog.choice_language));}</span>
+
+<span class="nc" id="L118">                String pw = ask(&quot;Entrer votre mot de passe : &quot;);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">                while (!isSecurePassword(pw)){pw = ask(&quot;Entrer un mot de passe valide :&quot; +</span>
+                                                                &quot;\n(&gt;=1 number, &gt;= 1 lowercase and upercase character, &gt;= 1 special character (@#$%^&amp;+=), 8+ characters, no whitespaces)&quot;);}
+
+<span class="nc" id="L122">                Resident resident = new Resident();</span>
+<span class="nc" id="L123">                Intervenant intervenant = new Intervenant();</span>
+
+<span class="nc bnc" id="L125" title="All 4 branches missed.">                switch (userType) {</span>
+                    case RESIDENT:
+                        
+<span class="nc" id="L128">                        String address = ask(Language.Qaddress(Dialog.choice_language));</span>
+<span class="nc" id="L129">                        int birthDay = Integer.parseInt(ask(Language.Qbirthday(Dialog.choice_language)));</span>
+
+<span class="nc" id="L131">                        resident.setFname(fname);</span>
+<span class="nc" id="L132">                        resident.setLname(lname);</span>
+<span class="nc" id="L133">                        resident.setMail(mail);</span>
+<span class="nc" id="L134">                        resident.setPw(pw);</span>
+
+<span class="nc" id="L136">                        resident.setDistrict(null);</span>
+<span class="nc" id="L137">                        resident.setAddress(address);</span>
+<span class="nc" id="L138">                        resident.setBirthDay(birthDay);</span>
+
+<span class="nc" id="L140">                        database.addResident(resident);</span>
+<span class="nc" id="L141">                        database.setActiveUser(resident);</span>
+
+<span class="nc" id="L143">                        System.out.println(&quot;alskca&quot;);</span>
+
+<span class="nc" id="L145">                        return Dialog.STATE.MAIN_RESIDENT;</span>
+                    case INTERVENANT:
+<span class="nc" id="L147">                        String sInType = ask(Language.QinType(Dialog.choice_language));</span>
+                        InType intype;
+<span class="nc bnc" id="L149" title="All 4 branches missed.">                        switch (sInType) {</span>
+<span class="nc" id="L150">                            case &quot;1&quot; : intype = Intervenant.InType.Public_enterprise;</span>
+<span class="nc" id="L151">                                break;</span>
+<span class="nc" id="L152">                            case &quot;2&quot; : intype = Intervenant.InType.Private_entrepreneur;</span>
+<span class="nc" id="L153">                                break;</span>
+<span class="nc" id="L154">                            case &quot;3&quot; : intype = Intervenant.InType.Individual;</span>
+<span class="nc" id="L155">                                break;</span>
+<span class="nc" id="L156">                            default : intype = Intervenant.InType.Unhandled;</span>
+                                break;
+                        }
+
+<span class="nc" id="L160">                        intervenant.setFname(fname);</span>
+<span class="nc" id="L161">                        intervenant.setLname(lname);</span>
+<span class="nc" id="L162">                        intervenant.setMail(mail);</span>
+<span class="nc" id="L163">                        intervenant.setPw(pw);</span>
+
+<span class="nc" id="L165">                        intervenant.setInType(intype);</span>
+<span class="nc" id="L166">                        intervenant.setCityId(Integer.parseInt(ask(Language.Qcityid(Dialog.choice_language))));</span>
+
+<span class="nc" id="L168">                        database.addIntervenant(intervenant);</span>
+<span class="nc" id="L169">                        database.setActiveUser(intervenant);</span>
+                        
+<span class="nc" id="L171">                        return Dialog.STATE.MAIN_INTERVENANT;</span>
+                    case ADMIN:
+<span class="nc" id="L173">                        System.out.println(&quot;You are an admin&quot;);</span>
+<span class="nc" id="L174">                        return Dialog.STATE.MAIN_ADMIN;</span>
+
+                    default:
+<span class="nc" id="L177">                        System.out.println(&quot;Choix invalide ,veuillez entrer 1 (résident) ou 2 (intervenant&quot;);</span>
+<span class="nc" id="L178">                        userType = User.Type.ADMIN;</span>
+<span class="nc bnc" id="L179" title="All 4 branches missed.">                        switch(Speaker.ask(Utils.Language.QUserType(Dialog.choice_language)))  {</span>
+<span class="nc" id="L180">                            case &quot;1&quot; : userType = User.Type.RESIDENT;</span>
+<span class="nc" id="L181">                            case &quot;2&quot; : userType = User.Type.INTERVENANT;</span>
+<span class="nc" id="L182">                            case &quot;3&quot; : userType = User.Type.ADMIN;</span>
+                        }
+<span class="nc" id="L184">                        return Dialog.STATE.INITIAL;</span>
+                }
+
+            // TODO: bookmark
+            case MAIN_RESIDENT:
+<span class="nc" id="L189">                String choixResident = ask(Utils.Language.Main_menu_resident(Dialog.choice_language));</span>
+
+<span class="nc bnc" id="L191" title="All 11 branches missed.">                switch (choixResident) {</span>
                     // Retourner au menu des résidents
                     case &quot;1&quot;:
-<span class="nc" id="L94">                        System.out.println(&quot;La fonctionnalité pour consulter les travaux en cours n'est pas encore implémentée&quot;);</span>
-<span class="nc" id="L95">                        return Speaker.STATE.RESIDENT_MAIN;</span>
+<span class="nc" id="L194">                        return Dialog.STATE.TRAVAUX_RESIDENT;</span>
                     case &quot;2&quot;:
-<span class="nc" id="L97">                        System.out.println(&quot;La fonctionnalité pour rechercher un projet en particulier n'est pas encore implémentée&quot;);</span>
-<span class="nc" id="L98">                        return Speaker.STATE.RESIDENT_MAIN;</span>
+<span class="nc" id="L196">                        return Dialog.STATE.RECHERCHER_PROJET_RESIDENT;</span>
                     case &quot;3&quot;:
-<span class="nc" id="L100">                        System.out.println(&quot;La fonctionnalité pour activer les notifications n'est pas encore implémentée&quot;);</span>
-<span class="nc" id="L101">                        return Speaker.STATE.RESIDENT_MAIN;</span>
+<span class="nc" id="L198">                        return Dialog.STATE.NOTIFS_RESIDENT;</span>
                     case &quot;4&quot;:
-<span class="nc" id="L103">                        System.out.println(&quot;La fonctionnalité pour planifier un projet n'est pas encore implémentée&quot;);</span>
-<span class="nc" id="L104">                        return Speaker.STATE.RESIDENT_MAIN;</span>
+<span class="nc" id="L200">                        return Dialog.STATE.PLANIF_RESIDENT;</span>
                     case &quot;5&quot;:
-<span class="nc" id="L106">                        System.out.println(&quot;La fonctionnalité pour faire une requête de travail n'est pas encore implémentée&quot;);</span>
-<span class="nc" id="L107">                        return Speaker.STATE.RESIDENT_MAIN;</span>
+<span class="nc" id="L202">                        return Dialog.STATE.REQUEST_RESIDENT;</span>
                     case &quot;6&quot;:
-<span class="nc" id="L109">                        System.out.println(&quot;La fonctionnalité pour accepter ou refuser la candidature d'un travail n'est pas encore implémentée&quot;);</span>
-<span class="nc" id="L110">                        return Speaker.STATE.RESIDENT_MAIN;</span>
+<span class="nc" id="L204">                        return Dialog.STATE.VOTE_RESIDENT;</span>
                     case &quot;7&quot;:
-<span class="nc" id="L112">                        System.out.println(&quot;La fonctionnalité pour signaler un problème n'est pas encore implémentée&quot;);</span>
-<span class="nc" id="L113">                        return Speaker.STATE.RESIDENT_MAIN;</span>
+<span class="nc" id="L206">                        return Dialog.STATE.SIGNAL_PRB_RESIDENT;</span>
                     case &quot;8&quot;:
-<span class="nc" id="L115">                        return Speaker.STATE.INITIAL;</span>
-                    case &quot;9&quot;:
-<span class="nc" id="L117">                        return Speaker.STATE.QUIT;</span>
+<span class="nc" id="L208">                        return Dialog.STATE.IMPEDIMENT_RESIDENT;</span>
+                    case &quot;9&quot; :
+<span class="nc" id="L210">                        database.setActiveUser(null);</span>
+<span class="nc" id="L211">                        return Dialog.STATE.INITIAL;</span>
+                    case &quot;10&quot;:
+<span class="nc" id="L213">                        return Dialog.STATE.QUIT;</span>
+            }
+
+            // travaux en cours
+            case TRAVAUX_RESIDENT:
+<span class="nc bnc" id="L218" title="All 2 branches missed.">                for (Project p : database.getProjectList()) {</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">                    if (p.getStatus() == Project.Progress.IN_PROGRESS){</span>
+<span class="nc" id="L220">                        System.out.println(p.toString());</span>
+                    }
+<span class="nc" id="L222">                }</span>
+<span class="nc" id="L223">                return Dialog.STATE.MAIN_RESIDENT;</span>
+
+            // any project 
+            case RECHERCHER_PROJET_RESIDENT:
+<span class="nc" id="L227">                String query = ask(Language.ask_for_project_search_query(Dialog.choice_language));</span>
+<span class="nc bnc" id="L228" title="All 5 branches missed.">                switch (query) {</span>
+                    case &quot;1&quot;:
+<span class="nc" id="L230">                        String title = ask_inline(Language.ask_for_title(Dialog.choice_language));</span>
+<span class="nc" id="L231">                        boolean none = true;</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">                        for (Project p : database.getProjectList()) {</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">                            if (p.getTitle().equals(title)){</span>
+<span class="nc" id="L234">                                System.out.println(p.toString());</span>
+<span class="nc" id="L235">                                none = false;</span>
+                            }
+<span class="nc" id="L237">                        }</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">                        if (none) {System.out.println(Language.no_project_found(Dialog.choice_language));}</span>
+                        break;
+                    case &quot;2&quot;:
+                        Project.Reason chosen_reason;
+<span class="nc" id="L242">                        String r = ask(Language.reasonMenu(Dialog.choice_language));</span>
+<span class="nc bnc" id="L243" title="All 13 branches missed.">                        switch (r) {</span>
+                            case &quot;1&quot;:
+<span class="nc" id="L245">                                chosen_reason = Project.Reason.Travaux_routiers;</span>
+<span class="nc" id="L246">                                break;</span>
+                            case &quot;2&quot;:
+<span class="nc" id="L248">                                chosen_reason = Project.Reason.Travaux_de_gaz_ou_électricité;</span>
+<span class="nc" id="L249">                                break;</span>
+                            case &quot;3&quot;:
+<span class="nc" id="L251">                                chosen_reason = Project.Reason.Construction_ou_rénovation;</span>
+<span class="nc" id="L252">                                break;</span>
+                            case &quot;4&quot;:
+<span class="nc" id="L254">                                chosen_reason = Project.Reason.Entretien_paysager;</span>
+<span class="nc" id="L255">                                break;</span>
+                            case &quot;5&quot;:
+<span class="nc" id="L257">                                chosen_reason = Project.Reason.Travaux_liés_aux_transports_en_commun;</span>
+<span class="nc" id="L258">                                break;</span>
+                            case &quot;6&quot;:
+<span class="nc" id="L260">                                chosen_reason = Project.Reason.Travaux_de_signalisation_et_éclairage;</span>
+<span class="nc" id="L261">                                break;</span>
+                            case &quot;7&quot;:
+<span class="nc" id="L263">                                chosen_reason = Project.Reason.Travaux_souterrains;</span>
+<span class="nc" id="L264">                                break;</span>
+                            case &quot;8&quot;:
+<span class="nc" id="L266">                                chosen_reason = Project.Reason.Travaux_résidentiel;</span>
+<span class="nc" id="L267">                                break;</span>
+                            case &quot;9&quot;:
+<span class="nc" id="L269">                                chosen_reason = Project.Reason.Entretien_urbain;</span>
+<span class="nc" id="L270">                                break;</span>
+                            case &quot;10&quot;:
+<span class="nc" id="L272">                                chosen_reason = Project.Reason.Entretien_des_réseaux_de_télécommunication;</span>
+<span class="nc" id="L273">                                break;</span>
+                            case &quot;11&quot;:
+<span class="nc" id="L275">                                chosen_reason = Project.Reason.UNHANDLED_REASON;</span>
+<span class="nc" id="L276">                                break;</span>
+                            case &quot;12&quot;:
+<span class="nc" id="L278">                                chosen_reason = Project.Reason.Autre;</span>
+<span class="nc" id="L279">                                break;</span>
+                            default:
+<span class="nc" id="L281">                                chosen_reason = Project.Reason.UNHANDLED_REASON;</span>
+<span class="nc" id="L282">                                throw new IllegalArgumentException(&quot;Invalid choice: &quot; + r);</span>
+                        }
+<span class="nc" id="L284">                        boolean none2 = true;</span>
+<span class="nc bnc" id="L285" title="All 2 branches missed.">                        for (Project p : database.getProjectList()) {</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">                            if (p.getReason() == chosen_reason){</span>
+<span class="nc" id="L287">                                System.out.println(p.toString());</span>
+<span class="nc" id="L288">                                none2 = false;</span>
+                            }
+<span class="nc" id="L290">                        }</span>
+<span class="nc bnc" id="L291" title="All 2 branches missed.">                        if (none2) {System.out.println(Language.no_project_found(Dialog.choice_language));}</span>
+                        break;
+
+                    case &quot;3&quot; :
+                        Project.Progress chosen_progress; 
+<span class="nc" id="L296">                        String prog = ask(Language.progressMenu(Dialog.choice_language));</span>
+<span class="nc bnc" id="L297" title="All 5 branches missed.">                        switch (prog) {</span>
+                            case &quot;1&quot;:
+<span class="nc" id="L299">                                chosen_progress = Progress.NOT_STARTED;</span>
+<span class="nc" id="L300">                                break;</span>
+                            case &quot;2&quot;:
+<span class="nc" id="L302">                                chosen_progress = Progress.IN_PROGRESS;</span>
+<span class="nc" id="L303">                                break;</span>
+                            case &quot;3&quot;:
+<span class="nc" id="L305">                                chosen_progress = Progress.FINISHED;</span>
+<span class="nc" id="L306">                                break;</span>
+                            case &quot;4&quot;:
+<span class="nc" id="L308">                                chosen_progress = Progress.PLACEHOLDER;</span>
+<span class="nc" id="L309">                                break;</span>
+                            default:
+<span class="nc" id="L311">                                throw new IllegalArgumentException(&quot;Invalid choice: &quot; + prog);</span>
+                        }
+<span class="nc" id="L313">                        boolean none3 = true;</span>
+<span class="nc bnc" id="L314" title="All 2 branches missed.">                        for (Project p : database.getProjectList()) {</span>
+<span class="nc bnc" id="L315" title="All 2 branches missed.">                            if (p.getStatus() == chosen_progress){</span>
+<span class="nc" id="L316">                                System.out.println(p.toString());</span>
+<span class="nc" id="L317">                                none3 = false;</span>
+                            }
+<span class="nc" id="L319">                        }</span>
+<span class="nc bnc" id="L320" title="All 2 branches missed.">                        if (none3) {System.out.println(Language.no_project_found(Dialog.choice_language));}</span>
+                
+                    case &quot;4&quot; : 
+<span class="nc" id="L323">                        District chosen_district = database.getDistrict(District.handleDistrictChoice(Language.request_district(Dialog.choice_language)));</span>
+<span class="nc" id="L324">                        boolean none4 = true;</span>
+<span class="nc bnc" id="L325" title="All 2 branches missed.">                        for (Project p : database.getProjectList()) {</span>
+<span class="nc bnc" id="L326" title="All 2 branches missed.">                            if (p.getDistrict() == chosen_district){</span>
+<span class="nc" id="L327">                                System.out.println(p.toString());</span>
+<span class="nc" id="L328">                                none4 = false;</span>
+                            }
+<span class="nc" id="L330">                        }</span>
+<span class="nc bnc" id="L331" title="All 2 branches missed.">                        if (none4) {System.out.println(Language.no_project_found(Dialog.choice_language));}</span>
+                    default:
+<span class="nc" id="L333">                        throw new IllegalArgumentException(&quot;Invalid choice: &quot; + query);</span>
                 }
+
+<span class="nc" id="L336">                return Dialog.STATE.MAIN_RESIDENT;</span>
+
+            // notification system
+            case NOTIFS_RESIDENT : 
+                // ask for a new district to subscribe to
+<span class="nc" id="L341">                System.out.println(Language.subscribe_to_new_district(Dialog.choice_language));</span>
+<span class="nc" id="L342">                String choice_district = ask(Language.districtMenu(Dialog.choice_language));</span>
+
+<span class="nc" id="L344">                District d = database.getDistrict(District.handleDistrictChoice(choice_district));</span>
+
+                // add it to the active user ( the one using the app ) 's subscriptions
+<span class="nc" id="L347">                database.getActiveUser().addToSubscriptions(d);</span>
+                
+                // return to main menu
+<span class="nc" id="L350">                return Dialog.STATE.MAIN_RESIDENT;</span>
+            
+            // donner des plages horaires de disponibilites
+            case PLANIF_RESIDENT :
+<span class="nc" id="L354">                String planif_string = ask(Language.planifMenu(Dialog.choice_language));</span>
+<span class="nc bnc" id="L355" title="All 3 branches missed.">                switch (planif_string) {</span>
+                    case &quot;1&quot;:
+<span class="nc" id="L357">                        System.out.println(database.getActiveUser().toString());</span>
+<span class="nc" id="L358">                        database.getActiveUser().update_schedule();</span>
+<span class="nc" id="L359">                        break;</span>
+                    case &quot;2&quot;:
+<span class="nc" id="L361">                        boolean none_planif = true;</span>
+<span class="nc bnc" id="L362" title="All 2 branches missed.">                        for (Resident r : database.getResidentList()) {</span>
+<span class="nc bnc" id="L363" title="All 2 branches missed.">                            if (r.geDistrict() == database.getActiveUser_Resident().geDistrict()){</span>
+<span class="nc" id="L364">                                System.out.println(r.getFname() + &quot;   &quot; + r.getLname());</span>
+<span class="nc" id="L365">                                r.getSchedule().printSchedule();</span>
+<span class="nc" id="L366">                                System.out.println();</span>
+<span class="nc" id="L367">                                none_planif = false;</span>
+                            }
+<span class="nc" id="L369">                        }</span>
+<span class="nc bnc" id="L370" title="All 2 branches missed.">                        if (none_planif) {System.out.println(Language.no_user_found(Dialog.choice_language));}</span>
+                    default:
+                        break;
+                }
+<span class="nc" id="L374">                return Dialog.STATE.MAIN_RESIDENT;</span>
+            
+            // plan a request
+            case REQUEST_RESIDENT : 
+<span class="nc" id="L378">                System.out.println(Language.request_hi_UwU(Dialog.choice_language));</span>
+<span class="nc" id="L379">                Request request = new Request(</span>
+<span class="nc" id="L380">                    Request.handle_reason(ask_inline(Language.request_reason(Dialog.choice_language))), </span>
+<span class="nc" id="L381">                    database.getDistrict(District.handleDistrictChoice(ask_inline(Language.request_district(Dialog.choice_language)))), </span>
+<span class="nc" id="L382">                    Date.parse(ask_inline(Language.request_start(Dialog.choice_language))), </span>
+                    //Date.parse(ask_inline(Language.request_end(Dialog.choice_language))), 
+<span class="nc" id="L384">                    ask_inline(Language.request_streetid(Dialog.choice_language)), </span>
+<span class="nc" id="L385">                    ask_inline(Language.request_fromname(Dialog.choice_language)), </span>
+<span class="nc" id="L386">                    ask_inline(Language.request_toname(Dialog.choice_language)), </span>
+<span class="nc" id="L387">                    Double.parseDouble(ask_inline(Language.request_length(Dialog.choice_language))),</span>
+<span class="nc" id="L388">                    ask(Language.request_description(Dialog.choice_language)),</span>
+<span class="nc" id="L389">                    ask(Language.request_title(Dialog.choice_language)),</span>
+<span class="nc" id="L390">                    database.getActiveUser()</span>
+                );
+<span class="nc" id="L392">                database.addRequest(request);</span>
+<span class="nc" id="L393">                return Dialog.STATE.MAIN_RESIDENT;</span>
+
+            // vote for an existing request
+            case VOTE_RESIDENT : 
+<span class="nc" id="L397">                ArrayList&lt;String&gt; schedule = new ArrayList&lt;&gt;();</span>
+                    
+<span class="nc" id="L399">                System.out.println(Language.ask_for_schedule(Dialog.choice_language));</span>
+<span class="nc" id="L400">                System.out.println(Date.week_schedule());</span>
+<span class="nc" id="L401">                schedule.add(ask(Language.ask_for_correct_format_schedule(Dialog.choice_language)));</span>
+<span class="nc" id="L402">                schedule.add(ask(Language.anything_else(Dialog.choice_language)));</span>
+<span class="nc" id="L403">                return Dialog.STATE.MAIN_RESIDENT;</span>
+
+            // signal a problem
+            case SIGNAL_PRB_RESIDENT : 
+<span class="nc" id="L407">                System.out.println(Language.NotImplemented_SignalerProbleme(null));</span>
+<span class="nc" id="L408">                return Dialog.STATE.MAIN_RESIDENT;</span>
+
+            // search for a specific impediment
+            // TODO:test 
+            case IMPEDIMENT_RESIDENT :
+                
+<span class="nc bnc" id="L414" title="All 2 branches missed.">                boolean byroad = ask(Language.search_for_specific_impediment(Dialog.choice_language)) == &quot;1&quot;;</span>
+<span class="nc bnc" id="L415" title="All 2 branches missed.">                String info = ask(byroad ? Language.impediment_by_road(Dialog.choice_language) : Language.impediment_by_id(Dialog.choice_language));</span>
+
+<span class="nc" id="L417">                boolean none_road = true;</span>
+<span class="nc bnc" id="L418" title="All 2 branches missed.">                for (Impediment i : database.getImpedimentList()) {</span>
+                    // if the user said they want to search by road, test the road, else test the id
+<span class="nc bnc" id="L420" title="All 6 branches missed.">                    if (byroad ? i.affects(info) : i.idRequest.equals(info)){</span>
+<span class="nc" id="L421">                        System.out.println(i.toString());</span>
+<span class="nc" id="L422">                        none_road = false;</span>
+                    }
+<span class="nc" id="L424">                }</span>
+<span class="nc bnc" id="L425" title="All 2 branches missed.">                if (none_road) {System.out.println(Language.no_impediment_found(Dialog.choice_language));}</span>
+<span class="nc" id="L426">                return Dialog.STATE.MAIN_RESIDENT;</span>
+
 
             case MAIN_INTERVENANT:
-<span class="nc" id="L121">                String choixIntervenant = ask(Utils.Language.Main_menu_intervenant());</span>
+<span class="nc" id="L430">                String choixIntervenant = ask(Utils.Language.Main_menu_intervenant(Dialog.choice_language));</span>
 
-<span class="nc bnc" id="L123" title="All 6 branches missed.">                switch (choixIntervenant) {</span>
+<span class="nc bnc" id="L432" title="All 6 branches missed.">                switch (choixIntervenant) {</span>
                     case &quot;1&quot;:
-<span class="nc" id="L125">                           System.out.println(&quot;La fonctionnalité pour soumettre un nouveau projet n'est pas encore implémentée&quot;);</span>
-<span class="nc" id="L126">                            return Speaker.STATE.MAIN_INTERVENANT;</span>
+<span class="nc" id="L434">                        return Dialog.STATE.NEW_PROJECT_INTERVENANT;</span>
                     case &quot;2&quot;:
-<span class="nc" id="L128">                        System.out.println(&quot;La fonctionnalité pour soumettre une mise à jour du projet n'est pas encore implémentée&quot;);</span>
-<span class="nc" id="L129">                        return Speaker.STATE.MAIN_INTERVENANT;</span>
+<span class="nc" id="L436">                        return Dialog.STATE.UPDATE_INTERVENANT;</span>
                     case &quot;3&quot;:
-<span class="nc" id="L131">                        System.out.println(&quot;La fonctionnalité pour soumettre une candidature à une requête de travail n'est pas encore implémentée&quot;);</span>
-<span class="nc" id="L132">                        return Speaker.STATE.MAIN_INTERVENANT;</span>
+<span class="nc" id="L438">                        return Dialog.STATE.REQUEST_INTERVENANT;</span>
                     case &quot;4&quot;:
-<span class="nc" id="L134">                        return Speaker.STATE.INITIAL;</span>
+<span class="nc" id="L440">                        database.setActiveUser(null);</span>
+<span class="nc" id="L441">                        return Dialog.STATE.INITIAL;</span>
                     case &quot;5&quot;:
-<span class="nc" id="L136">                        return Speaker.STATE.QUIT;</span>
+<span class="nc" id="L443">                        return Dialog.STATE.QUIT;</span>
+            }
+
+            case NEW_PROJECT_INTERVENANT:
+<span class="nc" id="L447">                System.out.println(Language.request_hi_UwU(Dialog.choice_language));</span>
+<span class="nc" id="L448">                Schedule project_Schedule = new Schedule();</span>
+<span class="nc" id="L449">                District_name project_district = District.handleDistrictChoice(ask_inline(Language.request_district(Dialog.choice_language)));</span>
+<span class="nc" id="L450">                Project project = new Project(</span>
+                    // title
+<span class="nc" id="L452">                    ask(Language.project_title(Dialog.choice_language)),</span>
+                    // description
+<span class="nc" id="L454">                    ask(Language.request_description(Dialog.choice_language)),</span>
+                    //id
+<span class="nc" id="L456">                    database.getProjectList().size(),</span>
+                    // long id
+<span class="nc" id="L458">                    String.valueOf(new Random().nextLong()),</span>
+                    // reason
+<span class="nc" id="L460">                    Request.handle_reason(ask_inline(Language.request_reason(Dialog.choice_language))), </span>
+                    // district
+<span class="nc" id="L462">                    database.getDistrict(project_district),</span>
+                    // streets
+<span class="nc" id="L464">                    collectStreetNames(),</span>
+                    //start and en
+<span class="nc" id="L466">                    Date.parse(ask_inline(Language.request_start(Dialog.choice_language))), </span>
+<span class="nc" id="L467">                    Date.parse(ask_inline(Language.request_end(Dialog.choice_language))), </span>
+                    // schedule
+                    project_Schedule,
+                    //submitter
+<span class="nc" id="L471">                    database.getActiveUser()</span>
+                );
+<span class="nc" id="L473">                project_Schedule.runCLI();</span>
+<span class="nc" id="L474">                database.addProject(project);</span>
+<span class="nc" id="L475">                database.send_notif(project_district, project);</span>
+<span class="nc" id="L476">                return Dialog.STATE.MAIN_INTERVENANT;</span>
+
+            case UPDATE_INTERVENANT :
+<span class="nc" id="L479">                return Dialog.STATE.MAIN_INTERVENANT;</span>
+
+            case REQUEST_INTERVENANT :
+<span class="nc" id="L482">                return Dialog.STATE.MAIN_INTERVENANT;</span>
+
+
+            case MAIN_ADMIN:
+<span class="nc" id="L486">                String choixAdmin = ask(Utils.Language.main_menu_admin(Dialog.choice_language));</span>
+<span class="nc bnc" id="L487" title="All 6 branches missed.">                switch (choixAdmin) {</span>
+                    case &quot;1&quot;:
+<span class="nc" id="L489">                        System.out.println(&quot;Residents : &quot;);</span>
+<span class="nc" id="L490">                        database.printAll(User.Type.RESIDENT);</span>
+
+<span class="nc" id="L492">                        System.out.println(&quot;Intervenants : &quot;);</span>
+<span class="nc" id="L493">                        database.printAll(User.Type.INTERVENANT);</span>
+
+<span class="nc" id="L495">                        System.out.println(&quot;Admins : &quot;);</span>
+<span class="nc" id="L496">                        database.printAll(User.Type.ADMIN);</span>
+<span class="nc" id="L497">                        return Dialog.STATE.MAIN_ADMIN;</span>
+                    case &quot;2&quot; : 
+<span class="nc" id="L499">                        System.out.println(&quot;projects idk&quot;);</span>
+<span class="nc" id="L500">                        database.printAll(User.Type.PROJECT);</span>
+<span class="nc" id="L501">                        return Dialog.STATE.MAIN_ADMIN;</span>
+                    case &quot;3&quot; : 
+<span class="nc" id="L503">                        return Dialog.STATE.INITIAL;</span>
+<span class="nc" id="L504">                    case &quot;4&quot; : return null;</span>
+                    case &quot;5&quot; :
+                    
+<span class="nc" id="L507">                        return null;</span>
+                    default:
+<span class="nc" id="L509">                        return Dialog.STATE.INITIAL;</span>
                 }
+
         
+
             case QUIT:
                 // handle quit
-<span class="nc" id="L141">                return null;</span>
+<span class="nc" id="L516">                return Dialog.STATE.QUIT;</span>
     
+                
             default:
-<span class="nc" id="L144">                return Speaker.STATE.PLACEHOLDER;</span>
+<span class="nc" id="L520">                return Dialog.STATE.QUIT;</span>
         }
     }
 
+    public static String[] collectStreetNames() {
+<span class="nc" id="L525">        ArrayList&lt;String&gt; streetNames = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L527">        System.out.println(&quot;Enter street names (type 'exit' to finish):&quot;);</span>
+
+        while (true) {
+<span class="nc" id="L530">            System.out.print(&quot;Street name: &quot;);</span>
+<span class="nc" id="L531">            String input = ask().trim();</span>
+
+<span class="nc bnc" id="L533" title="All 2 branches missed.">            if (input.equalsIgnoreCase(&quot;exit&quot;)) {</span>
+<span class="nc" id="L534">                break; </span>
+            }
+
+<span class="nc bnc" id="L537" title="All 2 branches missed.">            if (!input.isEmpty()) {</span>
+<span class="nc" id="L538">                streetNames.add(input); </span>
+            } else {
+<span class="nc" id="L540">                System.out.println(&quot;Street name cannot be empty. Please try again.&quot;);</span>
+            }
+<span class="nc" id="L542">        }</span>
+        // Convert the ArrayList to a String array
+<span class="nc" id="L544">        return streetNames.toArray(new String[0]);</span>
+    }
+
+    @SuppressWarnings(&quot;unused&quot;)
     public static boolean isValidEmail(String email) {
-        // Compile the regex pattern
-<span class="nc" id="L150">        Pattern pattern = Pattern.compile(EMAIL_REGEX);</span>
-        // If the email is null, it's not valid
-<span class="nc bnc" id="L152" title="All 2 branches missed.">        if (email == null) {</span>
-<span class="nc" id="L153">            return false;</span>
+        // to test easily
+        // TODO: remove
+<span class="pc bpc" id="L551" title="1 of 2 branches missed.">        if (email.equals(&quot;a&quot;)){return true;}</span>
+
+<span class="fc" id="L553">        Pattern pattern = Pattern.compile(EMAIL_REGEX);</span>
+<span class="pc bpc" id="L554" title="1 of 2 branches missed.">        if (email == null) {</span>
+<span class="nc" id="L555">            return false;</span>
         }
-        // Match the email with the regex
-<span class="nc" id="L156">        Matcher matcher = pattern.matcher(email);</span>
-<span class="nc" id="L157">        return matcher.matches();</span>
+<span class="fc" id="L557">        Matcher matcher = pattern.matcher(email);</span>
+<span class="fc" id="L558">        return matcher.matches();</span>
     }
 
+    // warnings arent real
+    @SuppressWarnings(&quot;unused&quot;)
     public static boolean isSecurePassword(String password) {
-<span class="nc bnc" id="L161" title="All 2 branches missed.">        if (password == null) {</span>
-<span class="nc" id="L162">            return false;</span>
+<span class="pc bpc" id="L564" title="1 of 2 branches missed.">        if (password.equals(&quot;a&quot;)){return true;}</span>
+<span class="pc bpc" id="L565" title="1 of 2 branches missed.">        if (password == null) {</span>
+<span class="nc" id="L566">            return false;</span>
         }
-<span class="nc" id="L164">        Matcher matcher = pattern.matcher(password);</span>
-<span class="nc" id="L165">        return matcher.matches();</span>
+<span class="fc" id="L568">        Matcher matcher = pattern.matcher(password);</span>
+<span class="fc" id="L569">        return matcher.matches();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

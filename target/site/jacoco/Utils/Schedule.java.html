@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Schedule.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MaVille</a> &gt; <a href="index.source.html" class="el_package">Utils</a> &gt; <span class="el_source">Schedule.java</span></div><h1>Schedule.java</h1><pre class="source lang-java linenums">package Utils;
+
+import UI_UX.Speaker;
+import java.util.Random;
+
+public class Schedule {
+
+<span class="fc" id="L8">    private String[][] schedule = new String[7][15];</span>
+
+<span class="fc" id="L10">    public Schedule() {</span>
+<span class="fc" id="L11">        initializeSchedule();</span>
+<span class="fc" id="L12">    }</span>
+
+    private void initializeSchedule() {
+<span class="fc bfc" id="L15" title="All 2 branches covered.">        for (int i = 0; i &lt; schedule.length; i++) {</span>
+<span class="fc bfc" id="L16" title="All 2 branches covered.">            for (int j = 0; j &lt; schedule[i].length; j++) {</span>
+<span class="fc" id="L17">                schedule[i][j] = &quot;---&quot;; </span>
+            }
+        }
+<span class="fc" id="L20">    }</span>
+
+    public void generateMockSchedule() {
+<span class="nc" id="L23">        Random random = new Random();</span>
+<span class="nc bnc" id="L24" title="All 2 branches missed.">        for (int i = 0; i &lt; schedule.length; i++) { </span>
+<span class="nc bnc" id="L25" title="All 2 branches missed.">            for (int j = 0; j &lt; schedule[i].length; j++) { </span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">                if (random.nextBoolean()) { </span>
+<span class="nc" id="L27">                    schedule[i][j] = &quot;###&quot;; </span>
+                } else {
+<span class="nc" id="L29">                    schedule[i][j] = &quot;---&quot;; </span>
+                }
+            }
+        }
+<span class="nc" id="L33">    }</span>
+
+    // Run the command-line interface
+    public void runCLI() {
+<span class="nc" id="L37">        String[] days = {&quot;Mon&quot;, &quot;Tue&quot;, &quot;Wed&quot;, &quot;Thu&quot;, &quot;Fri&quot;, &quot;Sat&quot;, &quot;Sun&quot;};</span>
+<span class="nc" id="L38">        String[] times = {&quot;8h30&quot;, &quot;9h30&quot;, &quot;10h30&quot;, &quot;11h30&quot;, &quot;12h30&quot;, &quot;13h30&quot;, &quot;14h30&quot;,</span>
+                          &quot;15h30&quot;, &quot;16h30&quot;, &quot;17h30&quot;, &quot;18h30&quot;, &quot;19h30&quot;, &quot;20h30&quot;, &quot;21h30&quot;, &quot;22h30&quot;};
+
+        while (true) {
+<span class="nc" id="L42">            System.out.println(&quot;\nCurrent Schedule:&quot;);</span>
+<span class="nc" id="L43">            printSchedule();</span>
+
+<span class="nc" id="L45">            System.out.println(&quot;\nEnter the day (Mon, Tue, Wed, Thu, Fri, Sat, Sun) or type 'exit' to finish:&quot;);</span>
+<span class="nc" id="L46">            String day = Speaker.ask().trim();</span>
+
+<span class="nc bnc" id="L48" title="All 2 branches missed.">            if (day.equalsIgnoreCase(&quot;exit&quot;)) {</span>
+<span class="nc" id="L49">                break;</span>
+            }
+
+<span class="nc" id="L52">            int dayIndex = -1;</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">            for (int i = 0; i &lt; days.length; i++) {</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">                if (days[i].equalsIgnoreCase(day)) {</span>
+<span class="nc" id="L55">                    dayIndex = i;</span>
+<span class="nc" id="L56">                    break;</span>
+                }
+            }
+
+<span class="nc bnc" id="L60" title="All 2 branches missed.">            if (dayIndex == -1) {</span>
+<span class="nc" id="L61">                System.out.println(&quot;Invalid day. Try again.&quot;);</span>
+<span class="nc" id="L62">                continue;</span>
+            }
+
+<span class="nc" id="L65">            System.out.println(&quot;Enter the time slot (e.g., 8h30, 9h30, ..., 22h30):&quot;);</span>
+<span class="nc" id="L66">            String time = Speaker.ask().trim();</span>
+
+<span class="nc" id="L68">            int timeIndex = -1;</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">            for (int i = 0; i &lt; times.length; i++) {</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">                if (times[i].equalsIgnoreCase(time)) {</span>
+<span class="nc" id="L71">                    timeIndex = i;</span>
+<span class="nc" id="L72">                    break;</span>
+                }
+            }
+
+<span class="nc bnc" id="L76" title="All 2 branches missed.">            if (timeIndex == -1) {</span>
+<span class="nc" id="L77">                System.out.println(&quot;Invalid time slot. Try again.&quot;);</span>
+<span class="nc" id="L78">                continue;</span>
+            }
+
+<span class="nc" id="L81">            System.out.println(&quot;Mark the time slot as (### for busy, --- for free):&quot;);</span>
+<span class="nc" id="L82">            String status = Speaker.ask().trim();</span>
+
+<span class="nc bnc" id="L84" title="All 4 branches missed.">            if (!status.equals(&quot;###&quot;) &amp;&amp; !status.equals(&quot;---&quot;)) {</span>
+<span class="nc" id="L85">                System.out.println(&quot;Invalid status. Use ### or --- only.&quot;);</span>
+<span class="nc" id="L86">                continue;</span>
+            }
+
+<span class="nc" id="L89">            schedule[dayIndex][timeIndex] = status;</span>
+<span class="nc" id="L90">            System.out.println(&quot;Schedule updated!&quot;);</span>
+<span class="nc" id="L91">        }</span>
+<span class="nc" id="L92">    }</span>
+
+    public void printSchedule() {
+<span class="nc" id="L95">        String[] days = {&quot;Mon&quot;, &quot;Tue&quot;, &quot;Wed&quot;, &quot;Thu&quot;, &quot;Fri&quot;, &quot;Sat&quot;, &quot;Sun&quot;};</span>
+<span class="nc" id="L96">        String[] times = {&quot;8h30&quot;, &quot;9h30&quot;, &quot;10h30&quot;, &quot;11h30&quot;, &quot;12h30&quot;, &quot;13h30&quot;, &quot;14h30&quot;,</span>
+                          &quot;15h30&quot;, &quot;16h30&quot;, &quot;17h30&quot;, &quot;18h30&quot;, &quot;19h30&quot;, &quot;20h30&quot;, &quot;21h30&quot;, &quot;22h30&quot;};
+
+<span class="nc" id="L99">        System.out.print(&quot;        &quot;);</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        for (String time : times) {</span>
+<span class="nc" id="L101">            System.out.print(time + &quot; | &quot;);</span>
+        }
+<span class="nc" id="L103">        System.out.println();</span>
+
+<span class="nc bnc" id="L105" title="All 2 branches missed.">        for (int i = 0; i &lt; schedule.length; i++) {</span>
+<span class="nc" id="L106">            System.out.print(days[i] + &quot;   &quot;);</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">            for (int j = 0; j &lt; schedule[i].length; j++) {</span>
+<span class="nc" id="L108">                System.out.print(schedule[i][j] + &quot;  | &quot;);</span>
+            }
+<span class="nc" id="L110">            System.out.println();</span>
+        }
+<span class="nc" id="L112">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

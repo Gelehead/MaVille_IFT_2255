@@ -84,6 +84,7 @@ public class GeoJSON {
         @JsonProperty("DATEMODIF")
         private String dateModif;
 
+        // getters 
         public String getAbrev() {return abrev;}
         public String getCode3C() {return code3C;}
         public int getCodeId() {return codeId;}
@@ -95,36 +96,17 @@ public class GeoJSON {
         public int getNum() {return num;}
         public String getType() {return type;}
 
-        public void setAbrev(String abrev) {
-            this.abrev = abrev;
-        }
-        public void setCode3C(String code3c) {
-            code3C = code3c;
-        }
-        public void setCodeId(int codeId) {
-            this.codeId = codeId;
-        }
-        public void setCodeMamh(String codeMamh) {
-            this.codeMamh = codeMamh;
-        }
-        public void setComment(String comment) {
-            this.comment = comment;
-        }
-        public void setDateModif(String dateModif) {
-            this.dateModif = dateModif;
-        }
-        public void setNom(String nom) {
-            this.nom = nom;
-        }
-        public void setNomOfficiel(String nomOfficiel) {
-            this.nomOfficiel = nomOfficiel;
-        }
-        public void setNum(int num) {
-            this.num = num;
-        }
-        public void setType(String type) {
-            this.type = type;
-        }
+        // setters 
+        public void setAbrev(String abrev) {this.abrev = abrev;}
+        public void setCode3C(String code3c) {code3C = code3c;}
+        public void setCodeId(int codeId) {this.codeId = codeId;}
+        public void setCodeMamh(String codeMamh) {this.codeMamh = codeMamh;}
+        public void setComment(String comment) {this.comment = comment;}
+        public void setDateModif(String dateModif) {this.dateModif = dateModif;}
+        public void setNom(String nom) {this.nom = nom;}
+        public void setNomOfficiel(String nomOfficiel) {this.nomOfficiel = nomOfficiel;}
+        public void setNum(int num) {this.num = num;}
+        public void setType(String type) {this.type = type;}
     }
 
     public static class Geometry {

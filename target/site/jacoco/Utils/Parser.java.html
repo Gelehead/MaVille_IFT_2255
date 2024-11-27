@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Parser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MaVille</a> &gt; <a href="index.source.html" class="el_package">Utils</a> &gt; <span class="el_source">Parser.java</span></div><h1>Parser.java</h1><pre class="source lang-java linenums">package Utils;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.FileReader;
+import UI_UX.Dialog;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.List;
+<span class="nc" id="L16">public class Parser {</span>
+
+<span class="fc" id="L18">    public static class Root {</span>
+        public String help;
+        public boolean success;
+        public Result result;
+    }
+    @JsonIgnoreProperties({&quot;fields&quot;})
+<span class="fc" id="L24">    public static class Result {</span>
+        @JsonProperty(&quot;include_total&quot;)
+        public boolean includeTotal;
+        public int limit;
+        @JsonProperty(&quot;records_format&quot;)
+        public String recordsFormat;
+        @JsonProperty(&quot;resource_id&quot;)
+        public String resourceId;
+        public List&lt;Record&gt; records;
+        @JsonProperty(&quot;total_estimation_threshold&quot;)
+        public String totalEstimationThreshold;
+        public List&lt;Object&gt; fields;  // This will be ignored during deserialization
+        public Object _links;
+        public int total;
+        public boolean total_was_estimated;
+    }
+
+<span class="fc" id="L41">    public static class Record {</span>
+        @JsonProperty(&quot;_id&quot;)
+        public int id;
+        @JsonProperty(&quot;id&quot;)
+        public String official_id;
+        public String permit_permit_id;
+        public String contractnumber;
+        public String boroughid;
+        public String permitcategory;
+        public String currentstatus;
+        public String duration_start_date;
+        public String duration_end_date;
+        public String reason_category;
+        public String occupancy_name;
+        public String submittercategory;
+        public String organizationname;
+// deprecated parameters
+/*         public String duration_days_mon_active;
+        public String duration_days_mon_all_day_round;
+        public String duration_days_tue_active;
+        public String duration_days_tue_all_day_round;
+        public String duration_days_wed_active;
+        public String duration_days_wed_all_day_round;
+        public String duration_days_thu_active;
+        public String duration_days_thu_all_day_round;
+        public String duration_days_fri_active;
+        public String duration_days_fri_all_day_round;
+        public String duration_days_sat_active;
+        public String duration_days_sat_all_day_round;
+        public String duration_days_sun_active;
+        public String duration_days_sun_all_day_round;
+        public String duration_days_sat_start_time;
+        public String duration_days_sat_end_time;
+        public String duration_days_mon_start_time;
+        public String duration_days_mon_end_time;
+        public String duration_days_tue_start_time;
+        public String duration_days_tue_end_time;
+        public String duration_days_wed_start_time;
+        public String duration_days_wed_end_time;
+        public String duration_days_thu_start_time;
+        public String duration_days_thu_end_time;
+        public String duration_days_fri_start_time;
+        public String duration_days_fri_end_time;
+        public String duration_days_sun_start_time;
+        public String duration_days_sun_end_time; */
+        public String load_date;
+        public String longitude;
+        public String latitude;
+
+        @Override
+        public String toString() {
+<span class="nc" id="L92">            String res = &quot;&quot;;</span>
+<span class="nc" id="L93">            res += (&quot;  ID: &quot; + id + &quot;\n&quot;);</span>
+<span class="nc" id="L94">            res += (&quot;  Permit ID: &quot; + permit_permit_id+ &quot;\n&quot;);</span>
+<span class="nc" id="L95">            res += (&quot;  Borough: &quot; + boroughid+ &quot;\n&quot;);</span>
+<span class="nc" id="L96">            res += (&quot;  Start Date: &quot; + duration_start_date+ &quot;\n&quot;);</span>
+<span class="nc" id="L97">            res += (&quot;  Longitude: &quot; + longitude+ &quot;\n&quot;);</span>
+<span class="nc" id="L98">            res += (&quot;  Latitude: &quot; + latitude + &quot;\n&quot;);</span>
+<span class="nc" id="L99">            return res;</span>
+        }
+    }
+
+    @JsonIgnoreProperties({&quot;fields&quot;})
+<span class="fc" id="L104">    public static class RootImpediment {</span>
+        public String help;
+        public boolean success;
+        public Resultimpediment result;
+    }
+
+    @JsonIgnoreProperties({&quot;fields&quot;})
+<span class="fc" id="L111">    public static class Resultimpediment {</span>
+        @JsonProperty(&quot;include_total&quot;)
+        public boolean includeTotal;
+        public int limit;
+        @JsonProperty(&quot;records_format&quot;)
+        public String recordsFormat;
+        @JsonProperty(&quot;resource_id&quot;)
+        public String resourceId;
+        public List&lt;Impediment&gt; records;
+        @JsonProperty(&quot;total_estimation_threshold&quot;)
+        public String totalEstimationThreshold;
+        public List&lt;Object&gt; fields;  // This will be ignored during deserialization
+        public Object _links;
+        public int total;
+        public boolean total_was_estimated;
+    }
+    
+<span class="fc" id="L128">    public static class Impediment {</span>
+        @JsonProperty(&quot;_id&quot;)
+        public int id;
+        @JsonProperty(&quot;id_request&quot;)
+        public String idRequest;
+        public String streetid;
+        public String streetimpactwidth;
+        public String streetimpacttype;
+        public String nbfreeparkingplace;
+        public String sidewalk_blockedtype;
+        public String backsidewalk_blockedtype;
+        public String bikepath_blockedtype;
+        public String name;
+        public String shortname;
+        public String fromname;
+        public String fromshortname;
+        public String toname;
+        public String toshortname;
+        public String length;
+        public String isarterial;
+        public String stmimpact_blockedtype;
+        public String otherproviderimpact_blockedtype;
+        public String reservedlane_blockedtype;
+    
+        @Override
+        public String toString() {
+<span class="nc" id="L154">            return String.format(&quot;ID: %d, Street: %s, Length: %s, Is Arterial: %s&quot;, id, name, length, isarterial);</span>
+        }
+
+        public boolean affects(String s){
+<span class="nc bnc" id="L158" title="All 2 branches missed.">            if (streetid.toLowerCase().contains(s.toLowerCase())){return true;}</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">            if (fromname.toLowerCase().contains(s.toLowerCase())){return true;}</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">            if (toname.toLowerCase().contains(s.toLowerCase())){return true;}</span>
+<span class="nc" id="L161">            return false;</span>
+        }
+    }
+
+    // Method to fetch JSON data from a URL
+    //TODO: implement an offline method, so the program can work without url
+    public static String fetchJsonFromUrl(String jsonUrl) throws IOException {
+        // Open connection to the URL
+<span class="nc" id="L169">        URL url = new URL(jsonUrl);</span>
+<span class="nc" id="L170">        try (InputStream input = url.openStream()) {</span>
+<span class="nc" id="L171">            InputStreamReader isr = new InputStreamReader(input);</span>
+<span class="nc" id="L172">            BufferedReader reader = new BufferedReader(isr);</span>
+<span class="nc" id="L173">            StringBuilder json = new StringBuilder();</span>
+            int c;
+<span class="nc bnc" id="L175" title="All 2 branches missed.">            while ((c = reader.read()) != -1) {</span>
+<span class="nc" id="L176">                json.append((char) c);</span>
+            }
+<span class="nc" id="L178">            return json.toString();</span>
+        }
+
+        // current method is slightly faster than this one
+
+/*         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod(&quot;GET&quot;);
+        connection.connect();
+
+        // Check if the response code is 200 (OK)
+        int responseCode = connection.getResponseCode();
+        if (responseCode != 200) {
+            throw new IOException(&quot;Failed to fetch data, HTTP response code: &quot; + responseCode);
+        }
+
+        // Read response body
+        StringBuilder jsonResponse = new StringBuilder();
+        try (Scanner scanner = new Scanner(connection.getInputStream())) {
+            while (scanner.hasNextLine()) {
+                jsonResponse.append(scanner.nextLine());
+            }
+        }
+        connection.disconnect();
+        return jsonResponse.toString(); */
+    }
+
+        /** Gets all impediments (entraves) and put them into the database
+     * 
+     * @param filePath
+     */
+    public static List&lt;Impediment&gt; getImpediments(String jsonURL){
+<span class="nc" id="L209">        System.out.println(Language.fetching_impediments(Dialog.choice_language));</span>
+        try {
+<span class="nc" id="L211">            ObjectMapper om = new ObjectMapper();</span>
+<span class="nc" id="L212">            om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);</span>
+
+<span class="nc" id="L214">            String JsonResponse = fetchJsonFromUrl(jsonURL);</span>
+
+<span class="nc" id="L216">            RootImpediment root = om.readValue(JsonResponse, RootImpediment.class);</span>
+<span class="nc" id="L217">            return root.result.records;</span>
+        } 
+<span class="nc" id="L219">        catch (IOException e) {</span>
+<span class="nc" id="L220">            e.printStackTrace();</span>
+        }
+<span class="nc" id="L222">        return null;</span>
+    }
+
+    /** Gets all records and put them into the database
+     * 
+     * @param filePath
+     */
+    public static List&lt;Record&gt; getRecords(String jsonURL){
+<span class="nc" id="L230">        System.out.println(Language.fetching_records(Dialog.choice_language));</span>
+        try {
+<span class="nc" id="L232">            ObjectMapper om = new ObjectMapper();</span>
+<span class="nc" id="L233">            om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);</span>
+
+<span class="nc" id="L235">            String JsonResponse = fetchJsonFromUrl(jsonURL);</span>
+
+<span class="nc" id="L237">            Root root = om.readValue(JsonResponse, Root.class);</span>
+
+<span class="nc" id="L239">            return root.result.records;</span>
+        } 
+<span class="nc" id="L241">        catch (IOException e) {</span>
+<span class="nc" id="L242">            e.printStackTrace();</span>
+        }
+<span class="nc" id="L244">        return null;</span>
+    }
+
+    ///  Pour tester le parsing sans le url à partir des fichiers test local////
+
+    //  lire fichiers locaux et les parser en projets
+    public static List&lt;Record&gt; getRecordsFromLocalFile(String filePath) {
+        try {
+<span class="fc" id="L252">            String jsonContent = readFileAsString(filePath);</span>
+            // Utiliser ObjectMapper pour convertir JSON en objets
+<span class="fc" id="L254">            ObjectMapper om = new ObjectMapper();</span>
+<span class="fc" id="L255">            om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);</span>
+
+<span class="fc" id="L257">            Root root = om.readValue(jsonContent, Root.class);</span>
+<span class="fc" id="L258">            return root.result.records;</span>
+<span class="nc" id="L259">        } catch (IOException e) {</span>
+<span class="nc" id="L260">            e.printStackTrace();</span>
+<span class="nc" id="L261">            return null;</span>
+        }
+    }
+
+    // Lire des fichiers locaux et les parser en entraves
+    public static List&lt;Impediment&gt; getImpedimentsFromLocalFile(String filePath) {
+        try {
+<span class="fc" id="L268">            String jsonContent = readFileAsString(filePath);</span>
+            // Utiliser ObjectMapper pour convertir JSON en objets
+<span class="fc" id="L270">            ObjectMapper om = new ObjectMapper();</span>
+<span class="fc" id="L271">            om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);</span>
+
+<span class="fc" id="L273">            RootImpediment root = om.readValue(jsonContent, RootImpediment.class);</span>
+<span class="fc" id="L274">            return root.result.records;</span>
+<span class="nc" id="L275">        } catch (IOException e) {</span>
+<span class="nc" id="L276">            e.printStackTrace();</span>
+<span class="nc" id="L277">            return null;</span>
+        }
+    }
+
+    // Méthode lit un fichier comme String
+    private static String readFileAsString(String filePath) throws IOException {
+<span class="fc" id="L283">        StringBuilder content = new StringBuilder();</span>
+<span class="fc" id="L284">        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {</span>
+            String line;
+<span class="fc bfc" id="L286" title="All 2 branches covered.">            while ((line = br.readLine()) != null) {</span>
+<span class="fc" id="L287">                content.append(line).append(&quot;\n&quot;);</span>
+            }
+        }
+<span class="fc" id="L290">        return content.toString();</span>
+    }
+
+    public static GeoJSON getgeojson(String filePath){
+<span class="nc" id="L294">        System.out.println(Language.fetching_districts(Dialog.choice_language));</span>
+        try {
+<span class="nc" id="L296">            ObjectMapper mapper = new ObjectMapper();</span>
+            // Replace with the actual path to your GeoJSON file
+<span class="nc" id="L298">            File geoJsonFile = new File(filePath);</span>
+<span class="nc" id="L299">            GeoJSON geoJSON = mapper.readValue(geoJsonFile, GeoJSON.class);</span>
+
+<span class="nc" id="L301">            return geoJSON;</span>
+<span class="nc" id="L302">        } catch (Exception e) {</span>
+<span class="nc" id="L303">            e.printStackTrace();</span>
+        }
+<span class="nc" id="L305">        return null;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

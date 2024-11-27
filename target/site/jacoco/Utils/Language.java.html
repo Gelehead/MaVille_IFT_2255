@@ -6,55 +6,813 @@
 
 <span class="nc" id="L7">public class Language {</span>
 
-    // TODO: placeholder dialogue, replace when possible
-<span class="nc bnc" id="L10" title="All 2 branches missed.">    public static String Qfname(String language){       return language == &quot;french&quot; ? &quot;Quel est votre prenom?&quot; : &quot;What's your first name?&quot;;}</span>
-<span class="nc bnc" id="L11" title="All 2 branches missed.">    public static String Qlname(String language){       return language == &quot;french&quot; ? &quot;Quel est votre nom de famille?&quot; : &quot;What's your last name?&quot;;}</span>
-<span class="nc bnc" id="L12" title="All 2 branches missed.">    public static String Qmail(String language){        return language == &quot;french&quot; ? &quot;Quel est votre addresse mail?&quot; : &quot;What's your mail address?&quot;;}</span>
-<span class="nc bnc" id="L13" title="All 2 branches missed.">    public static String Qpassword(String language){    return language == &quot;french&quot; ? &quot;Quel est votre mot de passe?&quot; : &quot;What's your password?&quot;;}</span>
-<span class="nc bnc" id="L14" title="All 2 branches missed.">    public static String Qid(String language){          return language == &quot;french&quot; ? &quot;Quel est votre numero d'identification?&quot; : &quot;What's your ID number?&quot;;}</span>
-<span class="nc bnc" id="L15" title="All 2 branches missed.">    public static String Qenterprise(String language){  return language == &quot;french&quot; ? &quot;Quel est votre entreprise?&quot; : &quot;What's your first name?&quot;;}</span>
-<span class="nc bnc" id="L16" title="All 2 branches missed.">    public static String Qphone(String language){       return language == &quot;french&quot; ? &quot;Quel est votre numero de telephone?&quot; : &quot;What's your phone number?&quot;;}</span>
-<span class="nc bnc" id="L17" title="All 2 branches missed.">    public static String Qaddress(String language){     return language == &quot;french&quot; ? &quot;Quel est votre addresse?&quot; : &quot;What's your address?&quot;;}</span>
-<span class="nc bnc" id="L18" title="All 2 branches missed.">    public static String Qbirthday(String language){    return language == &quot;french&quot; ? &quot;Quel est votre date de naissance?&quot; : &quot;What's your birth day?&quot;;}</span>
-
-<span class="nc bnc" id="L20" title="All 2 branches missed.">    public static String notAnEnterprise(String language){return language == &quot;french&quot; ? &quot;Cet utilisateur n'est pas une entreprise?&quot; : &quot;this user is not an enterprise&quot;;}</span>
-
-    public static String QUserType(String language){
-<span class="nc bnc" id="L23" title="All 2 branches missed.">        return language == &quot;french&quot; ? &quot;Etes vous un resident ou un intervenant?&quot;</span>
-                + &quot;\n Tapez [1] pour resident&quot; +
-                  &quot;\n Tapez [2] pour intervenant&quot;
-<span class="nc" id="L26">                : &quot;not yet implemented&quot;;</span>
-                }
-<span class="nc" id="L28">    public static String QUserType(){return &quot;Etes vous un resident ou un intervenant?&quot;</span>
-                + &quot;\n Tapez [1] pour resident&quot; +
-                  &quot;\n Tapez [2] pour intervenant&quot;;
+<span class="nc" id="L9">    public enum language {</span>
+<span class="nc" id="L10">        FRENCH,</span>
+<span class="nc" id="L11">        ENGLISH</span>
     }
 
-    // nav menu for residents    
-    public static String Main_menu_resident(){
-<span class="nc" id="L35">        return </span>
-        &quot; Menu principal pour les résidents :\n&quot; +
-        &quot; [1] Consulter les travaux en cours\n&quot; +
-        &quot; [2] Rechercher un projet en particulier\n&quot; +
-        &quot; [3] Activer les notifications\n&quot; +
-        &quot; [4] Planifier un projet\n&quot; +
-        &quot; [5] Faire une requête de travail\n&quot; +
-        &quot; [6] Accepter ou refuser la candidature d'un travail\n&quot; +
-        &quot; [7] Signaler un problème\n&quot; +
-        &quot; [8] Retourner au menu principal\n&quot; +
-        &quot; [9] Quitter\n&quot; + 
-        &quot;Choisissez une option : &quot;;
+
+    public static String planifMenu(language language){
+<span class="nc bnc" id="L16" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L18">                return &quot;&quot;&quot;</span>
+                Que désirez vous faire ?
+                [1] Modifier mon emploi du temps
+                [2] Consulter les emplois du temps d'autres personnes du quartier
+                &quot;&quot;&quot;;
+            case ENGLISH : 
+<span class="nc" id="L24">            return &quot;&quot;&quot;</span>
+                What should we do ?
+                [1] Modify my own schedule
+                [2] See schedules of neighbours
+                &quot;&quot;&quot;;
+            default:
+<span class="nc" id="L30">                return &quot;&quot;;</span>
+        } 
     }
 
-    public static String Main_menu_intervenant(){
-<span class="nc" id="L50">        return </span>
-        &quot; Menu principal pour les intervenants :\n&quot; +
-        &quot; [1] Soumettre un nouveau projet\n&quot; +
-        &quot; [2] Soumettre une mise à jour du projet\n&quot; +
-        &quot; [3] Soumettre une candidature à une requête de travail\n&quot; +
-        &quot; [4] Retourner au menu principal\n&quot; +
-        &quot; [5] Quitter\n&quot; +
-        &quot;Choisissez une option : &quot;;
+    public static String subscribe_to_new_district(language language){
+<span class="nc bnc" id="L35" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L37">                return &quot;Entrez un quartier sur lequel vous voulez recevoir des nouvelles&quot;;</span>
+            case ENGLISH : 
+<span class="nc" id="L39">                return &quot;choose a new district to subscribe to&quot;;</span>
+            default:
+<span class="nc" id="L41">                return &quot;&quot;;</span>
+        } 
     }
+
+    public static String ask_for_title(language language){
+<span class="nc bnc" id="L46" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L48">                return &quot;Entrez un titre&quot;;</span>
+            case ENGLISH : 
+<span class="nc" id="L50">                return &quot;placeholder ask_for_project_search_query&quot;;</span>
+            default:
+<span class="nc" id="L52">                return &quot;&quot;;</span>
+        } 
+    }
+
+    public static String ask_for_project_search_query(language language){
+<span class="nc bnc" id="L57" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L59">                return &quot;&quot;&quot;</span>
+                Choisissez parmis les options suivantes un critere de recherche
+                [1] titre
+                [2] type de travaux
+                [3] progrès du projet
+                [4] Rue
+            &quot;&quot;&quot;;
+            case ENGLISH : 
+<span class="nc" id="L67">                return &quot;placeholder ask_for_project_search_query&quot;;</span>
+            default:
+<span class="nc" id="L69">                return &quot;&quot;;</span>
+        } 
+    }
+
+    public static String request_title(language language){
+<span class="nc bnc" id="L74" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L76">                return &quot;Donnez un titre à votre requete&quot;;</span>
+            case ENGLISH : 
+<span class="nc" id="L78">                return &quot;Give a title to your request&quot;;</span>
+            default:
+<span class="nc" id="L80">                return &quot;&quot;;</span>
+        }        
+    }
+
+    public static String project_title(language language){
+<span class="nc bnc" id="L85" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L87">                return &quot;Donnez un titre à votre projet&quot;;</span>
+            case ENGLISH : 
+<span class="nc" id="L89">                return &quot;Give a title to your project&quot;;</span>
+            default:
+<span class="nc" id="L91">                return &quot;&quot;;</span>
+        }        
+    }
+
+    public static String request_hi_UwU(language language){
+<span class="nc bnc" id="L96" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L98">                return &quot;Entrez une nouvelle requete&quot;;</span>
+            case ENGLISH : 
+<span class="nc" id="L100">                return &quot;Enter a new request&quot;;</span>
+            default:
+<span class="nc" id="L102">                return &quot;&quot;;</span>
+        }
+    }
+
+    public static String request_reason(language language){
+<span class="nc bnc" id="L107" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L109">                return &quot;Donnez une raison parmis les suivantes\n&quot; + reasonMenu(language);</span>
+            case ENGLISH :
+<span class="nc" id="L111">                return &quot;give a reason amongst the following ones\n&quot; + reasonMenu(language);</span>
+            default:
+<span class="nc" id="L113">                return &quot;&quot;;</span>
+        }
+    }
+
+    public static String request_district(language language){
+<span class="nc bnc" id="L118" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L120">                return &quot;Donnez un quartier parmis les quartiers suivants\n&quot; + districtMenu(language);</span>
+            case ENGLISH :
+<span class="nc" id="L122">                return &quot;Give a district amongst the following options \n&quot; + districtMenu(language);</span>
+            default:
+<span class="nc" id="L124">                return &quot;&quot;;</span>
+        }
+    }
+
+    public static String districtMenu(language language) {
+<span class="nc bnc" id="L129" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L131">                return &quot;&quot;&quot;</span>
+                    [1] LaSalle
+                    [2] Dollard-des-Ormeaux
+                    [3] Côte-Saint-Luc
+                    [4] Villeray-Saint-Michel-Parc-Extension
+                    [5] Rosemont-La Petite-Patrie
+                    [6] Hampstead
+                    [7] Senneville
+                    [8] Le Plateau-Mont-Royal
+                    [9] Sainte-Anne-de-Bellevue
+                    [10] Montréal-Ouest
+                    [11] Côte-des-Neiges-Notre-Dame-de-Grâce
+                    [12] L'Île-Bizard-Sainte-Geneviève
+                    [13] Beaconsfield
+                    [14] Anjou
+                    [15] Verdun
+                    [16] Le Sud-Ouest
+                    [17] Mercier-Hochelaga-Maisonneuve
+                    [18] Montréal-Est
+                    [19] Lachine
+                    [20] Saint-Léonard
+                    [21] Montréal-Nord
+                    [22] Outremont
+                    [23] L'Île-Dorval
+                    [24] Mont-Royal
+                    [25] Pointe-Claire
+                    [26] Dorval
+                    [27] Pierrefonds-Roxboro
+                    [28] Rivière-des-Prairies-Pointe-aux-Trembles
+                    [29] Ahuntsic-Cartierville
+                    [30] Saint-Laurent
+                    [31] Ville-Marie
+                    [32] Kirkland
+                    [33] Baie-D'Urfé
+                    [34] Westmount
+                    &quot;&quot;&quot;;
+            case ENGLISH:
+<span class="nc" id="L168">                return &quot;&quot;&quot;</span>
+                    [1] LaSalle
+                    [2] Dollard-des-Ormeaux
+                    [3] Côte-Saint-Luc
+                    [4] Villeray-Saint-Michel-Parc-Extension
+                    [5] Rosemont-La Petite-Patrie
+                    [6] Hampstead
+                    [7] Senneville
+                    [8] Le Plateau-Mont-Royal
+                    [9] Sainte-Anne-de-Bellevue
+                    [10] Montréal-Ouest
+                    [11] Côte-des-Neiges-Notre-Dame-de-Grâce
+                    [12] L'Île-Bizard-Sainte-Geneviève
+                    [13] Beaconsfield
+                    [14] Anjou
+                    [15] Verdun
+                    [16] Le Sud-Ouest
+                    [17] Mercier-Hochelaga-Maisonneuve
+                    [18] Montréal-Est
+                    [19] Lachine
+                    [20] Saint-Léonard
+                    [21] Montréal-Nord
+                    [22] Outremont
+                    [23] L'Île-Dorval
+                    [24] Mont-Royal
+                    [25] Pointe-Claire
+                    [26] Dorval
+                    [27] Pierrefonds-Roxboro
+                    [28] Rivière-des-Prairies-Pointe-aux-Trembles
+                    [29] Ahuntsic-Cartierville
+                    [30] Saint-Laurent
+                    [31] Ville-Marie
+                    [32] Kirkland
+                    [33] Baie-D'Urfé
+                    [34] Westmount
+                    &quot;&quot;&quot;;
+            default:
+<span class="nc" id="L205">                return &quot;&quot;;</span>
+        }
+    }
+    
+
+    public static String request_start(language language){
+<span class="nc bnc" id="L211" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L213">                return &quot;date de début (JJMMAAAA_HHMM) : &quot;;</span>
+            case ENGLISH :
+<span class="nc" id="L215">                return &quot;starting date (DDMMYYYY_HHMM) : &quot;;</span>
+            default:
+<span class="nc" id="L217">                return &quot;&quot;;</span>
+        }
+    }
+
+    public static String request_end(language language){
+<span class="nc bnc" id="L222" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L224">                return &quot;date de fin (JJMMAAAA_HHMM) : &quot;;</span>
+            case ENGLISH :
+<span class="nc" id="L226">                return &quot;end date (DDMMYYYY_HHMM) : &quot;;</span>
+            default:
+<span class="nc" id="L228">                return &quot;&quot;;</span>
+        }
+    }
+
+    public static String request_description(language language){
+<span class="nc bnc" id="L233" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L235">                return &quot;Donnez une brève description des travaux : &quot;;</span>
+            case ENGLISH :
+<span class="nc" id="L237">                return &quot;Give a short description of the road work desired : &quot;;</span>
+            default:
+<span class="nc" id="L239">                return &quot;&quot;;</span>
+        }
+    }
+
+    public static String request_streetid(language language){
+<span class="nc bnc" id="L244" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L246">                return &quot;rue principale des travaux : &quot;;</span>
+            case ENGLISH :
+<span class="nc" id="L248">                return &quot;main road needing work : &quot;;</span>
+            default:
+<span class="nc" id="L250">                return &quot;&quot;;</span>
+        }
+    }
+
+    public static String request_fromname(language language){
+<span class="nc bnc" id="L255" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L257">                return &quot;Route d intersection 1 :&quot;;</span>
+            case ENGLISH :
+<span class="nc" id="L259">                return &quot;Intersecting road 1 : &quot;;</span>
+            default:
+<span class="nc" id="L261">                return &quot;&quot;;</span>
+        }
+    }
+
+    public static String request_toname(language language){
+<span class="nc bnc" id="L266" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L268">                return &quot;Route d intersection 2 :&quot;;</span>
+            case ENGLISH :
+<span class="nc" id="L270">                return &quot;Intersecting road 2 : &quot;;</span>
+            default:
+<span class="nc" id="L272">                return &quot;&quot;;</span>
+        }
+    }
+
+    public static String request_length(language language){
+<span class="nc bnc" id="L277" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L279">                return &quot;longueur de l'entrave : &quot;;</span>
+            case ENGLISH :
+<span class="nc" id="L281">                return &quot;length of the road work :&quot;;</span>
+            default:
+<span class="nc" id="L283">                return &quot;&quot;;</span>
+        }
+    }
+
+    public static String byebye(language language){
+<span class="nc bnc" id="L288" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L290">                return &quot;Merci de votre visite, au plaisir de vous revoir très bientôt.&quot;;</span>
+            case ENGLISH :
+<span class="nc" id="L292">                return &quot;Thank you for using us, we hope to see you again very soon.&quot;;</span>
+            default:
+<span class="nc" id="L294">                return &quot;&quot;;</span>
+        }
+    }
+
+    public static String no_impediment_found(language language){
+<span class="nc bnc" id="L299" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L301">                return &quot;Désolé, aucune entrave correspondant à vos spécification n'a été trouvé&quot;;</span>
+            case ENGLISH:
+<span class="nc" id="L303">                return &quot;Sorry, no impediment corresponding to your demands have been found&quot;;</span>
+            default:
+<span class="nc" id="L305">                return &quot;&quot;;</span>
+        }
+    }
+
+    public static String impediment_by_id(language language){
+<span class="nc bnc" id="L310" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L312">                return &quot;Recherche par ID de project&quot;;</span>
+            case ENGLISH : 
+<span class="nc" id="L314">                return &quot;Search by project id&quot;;</span>
+            default:
+<span class="nc" id="L316">                return &quot;&quot;;</span>
+        }
+    }
+
+    public static String impediment_by_road(language language){
+<span class="nc bnc" id="L321" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L323">                return &quot;Quelle rue voulez-vous rechercher?&quot;;</span>
+            case ENGLISH : 
+<span class="nc" id="L325">                return &quot;What road do you want to search for&quot;;</span>
+            default:
+<span class="nc" id="L327">                return &quot;&quot;;</span>
+        }
+    }
+
+    public static String search_for_specific_impediment(language language){
+<span class="nc bnc" id="L332" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L334">                return  </span>
+                &quot;&quot;&quot; 
+                Chercher par :
+                [1] route
+                [2] Travail associé
+                &quot;&quot;&quot;;
+            case ENGLISH :
+<span class="nc" id="L341">                return &quot;&quot;&quot;</span>
+                Search by :
+                [1] road 
+                [2] similar project  
+                &quot;&quot;&quot;;
+            default:
+<span class="nc" id="L347">                return &quot;&quot;;</span>
+        }
+    }
+
+    public static String anything_else(language language){
+<span class="nc bnc" id="L352" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L354">                return &quot;voulez vous entrer autre chose?&quot;;</span>
+            case ENGLISH :
+<span class="nc" id="L356">                return &quot;do you want to keep adding more?&quot;;</span>
+            default:
+<span class="nc" id="L358">                return &quot;&quot;;</span>
+        }
+    }
+
+    public static String ask_for_correct_format_schedule(language language){
+<span class="nc bnc" id="L363" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L365">                return &quot;Ecrivez selon le format suivant : \n    \&quot; JOUR hhmm - hhmm\&quot;&quot;;</span>
+            case ENGLISH : 
+<span class="nc" id="L367">                return &quot;please enter a response with the following format : \n    \&quot; DAY hhmm - hhmm\&quot;&quot;;</span>
+            default:
+<span class="nc" id="L369">                return &quot;&quot;;</span>
+        }
+    }
+
+    public static String ask_for_schedule(language language){
+<span class="nc bnc" id="L374" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L376">                return &quot;Donnez une plage horaire qui vous satisfait dans les horaires suivants : \n(--- : vide, ### : plein)&quot;;</span>
+            case ENGLISH:
+<span class="nc" id="L378">                return &quot;placeholder&quot;;</span>
+            default:
+<span class="nc" id="L380">                return &quot;&quot;;</span>
+        }
+    }
+
+    public static String fetching_impediments(language language){
+<span class="nc bnc" id="L385" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L387">                return &quot;Requête des entraves...&quot;;</span>
+            case ENGLISH :
+<span class="nc" id="L389">                return &quot;fetching impediments...&quot;;</span>
+            default:
+<span class="nc" id="L391">                return &quot;&quot;;</span>
+        }
+    }    
+
+    public static String fetching_records(language language){
+<span class="nc bnc" id="L396" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L398">                return &quot;Requête de travaux...&quot;;</span>
+            case ENGLISH :
+<span class="nc" id="L400">                return &quot;fetching records...&quot;;</span>
+            default:
+<span class="nc" id="L402">                return &quot;&quot;;</span>
+        }
+    }
+
+    public static String fetching_districts(language language){
+<span class="nc bnc" id="L407" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L409">                return &quot;Requête de quartiers...&quot;;</span>
+            case ENGLISH :
+<span class="nc" id="L411">                return &quot;fetching boroughs...&quot;;</span>
+            default:
+<span class="nc" id="L413">                return &quot;&quot;;</span>
+        }
+    }
+
+    public static String no_project_found(language language){
+<span class="nc bnc" id="L418" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L420">                return &quot;Désolé, aucun projet ne correspondant à vos spécification n'a été trouvé&quot;;</span>
+            case ENGLISH:
+<span class="nc" id="L422">                return &quot;Sorry, no project corresponding to your demands have been found&quot;;</span>
+            default:
+<span class="nc" id="L424">                return &quot;&quot;;</span>
+        }
+    }
+
+    public static String no_user_found(language language){
+<span class="nc bnc" id="L429" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L431">                return &quot;Désolé, aucun utilisateur correspondant à vos spécification n'a été trouvé&quot;;</span>
+            case ENGLISH:
+<span class="nc" id="L433">                return &quot;Sorry, no user corresponding to your demands have been found&quot;;</span>
+            default:
+<span class="nc" id="L435">                return &quot;&quot;;</span>
+        }
+    }
+
+    public static String not_implemented_filter_project_search(language language){
+<span class="nc bnc" id="L440" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH:
+<span class="nc" id="L442">                return &quot;la fonction de recherche avec filtre n est pas encore implementee&quot;;</span>
+            case ENGLISH:
+<span class="nc" id="L444">                return &quot;The search function hasn't its filter function implemented yet&quot;;</span>
+            default:
+<span class="nc" id="L446">                return &quot;&quot;;</span>
+        }
+    }
+
+    public static String progressMenu(language lang) {
+<span class="nc bnc" id="L451" title="All 3 branches missed.">        switch (lang) {</span>
+            case FRENCH:
+<span class="nc" id="L453">                return &quot;&quot;&quot;</span>
+                choisissez un type de progression de Projet
+                    [1] Non commencé
+                    [2] En cours
+                    [3] Terminé
+                    [4] Placeholder
+                        &quot;&quot;&quot;;
+            case ENGLISH:
+<span class="nc" id="L461">                return &quot;&quot;&quot;</span>
+                Please choose a type of project progression
+                    [1] Not started
+                    [2] In progress
+                    [3] Finished
+                    [4] Placeholder
+                        &quot;&quot;&quot;;
+            default:
+<span class="nc" id="L469">                return &quot;&quot;;</span>
+        }
+    }    
+
+    public static String reasonMenu(language lang) {
+<span class="nc bnc" id="L474" title="All 3 branches missed.">        switch (lang) {</span>
+            case FRENCH:
+<span class="nc" id="L476">                return &quot;&quot;&quot;</span>
+                    [1] Travaux routiers
+                    [2] Travaux de gaz ou électricité
+                    [3] Construction ou rénovation
+                    [4] Entretien paysager
+                    [5] Travaux liés aux transports en commun
+                    [6] Travaux de signalisation et éclairage
+                    [7] Travaux souterrains
+                    [8] Travaux résidentiels
+                    [9] Entretien urbain
+                    [10] Entretien des réseaux de télécommunication
+                    [11] Raison non prise en charge
+                    [12] Autre
+                        &quot;&quot;&quot;;
+            case ENGLISH:
+<span class="nc" id="L491">                return &quot;&quot;&quot;</span>
+                    [1] Roadwork
+                    [2] Gas or electricity work
+                    [3] Construction or renovation
+                    [4] Landscaping maintenance
+                    [5] Work related to public transportation
+                    [6] Signage and lighting work
+                    [7] Underground work
+                    [8] Residential work
+                    [9] Urban maintenance
+                    [10] Telecommunications network maintenance
+                    [11] Unhandled reason
+                    [12] Other
+                        &quot;&quot;&quot;;
+            default:
+<span class="nc" id="L506">                return &quot;&quot;;</span>
+        }
+    }
+    
+    
+        
+
+    public static String main_menu_admin(language language){
+<span class="nc bnc" id="L514" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L515">            case FRENCH: return &quot;&quot;&quot;</span>
+                [1] Tous les utilisateurs
+                [2] Tous les projects
+                [3] Menu principal
+                [4] quit
+                [5] test function
+                    &quot;&quot;&quot;;
+<span class="nc" id="L522">            case ENGLISH: return &quot;&quot;&quot;</span>
+                [1] Get all Users
+                [2] get all projects
+                [3] Main menu
+                [4] quit 
+                    &quot;&quot;&quot;;
+<span class="nc" id="L528">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String noSuchUser(language language, String mail){
+<span class="nc bnc" id="L533" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L534">            case FRENCH: return &quot;L'utilisateur avec l'email&quot; + mail + &quot; n'existe pas dans la base de données.&quot; ;</span>
+<span class="nc" id="L535">            case ENGLISH: return &quot;User with email &quot; + mail + &quot; does not exist in the database.&quot;; </span>
+<span class="nc" id="L536">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String tooMuchIncorrectTries(language language){
+<span class="nc bnc" id="L541" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L542">            case FRENCH: return &quot;Trop d'échecs. Veuillez réessayer dans un moment&quot;;</span>
+<span class="nc" id="L543">            case ENGLISH: return &quot;Too much incorrect tries. Please try again in a moment&quot;;</span>
+<span class="nc" id="L544">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String Qinitial(language language){
+<span class="nc bnc" id="L549" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L550">            case FRENCH: return &quot;&quot;&quot;</span>
+                Choisissez une option
+                    [1] Connexion
+                    [2] Inscription
+                    [3] Admin (sera caché pour le produit final)
+                    &quot;&quot;&quot;;
+        
+<span class="nc" id="L557">            case ENGLISH: return &quot;&quot;&quot;</span>
+                        Choose an option:
+                        [1] Login
+                        [2] Register 
+                    &quot;&quot;&quot;;
+<span class="nc" id="L562">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String MailNotInDatabase(language language){
+<span class="nc bnc" id="L567" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L568">            case FRENCH: return &quot;L'addresse mail entrée n'existe pas dans notre base de donnees, veuillez en entrer une nouvelle&quot;;</span>
+<span class="nc" id="L569">            case ENGLISH: return &quot;The adress you entered does not exist in our database, please enter a new one&quot;;</span>
+<span class="nc" id="L570">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String IncorrectPassword(language language){
+<span class="nc bnc" id="L575" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L576">            case FRENCH: return &quot;mot de passe incorrect, essayez à nouveau.&quot;;</span>
+<span class="nc" id="L577">            case ENGLISH: return &quot;incorrect password, try again&quot;;</span>
+<span class="nc" id="L578">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String Qfname(language language){
+<span class="nc bnc" id="L583" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L584">            case FRENCH: return &quot;Quel est votre prenom?&quot;;</span>
+<span class="nc" id="L585">            case ENGLISH: return &quot;What's your first name?&quot;;</span>
+<span class="nc" id="L586">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String Qlname(language language){
+<span class="nc bnc" id="L591" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L592">            case FRENCH: return &quot;Quel est votre nom de famille?&quot;;</span>
+<span class="nc" id="L593">            case ENGLISH: return &quot;What's your last name?&quot;;</span>
+<span class="nc" id="L594">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String Qmail(language language){
+<span class="nc bnc" id="L599" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L600">            case FRENCH: return &quot;Quel est votre adresse mail?&quot;;</span>
+<span class="nc" id="L601">            case ENGLISH: return &quot;What's your email address?&quot;;</span>
+<span class="nc" id="L602">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String Qpassword(language language){
+<span class="nc bnc" id="L607" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L608">            case FRENCH: return &quot;Quel est votre mot de passe?&quot;;</span>
+<span class="nc" id="L609">            case ENGLISH: return &quot;What's your password?&quot;;</span>
+<span class="nc" id="L610">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String Qid(language language){
+<span class="nc bnc" id="L615" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L616">            case FRENCH: return &quot;Quel est votre numéro d'identification?&quot;;</span>
+<span class="nc" id="L617">            case ENGLISH: return &quot;What's your ID number?&quot;;</span>
+<span class="nc" id="L618">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String Qenterprise(language language){
+<span class="nc bnc" id="L623" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L624">            case FRENCH: return &quot;Quel est votre entreprise?&quot;;</span>
+<span class="nc" id="L625">            case ENGLISH: return &quot;What's your enterprise name?&quot;;</span>
+<span class="nc" id="L626">            default: return &quot;&quot;;</span>
+        }
+    }
+    
+    public static String Qcityid(language language){
+<span class="nc bnc" id="L631" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L632">            case FRENCH: return &quot;Entrez votre indentifiant de ville&quot;;</span>
+<span class="nc" id="L633">            case ENGLISH: return &quot;Please enter your city ID&quot;;</span>
+<span class="nc" id="L634">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String QinType(language language) {
+<span class="nc bnc" id="L639" title="All 3 branches missed.">        switch (language) {</span>
+            case FRENCH: 
+<span class="nc" id="L641">                return &quot;&quot;&quot;</span>
+                Entrez la catégorie qui vous représente le mieux :
+                [1] Entreprise publique
+                [2] Entrepreneur privé
+                [3] Particulier 
+                &quot;&quot;&quot;;
+            case ENGLISH: 
+<span class="nc" id="L648">                return &quot;&quot;&quot;</span>
+                Enter the category that best represents you:
+                [1] Public enterprise
+                [2] Private entrepreneur
+                [3] Individual
+                &quot;&quot;&quot;;
+            default: 
+<span class="nc" id="L655">                return &quot;&quot;;</span>
+        }
+    }
+    
+
+    public static String Qphone(language language){
+<span class="nc bnc" id="L661" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L662">            case FRENCH: return &quot;Quel est votre numéro de téléphone?&quot;;</span>
+<span class="nc" id="L663">            case ENGLISH: return &quot;What's your phone number?&quot;;</span>
+<span class="nc" id="L664">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String Qaddress(language language){
+<span class="nc bnc" id="L669" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L670">            case FRENCH: return &quot;Quel est votre adresse?&quot;;</span>
+<span class="nc" id="L671">            case ENGLISH: return &quot;What's your address?&quot;;</span>
+<span class="nc" id="L672">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String Qbirthday(language language){
+<span class="nc bnc" id="L677" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L678">            case FRENCH: return &quot;Quelle est votre date de naissance? (sous la forme \&quot;JJMMAAA\&quot;)&quot;;</span>
+<span class="nc" id="L679">            case ENGLISH: return &quot;What's your birth date?&quot;;</span>
+<span class="nc" id="L680">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String notAnEnterprise(language language){
+<span class="nc bnc" id="L685" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L686">            case FRENCH: return &quot;Cet utilisateur n'est pas une entreprise.&quot;;</span>
+<span class="nc" id="L687">            case ENGLISH: return &quot;This user is not an enterprise.&quot;;</span>
+<span class="nc" id="L688">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String QUserType(language language){
+<span class="nc bnc" id="L693" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L694">            case FRENCH: return &quot;Êtes-vous un résident ou un intervenant?\n&quot; +</span>
+                                &quot;Tapez [1] pour résident\n&quot; +
+                                &quot;Tapez [2] pour intervenant&quot;;
+<span class="nc" id="L697">            case ENGLISH: return &quot;Are you a resident or a contractor?\n&quot; +</span>
+                                &quot;Press [1] for resident\n&quot; +
+                                &quot;Press [2] for contractor&quot;;
+<span class="nc" id="L700">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String Main_menu_resident(language language){
+<span class="nc bnc" id="L705" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L706">            case FRENCH: return &quot;Menu principal pour les résidents :\n&quot; +</span>
+                                &quot;[1] Consulter les travaux en cours\n&quot; +
+                                &quot;[2] Rechercher un projet en particulier\n&quot; +
+                                &quot;[3] Activer les notifications\n&quot; +
+                                &quot;[4] Planifier un projet\n&quot; +
+                                &quot;[5] Faire une requête de travail\n&quot; +
+                                &quot;[6] Accepter ou refuser la candidature d'un travail\n&quot; +
+                                &quot;[7] Signaler un problème ( non implemente ) \n&quot; +
+                                &quot;[8] Consulter les entraves \n&quot; +
+                                &quot;[9] Revenir au menu principal\n&quot; + 
+                                &quot;[10] Quitter\n&quot; + 
+                                &quot;Choisissez une option : &quot;;
+<span class="nc" id="L718">            case ENGLISH: return &quot;Resident main menu:\n&quot; +</span>
+                                    &quot;[1] View ongoing projects\n&quot; +
+                                    &quot;[2] Search for a specific project\n&quot; +
+                                    &quot;[3] Activate notifications\n&quot; +
+                                    &quot;[4] Plan a project\n&quot; +
+                                    &quot;[5] Submit a work request\n&quot; +
+                                    &quot;[6] Accept or reject a job application\n&quot; +
+                                    &quot;[7] Report a problem ( not implemented )\n&quot; +
+                                    &quot;[8] Search for a specific Impediment\n&quot; +
+                                    &quot;[9] Go back to main menu\n&quot; +
+                                    &quot;[10] Quit\n&quot; +
+                                    &quot;Choose an option: &quot;;
+<span class="nc" id="L730">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String Main_menu_intervenant(language language){
+<span class="nc bnc" id="L735" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L736">            case FRENCH: return &quot;Menu principal pour les intervenants :\n&quot; +</span>
+                                &quot;[1] Soumettre un nouveau projet\n&quot; +
+                                &quot;[2] Soumettre une mise à jour du projet\n&quot; +
+                                &quot;[3] Soumettre une candidature à une requête de travail\n&quot; +
+                                &quot;[4] Quitter\n&quot; +
+                                &quot;Choisissez une option : &quot;;
+<span class="nc" id="L742">            case ENGLISH: return &quot;Contractor main menu:\n&quot; +</span>
+                                    &quot;[1] Submit a new project\n&quot; +
+                                    &quot;[2] Submit a project update\n&quot; +
+                                    &quot;[3] Apply for a work request\n&quot; +
+                                    &quot;[4] Quit\n&quot; +
+                                    &quot;Choose an option: &quot;;
+<span class="nc" id="L748">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String EnterValidEmail_NotAlreadyInDatabase(language language){
+<span class="nc bnc" id="L753" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L754">            case FRENCH: return &quot;Votre addresse mail et invalide ou existe deja dans la base de donnees : &quot;;</span>
+<span class="nc" id="L755">            case ENGLISH: return &quot;Your mail adress is either invalid or already exists in the database&quot;;</span>
+<span class="nc" id="L756">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String NotImplemented_ConsulterTravaux(language language) {
+<span class="nc bnc" id="L761" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L762">            case FRENCH: return &quot;La fonctionnalité pour consulter les travaux en cours n'est pas encore implémentée&quot;;</span>
+<span class="nc" id="L763">            case ENGLISH: return &quot;The feature to view ongoing projects is not yet implemented&quot;;</span>
+<span class="nc" id="L764">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String NotImplemented_RechercherProjet(language language) {
+<span class="nc bnc" id="L769" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L770">            case FRENCH: return &quot;La fonctionnalité pour rechercher un projet en particulier n'est pas encore implémentée&quot;;</span>
+<span class="nc" id="L771">            case ENGLISH: return &quot;The feature to search for a specific project is not yet implemented&quot;;</span>
+<span class="nc" id="L772">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String NotImplemented_ActiverNotifications(language language) {
+<span class="nc bnc" id="L777" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L778">            case FRENCH: return &quot;La fonctionnalité pour activer les notifications n'est pas encore implémentée&quot;;</span>
+<span class="nc" id="L779">            case ENGLISH: return &quot;The feature to activate notifications is not yet implemented&quot;;</span>
+<span class="nc" id="L780">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String NotImplemented_PlanifierProjet(language language) {
+<span class="nc bnc" id="L785" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L786">            case FRENCH: return &quot;La fonctionnalité pour planifier un projet n'est pas encore implémentée&quot;;</span>
+<span class="nc" id="L787">            case ENGLISH: return &quot;The feature to plan a project is not yet implemented&quot;;</span>
+<span class="nc" id="L788">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String NotImplemented_RequeteTravail(language language) {
+<span class="nc bnc" id="L793" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L794">            case FRENCH: return &quot;La fonctionnalité pour faire une requête de travail n'est pas encore implémentée&quot;;</span>
+<span class="nc" id="L795">            case ENGLISH: return &quot;The feature to submit a work request is not yet implemented&quot;;</span>
+<span class="nc" id="L796">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String NotImplemented_AccepterRefuserCandidature(language language) {
+<span class="nc bnc" id="L801" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L802">            case FRENCH: return &quot;La fonctionnalité pour accepter ou refuser la candidature d'un travail n'est pas encore implémentée&quot;;</span>
+<span class="nc" id="L803">            case ENGLISH: return &quot;The feature to accept or reject a job application is not yet implemented&quot;;</span>
+<span class="nc" id="L804">            default: return &quot;&quot;;</span>
+        }
+    }
+
+    public static String NotImplemented_SignalerProbleme(language language) {
+<span class="nc bnc" id="L809" title="All 3 branches missed.">        switch (language) {</span>
+<span class="nc" id="L810">            case FRENCH: return &quot;La fonctionnalité pour signaler un problème n'est pas encore implémentée&quot;;</span>
+<span class="nc" id="L811">            case ENGLISH: return &quot;The feature to report a problem is not yet implemented&quot;;</span>
+<span class="nc" id="L812">            default: return &quot;&quot;;</span>
+        }
+    }
+
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

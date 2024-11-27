@@ -164,6 +164,37 @@ public class Project {
         }
     }
 
+    public static Reason parse_reasonMenu(String r){
+        switch (r) {
+            case "1": return Project.Reason.Travaux_routiers;
+            case "2": return Project.Reason.Travaux_de_gaz_ou_électricité;
+            case "3": return Project.Reason.Construction_ou_rénovation;
+            case "4": return Project.Reason.Entretien_paysager;
+            case "5": return Project.Reason.Travaux_liés_aux_transports_en_commun;
+            case "6": return Project.Reason.Travaux_de_signalisation_et_éclairage;
+            case "7": return  Project.Reason.Travaux_souterrains;
+            case "8": return Project.Reason.Travaux_résidentiel;
+            case "9": return Project.Reason.Entretien_urbain;
+            case "10": return Project.Reason.Entretien_des_réseaux_de_télécommunication;
+            case "11": return Project.Reason.UNHANDLED_REASON;
+            case "12": return Project.Reason.Autre;
+            default: return Project.Reason.UNHANDLED_REASON;
+        }
+    }
+    
+    public static Progress parse_progressMenu(String p){
+        switch (p) {
+            case "1": return Progress.NOT_STARTED;
+            case "2": return Progress.IN_PROGRESS;
+            case "3":
+                return Progress.FINISHED;
+            case "4":
+                return Progress.PLACEHOLDER;
+            default:
+                throw new IllegalArgumentException("Invalid choice: " + p);
+        }
+    }
+
     @Override
     public String toString() {
         String res = "";

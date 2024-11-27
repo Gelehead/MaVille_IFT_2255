@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Algorithm.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MaVille</a> &gt; <a href="index.source.html" class="el_package">Utils</a> &gt; <span class="el_source">Algorithm.java</span></div><h1>Algorithm.java</h1><pre class="source lang-java linenums">package Utils;
+import java.util.Arrays;
+import java.util.Comparator;
+
+/** Algorithm class is used for district delimitation (convex hull problem), we will try to implement the graham scan 
+ *  
+ * Update : way more complicated than firstly thought, will come back to it later
+ */ 
+<span class="nc" id="L9">public class Algorithm {</span>
+    public static void mergeSort(int[] arr, int left, int right ){
+<span class="nc bnc" id="L11" title="All 2 branches missed.">        if (left &gt;= right) {return;}</span>
+<span class="nc" id="L12">        int mid = (left + right) / 2;</span>
+        
+<span class="nc" id="L14">        mergeSort(arr, left, mid);</span>
+<span class="nc" id="L15">        mergeSort(arr, mid + 1, right);</span>
+<span class="nc" id="L16">        merge(arr, left, mid, right);</span>
+<span class="nc" id="L17">    }</span>
+
+    public static void merge(int[] arr, int left, int mid, int right){
+<span class="nc" id="L20">        int n1 = mid - left + 1;</span>
+<span class="nc" id="L21">        int n2 = right - mid;</span>
+<span class="nc" id="L22">        int[] L = new int[n1];</span>
+<span class="nc" id="L23">        int[] R = new int[n2];</span>
+<span class="nc" id="L24">        System.arraycopy(arr, left, L, 0, n1);</span>
+<span class="nc" id="L25">        System.arraycopy(arr, mid + 1, R, 0, n2);</span>
+<span class="nc" id="L26">        int i = 0, j = 0, k = left;</span>
+<span class="nc bnc" id="L27" title="All 4 branches missed.">        while (i &lt; n1 &amp;&amp; j &lt; n2) {</span>
+<span class="nc bnc" id="L28" title="All 2 branches missed.">            if (L[i] &lt;= R[j]) {</span>
+<span class="nc" id="L29">                arr[k++] = L[i++];</span>
+            } else {
+<span class="nc" id="L31">                arr[k++] = R[j++];</span>
+            }
+        }
+<span class="nc bnc" id="L34" title="All 2 branches missed.">        while (i &lt; n1) {</span>
+<span class="nc" id="L35">            arr[k++] = L[i++];</span>
+        }
+<span class="nc bnc" id="L37" title="All 2 branches missed.">        while (j &lt; n2) {</span>
+<span class="nc" id="L38">            arr[k++] = R[j++];</span>
+        }
+<span class="nc" id="L40">    }</span>
+
+    public static double[][] SortByIndex(int index, double[][] arr){
+<span class="nc" id="L43">        Arrays.sort(arr, new Comparator&lt;double[]&gt;() {</span>
+            @Override 
+            public int compare(double[] a, double[] b){
+<span class="nc" id="L46">                return (int) (a[index] - b[index]);</span>
+            }
+        });
+<span class="nc" id="L49">        return arr;</span>
+    }
+
+    // ccw is for counter clockwise
+    // returns int &gt; 0 if 
+    public static double ccw(Vec2 p1, Vec2 p2, Vec2 p3){
+<span class="nc" id="L55">        Line2 v12 = new Line2(p1, p2);</span>
+<span class="nc" id="L56">        Line2 v23 = new Line2(p2, p3);</span>
+
+<span class="nc" id="L58">        return Math.acos((dot(v12, v23)) / (v12.norm() * v23.norm()));</span>
+
+    }
+
+<span class="nc" id="L62">    public static void Graham_scan(Vec2[] points){}</span>
+
+    public static double dot(Line2 v1, Line2 v2){
+<span class="nc" id="L65">        return (v1.p2.x - v1.p1.x)*(v2.p2.x - v2.p1.x) + (v1.p2.y - v1.p1.y)*(v2.p2.y - v2.p1.y) ;</span>
+    }
+    public static int dot(Vec2 v1, Vec2 v2){
+<span class="nc" id="L68">        return 1;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

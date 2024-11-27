@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>User.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MaVille</a> &gt; <a href="index.source.html" class="el_package">Instances</a> &gt; <span class="el_source">User.java</span></div><h1>User.java</h1><pre class="source lang-java linenums">package Instances;
+
+import java.util.ArrayList;
+
+import Utils.Schedule;
+
+public class User {
+
+<span class="fc" id="L9">    public static enum Type {</span>
+<span class="fc" id="L10">        USER,</span>
+<span class="fc" id="L11">        RESIDENT,</span>
+<span class="fc" id="L12">        INTERVENANT,</span>
+<span class="fc" id="L13">        ADMIN,</span>
+
+<span class="fc" id="L15">        PLACEHOLER,</span>
+
+        // trust, this is relevant 
+        // used in the database.printall
+<span class="fc" id="L19">        PROJECT,</span>
+<span class="fc" id="L20">        IMPEDIMENT,</span>
+    }
+
+    // first name, last name, email, password
+    private String fname, lname, mail, pw;
+<span class="pc" id="L25">    public Type type = Type.USER;</span>
+    private ArrayList&lt;District&gt; subscriptions;
+    private ArrayList&lt;Notification&gt; notifications;
+<span class="pc" id="L28">    private Schedule schedule = new Schedule();</span>
+
+<span class="nc" id="L30">    public User(){}</span>
+
+
+    // case user = particulier (not part of an enterprise)
+<span class="fc" id="L34">    public User(String fname, String lname, String mail, String pw){</span>
+<span class="fc" id="L35">        this.fname = fname;</span>
+<span class="fc" id="L36">        this.lname = lname;</span>
+<span class="fc" id="L37">        this.mail = mail;</span>
+<span class="fc" id="L38">        this.pw = pw;</span>
+<span class="fc" id="L39">    }</span>
+
+    public void addToSubscriptions(District d){
+<span class="nc" id="L42">        this.subscriptions.add(d);</span>
+<span class="nc" id="L43">    }</span>
+
+    public void add_notification(Notification notif){
+<span class="nc" id="L46">        notifications.add(notif);</span>
+<span class="nc" id="L47">    }</span>
+
+    public void update_schedule(){
+<span class="nc" id="L50">        schedule.runCLI();</span>
+<span class="nc" id="L51">    }</span>
+
+    // getters
+<span class="fc" id="L54">    public String getLname() {return this.lname;}</span>
+<span class="fc" id="L55">    public String getMail() {return this.mail;}</span>
+<span class="fc" id="L56">    public String getPw() {return this.pw;}</span>
+<span class="fc" id="L57">    public String getFname() {return this.fname;}</span>
+<span class="nc" id="L58">    public ArrayList&lt;Notification&gt; getNotifications() {return notifications;}</span>
+<span class="nc" id="L59">    public ArrayList&lt;District&gt; getSubscriptions() {return subscriptions;}</span>
+<span class="nc" id="L60">    public Schedule getSchedule() {return schedule;}</span>
+
+    // setters
+<span class="fc" id="L63">    public void setLname(String lname) {this.lname = lname;}</span>
+<span class="nc" id="L64">    public void setMail(String mail) {this.mail = mail;}</span>
+<span class="nc" id="L65">    public void setPw(String pw) {this.pw = pw;}</span>
+<span class="fc" id="L66">    public void setFname(String fName) {this.fname = fName;}</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L70">        return fname + &quot; &quot; + lname + &quot; : &quot; + mail + &quot; , &quot; + &quot;*&quot;.repeat(pw.length());</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
