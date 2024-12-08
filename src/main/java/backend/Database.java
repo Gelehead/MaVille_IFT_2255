@@ -580,7 +580,8 @@ public class Database implements java.io.Serializable {
      * Initialise les arrondissements à partir d'un fichier GeoJSON.
      */
     private void init_districts(){
-        GeoJSON geoJSON = Parser.getgeojson(geoJSONfilePath);
+        // Modifier pour le jar (chemin relatif)
+        GeoJSON geoJSON = Parser.getgeojson("data/limites-administratives-agglomeration-nad83.geojson");
         for (Feature f : geoJSON.getFeatures()) {
             District d = new District(
                 toDistrict_name(f.getProperties().getNom()),

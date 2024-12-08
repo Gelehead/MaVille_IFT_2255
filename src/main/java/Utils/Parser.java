@@ -8,6 +8,7 @@ import java.io.FileReader;
 import UI_UX.Dialog;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -290,18 +291,18 @@ public class Parser {
         return content.toString();
     }
 
-    public static GeoJSON getgeojson(String filePath){
-        System.out.println(Language.fetching_districts(Dialog.choice_language));
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            // Replace with the actual path to your GeoJSON file
-            File geoJsonFile = new File(filePath);
-            GeoJSON geoJSON = mapper.readValue(geoJsonFile, GeoJSON.class);
-
-            return geoJSON;
-        } catch (Exception e) {
-            e.printStackTrace();
+    public static GeoJSON getgeojson(String filename) {
+    try {
+        // Utiliser le ClassLoader pour obtenir la ressource
+        InputStream inputStream = Parser.class.getClassLoader().getResourceAsStream(filename);
+        if (inputStream == null) {
+            throw new FileNotFoundException("Fichier non trouvé: " + filename);
         }
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(inputStream, GeoJSON.class);
+    } catch (Exception e) {
+        e.printStackTrace();
         return null;
     }
+}
 }

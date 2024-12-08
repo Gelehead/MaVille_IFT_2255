@@ -527,38 +527,42 @@ document.addEventListener('DOMContentLoaded', function () {
   // Fonction de connexion
 
   document.addEventListener('DOMContentLoaded', function() {
-    const loginForm = document.getElementById('login-form');
+      const loginForm = document.getElementById('login-form');
 
-    loginForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+      loginForm.addEventListener('submit', async function(e) {
+          e.preventDefault();
 
-        if (!email || !password) {
-            alert('Veuillez remplir tous les champs');
-            return;
-        }
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
 
-        try {
-            const response = await loginUser(email, password);
-            console.log('Connexion réussie:', response);
+          if (!email || !password) {
+              alert('Veuillez remplir tous les champs');
+              return;
+          }
 
-            if (response.message === "Connexion réussie !") {
-                // ENREGISTRER L'EMAIL DANS LE LOCALSTORAGE
-                localStorage.setItem('email', email);
+          try {
+              const response = await loginUser(email, password);
+              console.log('Connexion réussie:', response);
+              console.log('Type utilisateur:', response.userType);
 
-                // Redirection selon le type d'utilisateur
-                if (response.userType === "resident") {
-                    window.location.href = 'resident.html';
-                } else if (response.userType === "intervenant") {
-                    window.location.href = 'intervenant.html';
-                } else {
-                    window.location.href = 'index.html';
-                }
-            }
-        } catch (error) {
-            alert(error.message || 'Erreur lors de la connexion');
-        }
-    });
-});
+              if (response.message === "Connexion réussie !") {
+                  console.log('Tentative de redirection...');
+                  localStorage.setItem('email', email);
+
+                  if (response.userType === "resident") {
+                      console.log('Redirection vers resident.html');
+                      window.location.href = 'resident.html';
+                  } else if (response.userType === "intervenant") {
+                      console.log('Redirection vers intervenant.html');
+                      window.location.href = 'intervenant.html';
+                  } else {
+                      console.log('Redirection vers index.html');
+                      window.location.href = '/index.html';
+                  }
+              }
+          } catch (error) {
+              console.error('Erreur:', error);
+              alert(error.message || 'Erreur lors de la connexion');
+          }
+      });
+  });

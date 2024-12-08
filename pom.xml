@@ -57,9 +57,15 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
-                    <include>**/*.geojson</include>
+                    <include>**/*</include>
                 </includes>
             </resource>
+            <resource>
+            <directory>resources/data</directory>
+            <includes>
+                <include>**/*.geojson</include>
+            </includes>
+        </resource>
         </resources>
         <plugins>
             <plugin>

@@ -49,7 +49,7 @@ public class App {
             });
         }).start(3000);
 
-        System.out.println("Server started on port 3000");
+        System.out.println("Server started on port 3000 , Accéder au site MaVille visiter : http://localhost:3000");
 
         /**
          * GET /api/test
