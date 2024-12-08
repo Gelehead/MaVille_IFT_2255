@@ -1,4 +1,5 @@
 package UI_UX;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -14,8 +15,13 @@ import Utils.Schedule;
 import Utils.Parser.Impediment;
 import backend.Database;
 import backend.Database.District_name;
-import metrics.Date; 
+import metrics.Date;
 
+/**
+ * La classe {@code Speaker} fournit des méthodes pour interagir avec l'utilisateur via la console.
+ * Elle permet de poser des questions, de valider des emails et des mots de passe, et de gérer
+ * les états de dialogue dans une application.
+ */
 public class Speaker {
     private static final Scanner s = new Scanner(System.in);
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" +
@@ -28,7 +34,12 @@ public class Speaker {
     "(?=\\S+$).{8,}$";       // no whitespace, at least 8 characters
     private static final Pattern pattern = Pattern.compile(PASSWORD_REGEX);
 
-    // prints in the command line the question and returns as a string the answer of the user
+    /**
+     * Affiche une question dans la console et retourne la réponse de l'utilisateur.
+     *
+     * @param question La question à poser à l'utilisateur.
+     * @return La réponse de l'utilisateur sous forme de chaîne de caractères.
+     */
     public static String ask(String question){
         System.out.println(question);
         String answer = s.nextLine();
@@ -36,10 +47,21 @@ public class Speaker {
         return answer;
     }
 
+    /**
+     * Retourne la réponse de l'utilisateur sans poser de question.
+     *
+     * @return La réponse de l'utilisateur sous forme de chaîne de caractères.
+     */
     public static String ask(){
         return s.nextLine();
     }
 
+    /**
+     * Affiche une question dans la console sans retour à la ligne et retourne la réponse de l'utilisateur.
+     *
+     * @param question La question à poser à l'utilisateur.
+     * @return La réponse de l'utilisateur sous forme de chaîne de caractères.
+     */
     public static String ask_inline(String question){
         System.out.print(question);
         String a = s.next();
@@ -47,6 +69,9 @@ public class Speaker {
         return a;
     }
 
+    /**
+     * Affiche un message de bienvenue dans la console.
+     */
     public static void welcome(){
         String introduction = 
         """ 
@@ -64,17 +89,22 @@ public class Speaker {
         System.out.println(introduction);
     }
 
-    // STATE is part of an enum list
-    // must return the next state after asking which way the user wants to go
+    /**
+     * Gère le menu principal et les transitions d'état en fonction des réponses de l'utilisateur.
+     *
+     * @param STATE L'état actuel du dialogue.
+     * @param database La base de données utilisée pour vérifier les informations de l'utilisateur.
+     * @return Le prochain état du dialogue.
+     */
     public static Dialog.STATE menu(Dialog.STATE STATE, Database database){
         switch (STATE) {
             case INITIAL: 
                 String a = ask(Language.Qinitial(Dialog.choice_language));
                 switch (a) {
                     case "1":
-                        return Dialog.STATE.REGISTER;
-                    case "2":
                         return Dialog.STATE.LOGIN;
+                    case "2":
+                        return Dialog.STATE.REGISTER;
                     case "3":
                         System.out.println("You are an admin");
                         return Dialog.STATE.MAIN_ADMIN;
@@ -248,7 +278,7 @@ public class Speaker {
                             }
                         }
                         if (none2) {System.out.println(Language.no_project_found(Dialog.choice_language));}
-                
+                        break;
                     case "3":
                         Progress chosen_progress = Project.parse_progressMenu(ask(Language.progressMenu(Dialog.choice_language)));
                         boolean none3 = true;
@@ -259,7 +289,7 @@ public class Speaker {
                             }
                         }
                         if (none3) {System.out.println(Language.no_project_found(Dialog.choice_language));}
-                
+                        break;
                     case "4" : 
                         District chosen_district = database.getDistrict(District.handleDistrictChoice(Language.request_district(Dialog.choice_language)));
                         boolean none4 = true;
@@ -269,7 +299,8 @@ public class Speaker {
                                 none4 = false;
                             }
                         }
-                        if (none4) {System.out.println(Language.no_project_found(Dialog.choice_language));}
+                    if (none4) {System.out.println(Language.no_project_found(Dialog.choice_language));}
+                    break;
                     default:
                         throw new IllegalArgumentException("Invalid choice: " + query);
                 }
@@ -503,6 +534,11 @@ public class Speaker {
         }
     }
 
+    /**
+     * Collecte les noms de rues entrés par l'utilisateur.
+     *
+     * @return Un tableau de chaînes de caractères contenant les noms de rues.
+     */
     public static String[] collectStreetNames() {
         ArrayList<String> streetNames = new ArrayList<>();
 

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notifier les Résidents</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-light">
+  <header class="text-center py-4 bg-primary text-white shadow">
+    <h1>Notifier les Résidents</h1>
+    <p>Envoyez des notifications à un district spécifique</p>
+  </header>
+
+  <div class="container mt-3">
+    <button onclick="window.history.back();" class="btn btn-outline-secondary mb-4">
+      <i class="bi bi-arrow-left"></i> Retour
+    </button>
+  </div>
+
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Envoyer une Notification</h2>
+    <form id="send-notification-form" class="bg-white p-4 rounded shadow-sm">
+      <div class="mb-3">
+        <label for="district-select" class="form-label fw-bold">District</label>
+        <select class="form-select" id="district-select" required>
+            <option value="">Sélectionnez un district</option>
+            <option value="LaSalle">LaSalle</option>
+            <option value="Dollard-des-Ormeaux">Dollard des Ormeaux</option>
+            <option value="Côte-Saint-Luc">Côte Saint-Luc</option>
+            <option value="Villeray-Saint-Michel-Parc-Extension">Villeray Saint-Michel Parc Extension</option>
+            <option value="Rosemont-La Petite-Patrie">Rosemont La Petite Patrie</option>
+            <option value="Hampstead">Hampstead</option>
+            <option value="Senneville">Senneville</option>
+            <option value="Le Plateau-Mont-Royal">Le Plateau Mont-Royal</option>
+            <option value="Sainte-Anne-de-Bellevue">Sainte-Anne-de-Bellevue</option>
+            <option value="Montréal-Ouest">Montréal Ouest</option>
+            <option value="Côte-des-Neiges-Notre-Dame-de-Grâce">Côte des Neiges Notre-Dame de Grâce</option>
+            <option value="L'Île-Bizard-Sainte-Geneviève">L'Île-Bizard-Sainte-Geneviève</option>
+            <option value="Beaconsfield">Beaconsfield</option>
+            <option value="Anjou">Anjou</option>
+            <option value="Verdun">Verdun</option>
+            <option value="Le Sud-Ouest">Le Sud-Ouest</option>
+            <option value="Mercier-Hochelaga-Maisonneuve">Mercier Hochelaga-Maisonneuve</option>
+            <option value="Montréal-Est">Montréal-Est</option>
+            <option value="Lachine">Lachine</option>
+            <option value="Saint-Léonard">Saint-Léonard</option>
+            <option value="Montréal-Nord">Montréal-Nord</option>
+            <option value="Outremont">Outremont</option>
+            <option value="L'Île-Dorval">L'Île-Dorval</option>
+            <option value="Mont-Royal">Mont-Royal</option>
+            <option value="Pointe-Claire">Pointe-Claire</option>
+            <option value="Dorval">Dorval</option>
+            <option value="Pierrefonds-Roxboro">Pierrefonds-Roxboro</option>
+            <option value="Rivière-des-Prairies-Pointe-aux-Trembles">Rivière-des-Prairies-Pointe-aux-Trembles</option>
+            <option value="Ahuntsic-Cartierville">Ahuntsic-Cartierville</option>
+            <option value="Saint-Laurent">Saint-Laurent</option>
+            <option value="Ville-Marie">Ville-Marie</option>
+            <option value="Kirkland">Kirkland</option>
+            <option value="Baie-D'Urfé">Baie-D'Urfé</option>
+            <option value="Westmount">Westmount</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="notification-message" class="form-label fw-bold">Message</label>
+        <textarea class="form-control" id="notification-message" rows="3" placeholder="Entrez le message à envoyer" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Envoyer</button>
+    </form>
+  </div>
+
+  <footer class="text-center py-3 bg-secondary text-white mt-5">
+    <p>© 2024 MaVille. Tous droits réservés.</p>
+  </footer>
+
+  <script>
+    document.getElementById('send-notification-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const district = document.getElementById('district-select').value;
+      const message = document.getElementById('notification-message').value.trim();
+
+      if (!district || !message) {
+        alert('Tous les champs sont obligatoires.');
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:3000/api/notifications', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ district, message })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || 'Erreur lors de l\'envoi de la notification.');
+        }
+
+        alert('Notification envoyée avec succès !');
+        document.getElementById('send-notification-form').reset();
+      } catch (error) {
+        alert(error.message || 'Erreur lors de l\'envoi de la notification.');
+      }
+    });
+  </script>
+</body>
+</html>

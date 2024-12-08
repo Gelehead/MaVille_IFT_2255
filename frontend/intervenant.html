@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accueil Intervenant - MaVille</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-light">
+  <header class="text-center py-4 bg-primary text-white shadow">
+    <h1>Accueil Intervenant</h1>
+    <p>Gérez vos requêtes, projets, et notifications.</p>
+  </header>
+
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Bienvenue, Intervenant</h2>
+    <div class="row gy-4">
+      <!-- Requêtes disponibles -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm">
+          <div class="card-body text-center">
+            <h5 class="card-title">Requêtes Disponibles</h5>
+            <p class="card-text">Consulter les requêtes de travail disponibles.</p>
+            <a href="requests_intervenant.html" class="btn btn-primary">Accéder</a>
+          </div>
+        </div>
+      </div>
+      <!-- Projets -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm">
+          <div class="card-body text-center">
+            <h5 class="card-title">Projets</h5>
+            <p class="card-text">Consulter les projets en cours et à venir.</p>
+            <a href="projects.html" class="btn btn-primary">Accéder</a>
+          </div>
+        </div>
+      </div>
+      <!-- Entraves -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm">
+          <div class="card-body text-center">
+            <h5 class="card-title">Entraves</h5>
+            <p class="card-text">Consulter les entraves liées aux projets.</p>
+            <a href="entraves.html" class="btn btn-primary">Accéder</a>
+          </div>
+        </div>
+      </div>
+      <!-- Soumettre un projet -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm">
+          <div class="card-body text-center">
+            <h5 class="card-title">Soumettre un Projet</h5>
+            <p class="card-text">Proposez un nouveau projet pour votre quartier.</p>
+            <a href="submit_project.html" class="btn btn-primary">Accéder</a>
+          </div>
+        </div>
+      </div>
+      <!-- Modifier un projet -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm">
+          <div class="card-body text-center">
+            <h5 class="card-title">Modifier un Projet</h5>
+            <p class="card-text">Mettre à jour le statut des projets en cours.</p>
+            <a href="update_project.html" class="btn btn-primary">Accéder</a>
+          </div>
+        </div>
+      </div>
+      <!-- Envoyer une notification -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm">
+          <div class="card-body text-center">
+            <h5 class="card-title">Notifier les Résidents</h5>
+            <p class="card-text">Envoyer des notifications aux résidents.</p>
+            <a href="notifications_intervenant.html" class="btn btn-primary">Accéder</a>
+          </div>
+        </div>
+      </div>
+      <!-- Déconnexion -->
+      <div class="col-12">
+        <button id="logout-btn" class="btn btn-danger w-100 mt-3">Déconnexion</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-center py-3 bg-secondary text-white mt-5 w-100">
+    <p>© 2024 MaVille. Tous droits réservés.</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

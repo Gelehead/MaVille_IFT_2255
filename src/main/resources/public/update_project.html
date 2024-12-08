@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mettre à jour un Projet</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-light">
+  <header class="text-center py-4 bg-primary text-white shadow">
+    <h1>Mettre à jour un Projet</h1>
+    <p>Modifier le statut d’un projet existant</p>
+  </header>
+
+  <div class="container mt-3">
+    <button onclick="window.history.back();" class="btn btn-outline-secondary mb-4">
+      <i class="bi bi-arrow-left"></i> Retour
+    </button>
+  </div>
+
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Mettre à Jour le Statut</h2>
+    <form id="update-project-form" class="bg-white p-4 rounded shadow-sm">
+      <!-- Sélectionnez un projet -->
+      <div class="mb-3">
+        <label for="project-select" class="form-label fw-bold">Sélectionner un Projet</label>
+        <select id="project-select" class="form-select" required>
+          <!-- Les projets seront ajoutés dynamiquement via JavaScript -->
+        </select>
+      </div>
+
+      <!-- Champ pour l'email de l'intervenant -->
+      <div class="mb-3">
+        <label for="emailIntervenant" class="form-label fw-bold">Email Intervenant</label>
+        <input type="email" class="form-control" id="emailIntervenant" placeholder="Entrez votre email" required>
+      </div>
+
+      <!-- Sélectionnez le nouveau statut -->
+      <div class="mb-3">
+        <label for="new-status" class="form-label fw-bold">Nouveau Statut</label>
+        <select id="new-status" class="form-select" required>
+          <option value="">Sélectionnez un statut</option>
+          <option value="PLANNED">Prévu</option>
+          <option value="IN_PROGRESS">En cours</option>
+          <option value="FINISHED">Terminé</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">Mettre à Jour</button>
+    </form>
+  </div>
+
+  <footer class="text-center py-3 bg-secondary text-white mt-5">
+    <p>© 2024 MaVille. Tous droits réservés.</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const projectSelect = document.getElementById("project-select");
+
+      try {
+        // Récupérer la liste des projets
+        const response = await fetch("http://localhost:3000/api/projects", {
+          method: "GET",
+          credentials: "include",
+        });
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Erreur lors de la récupération des projets.");
+        }
+
+        // Ajouter les projets dans la liste déroulante
+        const projects = data.projects;
+        if (projects && projects.length > 0) {
+          projects.forEach((project) => {
+            const option = document.createElement("option");
+            option.value = project.id; // Utilisez l'ID du projet
+            option.textContent = `${project.title} (Statut: ${project.status})`;
+            projectSelect.appendChild(option);
+          });
+        } else {
+          projectSelect.innerHTML = "<option value=''>Aucun projet disponible</option>";
+        }
+      } catch (error) {
+        alert(error.message || "Erreur lors du chargement des projets.");
+      }
+    });
+
+    // Gestion du formulaire de mise à jour
+    document.getElementById("update-project-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const projectId = document.getElementById("project-select").value;
+      const emailIntervenant = document.getElementById("emailIntervenant").value.trim();
+      const newStatus = document.getElementById("new-status").value;
+
+      if (!projectId || !emailIntervenant || !newStatus) {
+        alert("Tous les champs sont obligatoires.");
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:3000/api/projects/${projectId}/status`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ emailIntervenant, newStatus }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Erreur lors de la mise à jour du projet.");
+        }
+
+        alert("Statut mis à jour avec succès !");
+        document.getElementById("update-project-form").reset();
+      } catch (error) {
+        alert(error.message || "Erreur lors de la mise à jour.");
+      }
+    });
+  </script>
+</body>
+</html>

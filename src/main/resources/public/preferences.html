@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modifier les préférences horaires</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="text-center py-4 bg-primary text-white shadow">
+    <h1>Modifier les Préférences</h1>
+    <p>Gérez vos disponibilités hebdomadaires</p>
+  </header>
+
+  <div class="container mt-3">
+    <button onclick="window.history.back();" class="btn btn-outline-secondary">
+      <i class="bi bi-arrow-left"></i> Retour 
+    </button>
+  </div>
+  <div class="container mt-5">
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Mes Préférences Horaires</h2>
+    <form id="preferences-form" class="bg-white p-4 rounded shadow-sm">
+      <div class="mb-3">
+          <label for="email" class="form-label fw-bold">Email</label>
+          <input type="email" class="form-control" id="email" placeholder="Entrez votre email" required>
+      </div>
+      <div class="row">
+          <div class="col-md-6 mb-3">
+              <label for="day" class="form-label fw-bold">Jour</label>
+              <select class="form-select" id="day" required>
+                  <option value="0">Lundi</option>
+                  <option value="1">Mardi</option>
+                  <option value="2">Mercredi</option>
+                  <option value="3">Jeudi</option>
+                  <option value="4">Vendredi</option>
+                  <option value="5">Samedi</option>
+                  <option value="6">Dimanche</option>
+              </select>
+          </div>
+          <div class="col-md-6 mb-3">
+              <label for="start-time" class="form-label fw-bold">Heure de début</label>
+              <input type="time" id="start-time" class="form-control" required>
+          </div>
+          <div class="col-md-6 mb-3">
+              <label for="end-time" class="form-label fw-bold">Heure de fin</label>
+              <input type="time" id="end-time" class="form-control" required>
+          </div>
+      </div>
+      <div class="mb-3">
+          <label class="form-label fw-bold">Statut</label>
+          <div class="d-flex justify-content-around">
+              <label class="form-check-label">
+                  <input type="radio" name="status" value="###" class="form-check-input" required> Occupé
+              </label>
+              <label class="form-check-label">
+                  <input type="radio" name="status" value="---" class="form-check-input" required> Libre
+              </label>
+          </div>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Mettre à jour</button>
+  </form>
+  
+  </div>
+
+  <footer class="text-center py-3 bg-secondary text-white mt-5">
+    <p>© 2024 MaVille. Tous droits réservés.</p>
+  </footer>
+</body>
+</html>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html> 

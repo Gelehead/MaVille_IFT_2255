@@ -1,18 +1,59 @@
 package Instances;
+
 import Utils.GeoJSON.Geometry;
 import backend.Database.District_name;
+
+/**
+ * Classe représentant un district.
+ *
+ * Contient toutes les informations du district issues du GeoJSON, telles que le nom, la géométrie, le code MAMH,
+ * le type, le code ID et le code 3C.
+ */
 public class District {
+    /**
+     * Le nom du district.
+     */
     District_name name;
+    
+    /**
+     * La géométrie du district.
+     */
     Geometry geometry;
-    String mamh, type, code3c;
+    
+    /**
+     * Le code MAMH du district.
+     */
+    String mamh;
+    
+    /**
+     * Le type du district.
+     */
+    String type;
+    
+    /**
+     * Le code 3C du district.
+     */
+    String code3c;
+    
+    /**
+     * Le code ID du district.
+     */
     int codeId;
 
-    // placeholder, should contain all informationo from the GeoJSON
+    /**
+     * Constructeur de la classe District.
+     *
+     * @param name      Le nom du district.
+     * @param geometry  La géométrie du district.
+     * @param mamh      Le code MAMH du district.
+     * @param type      Le type du district.
+     * @param codeId    Le code ID du district.
+     * @param code3c    Le code 3C du district.
+     */
     public District(
         District_name name, Geometry geometry, String mamh,
         String type, int codeId, String code3c
-    )
-    {
+    ) {
         this.name = name;
         this.geometry = geometry;
         this.mamh = mamh;
@@ -21,10 +62,24 @@ public class District {
         this.codeId = codeId;
     }
 
+    /**
+     * Vérifie si un point donné est contenu dans la géométrie du district.
+     *
+     * @param latitude    La latitude du point.
+     * @param longitude   La longitude du point.
+     * @return true si le point est contenu dans le district, false sinon.
+     */
     public boolean containsPoint(double latitude, double longitude) {
         return this.geometry.contains(latitude, longitude);
     }
 
+    /**
+     * Gère le choix du district en fonction de l'entrée de l'utilisateur.
+     *
+     * @param choice_district Le choix du district sous forme de chaîne.
+     * @return Le nom du district correspondant.
+     * @throws IllegalArgumentException Si le choix du district est invalide.
+     */
     public static District_name handleDistrictChoice(String choice_district) {
         switch (choice_district) {
             case "1":
@@ -100,37 +155,75 @@ public class District {
         }
     }
 
+    /**
+     * Retourne une représentation sous forme de chaîne du district.
+     *
+     * @return Une chaîne contenant les informations du district.
+     */
     @Override
     public String toString() {
         return name + "\n"
-        + "type : " + type + "\n"
-        + "mamh : " + mamh + "\n"
-        + "code3C : " + code3c + "\n"
-        + "code ID : " + codeId + "\n";
+            + "type : " + type + "\n"
+            + "mamh : " + mamh + "\n"
+            + "code3C : " + code3c + "\n"
+            + "code ID : " + codeId + "\n";
     }
 
-    //getters 
+    // Getters 
+
+    /**
+     * Obtient la géométrie du district.
+     *
+     * @return La géométrie du district.
+     */
     public Geometry getGeometry() {
         return geometry;
     }
+
+    /**
+     * Obtient le code MAMH du district.
+     *
+     * @return Le code MAMH du district.
+     */
     public String getMamh() {
         return mamh;
     }
+
+    /**
+     * Obtient le nom du district.
+     *
+     * @return Le nom du district.
+     */
     public District_name getName() {
         return name;
     }
 
+    // Setters 
 
-    // setters 
+    /**
+     * Définit la géométrie du district.
+     *
+     * @param geometry La nouvelle géométrie du district.
+     */
     public void setGeometry(Geometry geometry) {
         this.geometry = geometry;
     }
+
+    /**
+     * Définit le code MAMH du district.
+     *
+     * @param mamh Le nouveau code MAMH du district.
+     */
     public void setMamh(String mamh) {
         this.mamh = mamh;
     }
+
+    /**
+     * Définit le nom du district.
+     *
+     * @param name Le nouveau nom du district.
+     */
     public void setName(District_name name) {
         this.name = name;
     }
-    
-
 }

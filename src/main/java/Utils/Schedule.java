@@ -110,4 +110,55 @@ public class Schedule {
             System.out.println();
         }
     }
+
+
+    //  pour le serveur frontend 
+    // Méthode pour mettre à jour les créneaux horaires avec HH:mm
+    public boolean updateSlot(int dayIndex, String startTime, String endTime, String status) {
+        String[] times = {"08:30", "09:30", "10:30", "11:30", "12:30", "13:30", 
+                          "14:30", "15:30", "16:30", "17:30", "18:30", "19:30", 
+                          "20:30", "21:30", "22:30"};
+        int startIndex = -1, endIndex = -1;
+        for (int i = 0; i < times.length; i++) {
+            if (startIndex == -1 && times[i].compareTo(startTime) >= 0) {
+                startIndex = i;
+            }
+            if (times[i].compareTo(endTime) <= 0) {
+                endIndex = i;
+            }
+        }
+    
+        if (startIndex == -1 || endIndex == -1 || startIndex > endIndex) {
+            throw new IllegalArgumentException("L'heure de début doit être avant l'heure de fin.");
+        }
+    
+        for (int i = startIndex; i <= endIndex; i++) {
+            schedule[dayIndex][i] = status;
+        }
+    
+        return true;
+    }
+    
+    
+
+    private String[] days = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
+
+    // getters setters
+
+    public String[][] getSchedule() {
+        return schedule;
+    }
+    
+    public void setSchedule(String[][] schedule) {
+        this.schedule = schedule;
+    }
+    
+    public String[] getDays() {
+        return days;
+    }
+    
+    public void setDays(String[] days) {
+        this.days = days;
+    }
+
 }

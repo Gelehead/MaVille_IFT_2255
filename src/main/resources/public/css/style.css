@@ -1,0 +1,107 @@
+/* Général */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+  }
+  
+  h1, h2, p {
+    margin: 0;
+  }
+  
+  header {
+    background: linear-gradient(to right, #007bff, #0056b3);
+  }
+  
+  header h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  
+  header p {
+    font-size: 1.2rem;
+  }
+  
+  /* Boutons */
+  .btn-primary {
+    background: #0056b3;
+    border-color: #0056b3;
+  }
+  
+  .btn-primary:hover {
+    background: #003f88;
+    border-color: #003f88;
+  }
+  
+  .btn-outline-primary {
+    color: #0056b3;
+    border-color: #0056b3;
+  }
+  
+  .btn-outline-primary:hover {
+    background: #0056b3;
+    color: #fff;
+  }
+  
+  /* Footer */
+  footer {
+    background: #333;
+    color: #fff;
+    font-size: 0.9rem;
+  }
+  
+  footer p {
+    margin: 0;
+  }
+  
+  /* Conteneur principal */
+  main {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card {
+    border-radius: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    color: #0056b3;
+  }
+  
+  .card-text {
+    color: #666;
+  }
+
+  /* Notifications */
+#notifications-list {
+    margin-top: 1.5rem;
+  }
+  
+  .notification-item {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .notification-item h5 {
+    color: #0056b3;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .notification-item p {
+    color: #495057;
+  }
+  

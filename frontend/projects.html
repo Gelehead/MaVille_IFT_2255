@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projets</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-light">
+  <header class="text-center py-4 bg-primary text-white shadow">
+    <h1>Projets</h1>
+    <p>Consultez les projets en cours et à venir dans votre quartier</p>
+  </header>
+
+  <div class="container mt-3">
+    <button onclick="window.history.back();" class="btn btn-outline-secondary mb-4">
+      <i class="bi bi-arrow-left"></i> Retour
+    </button>
+  </div>
+
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Consulter les Projets</h2>
+
+    <div class="bg-white p-4 rounded shadow-sm">
+      <button id="current-btn" class="btn btn-primary w-100 mb-3">Projets en cours</button>
+      <button id="upcoming-btn" class="btn btn-secondary w-100 mb-3">Projets à venir (3 mois)</button>
+
+      <div class="mb-3">
+        <label for="district-select" class="form-label fw-bold">Choisissez un district :</label>
+        <select id="district-select" class="form-select">
+          <option value="" selected>-- Sélectionnez un district --</option>
+          <option value="LaSalle">LaSalle</option>
+          <option value="Dollard_des_Ormeaux">Dollard_des_Ormeaux</option>
+          <option value="Côte_Saint_Luc">Côte_Saint_Luc</option>
+          <option value="Villeray_Saint_Michel_Parc_Extension">Villeray_Saint_Michel_Parc_Extension</option>
+          <option value="Rosemont_La_Petite_Patrie">Rosemont_La_Petite_Patrie</option>
+          <option value="Hampstead">Hampstead</option>
+          <option value="Senneville">Senneville</option>
+          <option value="Le_Plateau_Mont_Royal">Le_Plateau_Mont_Royal</option>
+          <option value="Sainte_Anne_de_Bellevue">Sainte_Anne_de_Bellevue</option>
+          <option value="Montreal_Ouest">Montreal_Ouest</option>
+          <option value="Cote_des_Neiges_Notre_Dame_de_Grace">Cote_des_Neiges_Notre_Dame_de_Grace</option>
+          <option value="Ile_Bizard_Sainte_Genevieve">Ile_Bizard_Sainte_Genevieve</option>
+          <option value="Beaconsfield">Beaconsfield</option>
+          <option value="Anjou">Anjou</option>
+          <option value="Verdun">Verdun</option>
+          <option value="Le_Sud_Ouest">Le_Sud_Ouest</option>
+          <option value="Mercier_Hochelaga_Maisonneuve">Mercier_Hochelaga_Maisonneuve</option>
+          <option value="Montreal_Est">Montreal_Est</option>
+          <option value="Lachine">Lachine</option>
+          <option value="Saint_Leonard">Saint_Leonard</option>
+          <option value="Montreal_Nord">Montreal_Nord</option>
+          <option value="Outremont">Outremont</option>
+          <option value="Ile_Dorval">Ile_Dorval</option>
+          <option value="Mont_Royal">Mont_Royal</option>
+          <option value="Pointe_Claire">Pointe_Claire</option>
+          <option value="Dorval">Dorval</option>
+          <option value="Pierrefonds_Roxboro">Pierrefonds_Roxboro</option>
+          <option value="Riviere_des_Prairies_Pointe_aux_Trembl">Riviere_des_Prairies_Pointe_aux_Trembl</option>
+          <option value="Ahuntsic_Cartierville">Ahuntsic_Cartierville</option>
+          <option value="Saint_Laurent">Saint_Laurent</option>
+          <option value="Ville_Marie">Ville_Marie</option>
+          <option value="Kirkland">Kirkland</option>
+          <option value="Baie_D_Urfe">Baie_D_Urfe</option>
+          <option value="Westmount">Westmount</option>
+        </select>
+        <button id="filter-btn" class="btn btn-outline-primary w-100 mt-3">Filtrer par district</button>
+      </div>
+    </div>
+
+    <div id="projects-list" class="mt-4"></div>
+  </div>
+
+  <footer class="text-center py-3 bg-secondary text-white mt-5">
+    <p>© 2024 MaVille. Tous droits réservés.</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

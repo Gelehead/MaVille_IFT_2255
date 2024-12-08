@@ -3,6 +3,11 @@ import Utils.*;
 import Utils.Language.language;
 import backend.Database;
 
+
+/*
+ * La classe est la classe principale qui interagit avec la base de données et la classe speaker
+ * 
+ */
 //Dialog class is the main discussion class, interacts with the database and speaker class,
 public class Dialog {
 
@@ -45,6 +50,9 @@ public class Dialog {
 
     /* ------------------------ Graphic part ------------------------ */
 
+    /*
+     * La méthode init() est la méthode principale qui initialise le programme
+     */
     public static void init(){
         Speaker.welcome();
 
