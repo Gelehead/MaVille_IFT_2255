@@ -111,36 +111,23 @@ public class GeoJSON {
 
     public static class Geometry {
         private String type;
-        private List<List<List<List<Double>>>> coordinates;
+        private List<List<Double>> coordinates;
 
         public String getType() { return type; }
         public void setType(String type) { this.type = type; }
 
-        public List<List<List<List<Double>>>> getCoordinates() { return coordinates; }
-        public void setCoordinates(List<List<List<List<Double>>>> coordinates) {
+        public List<List<Double>> getCoordinates() { return coordinates; }
+        public void setCoordinates(List<List<Double>> coordinates) {
             this.coordinates = coordinates;
         }
 
         public boolean contains(double latitude, double longitude) {
-            // Outer boundary is the first ring of the first feature
-            List<List<Double>> outerBoundary = coordinates.get(0).get(0);
-            if (!isPointInPolygon(latitude, longitude, outerBoundary)) {
-                return false; // Point is outside the outer boundary
-            }
-
-            // Check inner boundaries (holes)
-            for (int i = 1; i < coordinates.get(0).size(); i++) {
-                List<List<Double>> innerBoundary = coordinates.get(0).get(i);
-                if (isPointInPolygon(latitude, longitude, innerBoundary)) {
-                    return false; // Point is inside a hole
-                }
-            }
-
-            return true;
+            return isPointInPolygon(latitude, longitude, coordinates); 
         }
 
         /**
          * Determines if a point is within a polygon using the ray-casting algorithm.
+         * Note : rejects edge ( on the line ) cases
          *
          * @param latitude  The latitude of the point.
          * @param longitude The longitude of the point.
@@ -150,22 +137,33 @@ public class GeoJSON {
         private boolean isPointInPolygon(double latitude, double longitude, List<List<Double>> polygon) {
             boolean inside = false;
             int n = polygon.size();
+            double x = longitude, y = latitude; 
 
-            for (int i = 0, j = n - 1; i < n; j = i++) {
-                double xi = polygon.get(i).get(1); // Latitude of vertex i
-                double yi = polygon.get(i).get(0); // Longitude of vertex i
-                double xj = polygon.get(j).get(1); // Latitude of vertex j
-                double yj = polygon.get(j).get(0); // Longitude of vertex j
+            List<Double> p0 = polygon.get(0);
 
-                // Check if point is within the boundary of the edge
-                boolean intersect = ((yi > longitude) != (yj > longitude)) &&
-                        (latitude < (xj - xi) * (longitude - yi) / (yj - yi) + xi);
-                if (intersect) {
-                    inside = !inside;
+            for (int i = 0; i < n; i++) {
+                List<Double> p1 = polygon.get(i);
+
+                // if y < min(p1.y, p0.y)
+                if (y > (p1.get(1) > p0.get(1) ? p1.get(1) : p0.get(0))){
+                    // if y > max(p1.y, p0.y)
+                    if ( y < (p1.get(1) > p0.get(1) ? p0.get(1) : p1.get(0))){
+                        // if x <= max(p1.x, p0.x)
+                        if ( x <= (p1.get(0) > p0.get(0) ? p1.get(0) : p0.get(0) )){
+                            Double x_intersection = (y - p0.get(1) * (p1.get(0) - p0.get(0)) / (p1.get(1) - p0.get(1)) + p0.get(0));
+                            
+                            if ( p0.get(0) == p1.get(0) || x <= x_intersection) { inside = !inside;}
+                        }
+                    }
                 }
             }
 
             return inside;
+        }
+
+        @Override
+        public String toString() {
+            return coordinates.toString();
         }
     }
 }

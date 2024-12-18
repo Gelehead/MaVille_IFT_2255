@@ -583,6 +583,7 @@ public class Database implements java.io.Serializable {
         // Modifier pour le jar (chemin relatif)
         GeoJSON geoJSON = Parser.getgeojson("data/limites-administratives-agglomeration-nad83.geojson");
         for (Feature f : geoJSON.getFeatures()) {
+            System.out.println(f.getGeometry());
             District d = new District(
                 toDistrict_name(f.getProperties().getNom()),
                 f.getGeometry(),
@@ -614,17 +615,23 @@ public class Database implements java.io.Serializable {
         }
     }
 
+<<<<<<< Updated upstream
     /**
      * Récupère l'arrondissement correspondant à une adresse donnée.
      * @param address L'adresse à rechercher.
      * @return L'arrondissement correspondant ou null si non trouvé.
      */
+=======
+    // TODO: find correct adress format
+>>>>>>> Stashed changes
     public static District getDistrict(String address) {
         try {
             // Get the coordinates of the address
             double[] coordinates = Geocoding.getCoordinates(address);
             double latitude = coordinates[0];
             double longitude = coordinates[1];
+
+            System.out.println(latitude);
 
             // Iterate through all districts in the database to check which district contains the point
             for (District d : districtHashtable.values()) {

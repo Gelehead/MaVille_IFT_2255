@@ -103,17 +103,6 @@ public class Language {
         }        
     }
 
-    public static String enter_adress(language language){
-        switch (language) {
-            case FRENCH:
-                return "Entrez une addresse";
-            case ENGLISH : 
-                return "Please enter an adress";
-            default:
-                return "";
-        } 
-    }
-
     public static String project_title(language language){
         switch (language) {
             case FRENCH:
@@ -717,7 +706,7 @@ public class Language {
 
     public static String Qaddress(language language){
         switch (language) {
-            case FRENCH: return "Quel est votre adresse?";
+            case FRENCH: return "Quel est votre adresse? (123 john street, City, Country)";
             case ENGLISH: return "What's your address?";
             default: return "";
         }

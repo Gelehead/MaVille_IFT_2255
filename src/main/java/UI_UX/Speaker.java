@@ -164,14 +164,12 @@ public class Speaker {
                         resident.setMail(mail);
                         resident.setPw(pw);
 
-                        resident.setDistrict(null);
                         resident.setAddress(address);
+                        resident.setDistrict(Database.getDistrict(address).getName());
                         resident.setBirthDay(birthDay);
 
                         database.addResident(resident);
                         database.setActiveUser(resident);
-
-                        System.out.println("alskca");
 
                         return Dialog.STATE.MAIN_RESIDENT;
                     case INTERVENANT:
@@ -514,7 +512,7 @@ public class Speaker {
                             System.out.println(i.toString());
                         }
                     case "7" : 
-                        String sDistrict = ask_inline(Language.enter_adress(Dialog.choice_language)); 
+                        String sDistrict = ask_inline(Language.Qaddress(Dialog.choice_language)); 
                         System.out.println(Database.getDistrict(sDistrict));
 
 
