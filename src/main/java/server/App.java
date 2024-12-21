@@ -37,7 +37,7 @@ public class App {
             // Configuration CORS existante
             config.plugins.enableCors(cors -> {
                 cors.add(corsConfig -> {
-                    corsConfig.allowHost("http://127.0.0.1:5500");
+                    corsConfig.allowHost("http://localhost:3000");
                     corsConfig.allowCredentials = true;
                 });
             });
