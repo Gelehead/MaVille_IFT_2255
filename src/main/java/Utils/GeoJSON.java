@@ -111,17 +111,29 @@ public class GeoJSON {
 
     public static class Geometry {
         private String type;
-        private List<List<Double>> coordinates;
-
+        // private List<List<Double>> coordinates; 
+        private List<List<List<List<Double>>>> coordinates;  // modif
+    
         public String getType() { return type; }
         public void setType(String type) { this.type = type; }
 
+        /*
         public List<List<Double>> getCoordinates() { return coordinates; }
         public void setCoordinates(List<List<Double>> coordinates) {
             this.coordinates = coordinates;
         }
-
+        */
+        
+        // uriliser List<List<List<List<Double>>>> la liste de coordonnées
+        public List<List<List<List<Double>>>> getCoordinates() { return coordinates; }
+        public void setCoordinates(List<List<List<List<Double>>>> coordinates) {
+            this.coordinates = coordinates;
+        }
+    
         public boolean contains(double latitude, double longitude) {
+            //au lieu de this.coordinates.get(0) on utilise this.coordinates.get(0).get(0) pour accéder à la liste de coordonnées 
+            //pcq si on prend la première liste on aura une liste de liste de liste de double
+            List<List<Double>> coordinates = this.coordinates.get(0).get(0);
             return isPointInPolygon(latitude, longitude, coordinates); 
         }
 
@@ -160,11 +172,11 @@ public class GeoJSON {
 
             return inside;
         }
-
+        /* 
         @Override
         public String toString() {
             return coordinates.toString();
-        }
+        } */ 
     }
 }
 

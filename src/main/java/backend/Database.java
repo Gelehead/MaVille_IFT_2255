@@ -615,15 +615,12 @@ public class Database implements java.io.Serializable {
         }
     }
 
-<<<<<<< Updated upstream
-    /**
+    // TODO: find correct adress format
+     /**
      * Récupère l'arrondissement correspondant à une adresse donnée.
      * @param address L'adresse à rechercher.
      * @return L'arrondissement correspondant ou null si non trouvé.
      */
-=======
-    // TODO: find correct adress format
->>>>>>> Stashed changes
     public static District getDistrict(String address) {
         try {
             // Get the coordinates of the address
