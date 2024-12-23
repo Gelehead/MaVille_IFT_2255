@@ -164,7 +164,7 @@ mvn test
 
 Pour générer le rapport de couverture de tests:
 mvn jacoco:report
-Le rapport sera disponible dans:  jacoco/index.html
+Le rapport sera disponible dans:  targer/site/jacoco/index.html
 
 ## Documentation
 La documentation JavaDoc est disponible dans le dossier docs/. Ouvrez docs/index.html dans un navigateur pour la consulter.
