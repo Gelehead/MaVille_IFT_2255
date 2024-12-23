@@ -1,5 +1,6 @@
 package backend;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.NoSuchElementException;
@@ -334,11 +335,11 @@ public class Database implements java.io.Serializable {
     public ArrayList<Project> getProjectsBy(Reason reason){
         ArrayList<Project> byReasonList = new ArrayList<>();
         for (Project p : getProjectList()) {
-            if (p.getReason() == reason){
+            if (p.getReason().equals( reason)){
                 byReasonList.add(p);
             }
         }
-        if (!byReasonList.isEmpty()) {
+        if (byReasonList.isEmpty()) {
             throw new NoSuchElementException(Language.no_project_found(Dialog.choice_language));
         }
         return byReasonList;
@@ -357,7 +358,7 @@ public class Database implements java.io.Serializable {
                 byDistrictList.add(p);
             }
         }
-        if (!byDistrictList.isEmpty()) {
+        if (byDistrictList.isEmpty()) {
             throw new NoSuchElementException(Language.no_project_found(Dialog.choice_language));
         }
         return byDistrictList;
@@ -376,7 +377,7 @@ public class Database implements java.io.Serializable {
                 byList.add(p);
             }
         }
-        if (!byList.isEmpty()) {
+        if (byList.isEmpty()) {
             throw new NoSuchElementException(Language.no_project_found(Dialog.choice_language));
         }
         return byList;
@@ -615,15 +616,15 @@ public class Database implements java.io.Serializable {
         }
     }
 
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
     /**
      * Récupère l'arrondissement correspondant à une adresse donnée.
      * @param address L'adresse à rechercher.
      * @return L'arrondissement correspondant ou null si non trouvé.
      */
-=======
+//=======
     // TODO: find correct adress format
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
     public static District getDistrict(String address) {
         try {
             // Get the coordinates of the address
@@ -728,8 +729,8 @@ public class Database implements java.io.Serializable {
     /**
      * Initialise la base de données avec des valeurs par défaut.
      */
-    private void init(){
-        init(10, 3, 7);
+    public void init(){
+        init(0, 0, 0);
     }
 
     /**
@@ -738,10 +739,10 @@ public class Database implements java.io.Serializable {
      * @param mockIntervenants Nombre d'intervenants mock.
      * @param mockResidents Nombre de résidents mock.
      */
-    private void init(int mockUsers, int mockIntervenants, int mockResidents){
-        init_districts();
-        init_records();
-        init_impediments();
+    public void init(int mockUsers, int mockIntervenants, int mockResidents){
+       // init_districts();
+       // init_records();
+      //  init_impediments();
 
         ////////////////////////////  INITIALIZATION DE LA BASE DE DONNÉES  //////////////////////
 
@@ -847,7 +848,9 @@ public class Database implements java.io.Serializable {
             "submitter_test",
             new Coordinates(0,0)
         );
-        addProject(proj1);
+        //System.out.println(proj1.getDistrict());
+        //System.out.println( proj1.getReason());
+       // addProject(proj1);
 
         // Projet 2
         Project proj2 = new Project(
@@ -866,7 +869,7 @@ public class Database implements java.io.Serializable {
             "submitter_test",
             new Coordinates(0,0)
         );
-        addProject(proj2);
+        //addProject(proj2);
 
         // Projet 3
         Project proj3 = new Project(
@@ -885,7 +888,7 @@ public class Database implements java.io.Serializable {
             "submitter_test",
             new Coordinates(0,0)
         );
-        addProject(proj3);
+        //addProject(proj3);
 
         // Projet 4
         Project proj4 = new Project(
@@ -904,7 +907,7 @@ public class Database implements java.io.Serializable {
             "submitter_test",
             new Coordinates(0,0)
         );
-        addProject(proj4);
+        //addProject(proj4);
 
         // Projet 5
         Project proj5 = new Project(
@@ -923,7 +926,7 @@ public class Database implements java.io.Serializable {
             "submitter_test",
             new Coordinates(0,0)
         );
-        addProject(proj5);
+        //addProject(proj5);
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         Faker faker = new Faker();
@@ -1054,5 +1057,42 @@ public class Database implements java.io.Serializable {
      */
     public void setActiveUser(User activeUser) {
         Database.activeUser = activeUser;
+    }
+    public ArrayList<Project> addprojett(){
+        Project proj4 = new Project(
+                getProjectList().size(),
+                "bigId_test4",
+                "permit_id_test4",
+                "permit_cat_test4",
+                "444444",
+                "Réseaux routier",
+                "Projet paysager",
+                getDistrict(Database.District_name.Anjou),
+                "2024-12-07T00:00:00Z",
+                "2024-12-20T00:00:00Z",
+                "occupancy_test",
+                "organization_test",
+                "submitter_test",
+                new Coordinates(0,0)
+
+        );
+        addProject(proj4);
+       Reason ddo=proj4.parse_reasonMenu("1");
+        System.out.println(ddo);
+        System.out.println(proj4.getTitle());
+
+       // getProjectsByt("Projet paysager");
+        //System.out.println(ddo);
+        return getProjectsBy("Projet paysager");
+    }
+
+    public static void main(String[] args) {
+        Database DD=new Database();
+        DD.init(0,0,0);
+        DD.addprojett();
+
+       // DD.getProjectsBy(DD.ddo);
+
+        System.out.println(DD.getProjectList());
     }
 }

@@ -3,6 +3,7 @@ package Instances;
 import java.util.ArrayList;
 
 import Utils.Schedule;
+import backend.Database;
 import metrics.*;
 
 /**
@@ -253,7 +254,7 @@ public class Project {
         int id, String bigId,
         String permit_id, String permit_category, String contract_number,
         String reason, String title,
-        District district, 
+        District district,
         String start, String end, 
         String occupancy, String organization, String submitter_category,
         Coordinates co
@@ -316,7 +317,7 @@ public class Project {
                 return Reason.Travaux_souterrains;
             case "Égouts et aqueducs - Excavation":
                 return Reason.Travaux_souterrains;
-            case "Réseaux routier - Réfection et travaux corrélatifs":
+            case "Réseaux routier": //- Réfection et travaux corrélatifs"://
                 return Reason.Travaux_routiers;
             default:
                 return Reason.UNHANDLED_REASON;
@@ -329,7 +330,7 @@ public class Project {
      * @param r Représentation de la raison choisie.
      * @return La raison correspondante.
      */
-    public static Reason parse_reasonMenu(String r) {
+    public  static Reason parse_reasonMenu(String r) {
         switch (r) {
             case "1": return Project.Reason.Travaux_routiers;
             case "2": return Project.Reason.Travaux_de_gaz_ou_électricité;
@@ -375,12 +376,12 @@ public class Project {
     @Override
     public String toString() {
         String res = "";
-        res += ("  ID: " + id + "\n");
-        res += ("  Borough: " + (district == null ? "district is null" : district.name) + "\n");
-        res += ("  Start Date: " + start_date + "\n");
-        res += ("  End Date: " + end_date + "\n");
-        res += ("  Longitude: " + coordinates.longitude + "\n");
-        res += ("  Latitude: " + coordinates.latitude + "\n");
+        res += ("  ID: " + this.id + "\n");
+        res += ("  Borough: " + (this.district==null  ? "district is null" : district.name) + "\n");
+        res += ("  Start Date: " + this.start_date + "\n");
+        res += ("  End Date: " + this.end_date + "\n");
+        res += ("  Longitude: " + this.coordinates.longitude + "\n");
+        res += ("  Latitude: " + this.coordinates.latitude + "\n");
         res += ("  Reason: " + this.reason + "\n");
         res += ("  Submitter Category: " + this.submitter_category + "\n");
         res += ("  Contract Number: " + this.contract_number + "\n");
